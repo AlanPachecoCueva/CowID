@@ -1,5 +1,12 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+//import { StatusBar } from 'expo-status-bar';
+import React from "react";
+import { StyleSheet, Text, SafeAreaView, View, StatusBar } from "react-native";
+
+{/*-----------------Importación de colores-----------------*/}
+import colors from "./src/utils/colors";
+
+{/*-----------------Importación de componentes-----------------*/}
+import Form from "./src/components/Form";
 
 export default function App() {
   return (
@@ -7,19 +14,36 @@ export default function App() {
     {/* Barra de notificaciones del telefono (Parte Superior) */}
       <StatusBar barStyle="light-content" />
 
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <StatusBar style="auto" />
+      <View style={styles.safeArea}>
+        {/*Cabecera */}
+        <Text style={styles.textoHead}>CowID</Text>
+
+        <Form/>
+      </View>
+
+      <View>
+        <Text>Resultado</Text>
+      </View>
+
+      <View>
+        <Text>Footer</Text>
       </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
+  safeArea: {
+    backgroundColor: colors.PRIMARY_COLOR_DARK,
+    height:"50%",
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
     alignItems: "center",
-    justifyContent: "center",
+  },
+  textoHead: {
+    fontSize: 25,
+    fontWeight: "bold",
+    color: "#fff", //blanco
+    marginTop: 15,
   },
 });
