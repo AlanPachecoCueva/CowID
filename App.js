@@ -1,7 +1,4 @@
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-
-import {View, Text, StatusBar} from "react-native";
-import { Component } from 'react';
 import NavBar from './src/components/NavBar';
 import Login from './src/components/Login';
 import React from "react";
@@ -29,6 +26,6 @@ export default function App(){
   return(
   <NavigationContainer>
   
-    <LoadApp isLoggedIn = {true}/>
+    <LoadApp isLoggedIn = {false}/>
     </NavigationContainer>);
 }

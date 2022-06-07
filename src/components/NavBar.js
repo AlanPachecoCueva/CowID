@@ -1,19 +1,10 @@
 import React from 'react';
-import Icon from 'react-native-ico-material-design';
-import {StyleSheet, NavigationContainer, View, Text} from "react-native";
+import QRScan from './ScanQR'
+import {StyleSheet,View, Text} from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { render } from 'react-dom';
 
 const Tab = createMaterialBottomTabNavigator();
-
-function qrScan() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>QR</Text>
-    </View>
-  );
-}
 
 function HomeScreen() {
   return (
@@ -51,7 +42,7 @@ export default function NavBar() {
           />
           <Tab.Screen
             name="QR"
-            component={qrScan}
+            component={QRScan}
             options={{
               tabBarLabel: 'Updates',
               tabBarIcon: ({ color }) => (
