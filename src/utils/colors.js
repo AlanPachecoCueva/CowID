@@ -1,5 +1,5 @@
 export default{
-    PRIMARY_COLOR: "#51BB69", //Green
+    PRIMARY_COLOR: "#C2A77A", //Green
     PRIMARY_COLOR_DARK: "#357443",
     PRIMARY_COLOR_LIGHT: "#61DF7D", 
 

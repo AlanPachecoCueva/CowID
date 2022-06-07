@@ -12,7 +12,7 @@ const Tab = createMaterialBottomTabNavigator();
 
 function LoadApp(props) {
   const isLoggedIn = props.isLoggedIn;
-  if (!isLoggedIn) {
+  if (isLoggedIn) {
     return <Login/>;
   }
   return <NavBar/>;

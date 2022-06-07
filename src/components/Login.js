@@ -18,7 +18,7 @@ import colors from "../utils/colors";
 {
   /*-----------------Importación de componentes-----------------*/
 }
-import Form from "../components/Form";
+import Form from "./FormLogin";
 
 export default function Login() {
   return (
@@ -28,7 +28,6 @@ export default function Login() {
       <View style={styles.ViewContainer}>
         <View style={styles.safeArea}>
           {/*Cabecera */}
-          <Text style={styles.textoHead}>CowID</Text>
           <Image
             style={styles.img}
             source={require("../utils/images/cowLogo.png")}
@@ -57,15 +56,9 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 30,
     alignItems: "center",
   },
-  textoHead: {
-    fontSize: 25,
-    fontWeight: "bold",
-    color: "#fff", //blanco
-    marginTop: 30,
-  },
   img: {
-    width: "50%",
-    height: "50%",
-    bottom: 0,
+    width: "70%",
+    height: "70%",
+    bottom: -10,
   },
 });
