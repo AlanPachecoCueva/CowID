@@ -1,71 +1,80 @@
-//import { StatusBar } from 'expo-status-bar';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {View, Text, StatusBar} from "react-native";
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  SafeAreaView,
-  View,
-  StatusBar,
-  Image,
-} from "react-native";
 
-{
-  /*-----------------Importación de colores-----------------*/
-}
-import colors from "./src/utils/colors";
+const Tab = createMaterialBottomTabNavigator();
 
-{
-  /*-----------------Importación de componentes-----------------*/
-}
-import Form from "./src/components/Form";
-import { Colors } from "react-native/Libraries/NewAppScreen";
-
-export default function App() {
+function qrScan() {
   return (
-    <>
-      {/* Barra de notificaciones del telefono (Parte Superior) */}
-      <StatusBar barStyle="light-content" />
-      <View style={styles.ViewContainer}>
-        <View style={styles.safeArea}>
-          {/*Cabecera */}
-          <Text style={styles.textoHead}>CowID</Text>
-          <Image
-            style={styles.img}
-            source={require("./src/utils/images/cowLogo.png")}
-          />
-
-          <Form />
-        </View>
-
-        <View>{/* <Text>Resultado</Text> */}</View>
-
-        <View>{/* <Text>Footer</Text> */}</View>
-      </View>
-    </>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>QR</Text>
+    </View>
   );
 }
 
-const styles = StyleSheet.create({
-  ViewContainer:{
-    height:"100%",
-    //backgroundColor:"#FAEEDC"
-  },
-  safeArea: {
-    backgroundColor: colors.TERTIARY_COLOR,
-    height: "50%",
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
-    alignItems: "center",
-  },
-  textoHead: {
-    fontSize: 25,
-    fontWeight: "bold",
-    color: "#fff", //blanco
-    marginTop: 30,
-  },
-  img: {
-    width: "50%",
-    height: "50%",
-    bottom: 0,
-  },
-});
+function HomeScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Home!</Text>
+    </View>
+  );
+}
+
+function Profile() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Profile</Text>
+    </View>
+  );
+}
+
+state 
+
+export default function MyTabs() {
+  return (
+    <>
+    {}
+    <StatusBar barStyle="light-content" />
+    <NavigationContainer>
+      <Tab.Navigator
+        initialRouteName="Feed"
+        activeColor="white"
+        labeled = {false}
+        barStyle={{ backgroundColor: 'green' }}
+      >
+        <Tab.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            tabBarLabel: 'Home',
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons name="home" color={color} size={26} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="QR"
+          component={qrScan}
+          options={{
+            tabBarLabel: 'Updates',
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons name="qrcode-scan" color={color} size={24} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Profile"
+          component={Profile}
+          options={{
+            tabBarLabel: 'Profile',
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons name="account" color={color} size={26} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer></>
+  );
+}
