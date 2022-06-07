@@ -1,80 +1,34 @@
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import {View, Text, StatusBar} from "react-native";
+import { Component } from 'react';
+import NavBar from './src/components/NavBar';
+import Login from './src/components/Login';
 import React from "react";
+import { NavigationContainer } from '@react-navigation/native';
 
 const Tab = createMaterialBottomTabNavigator();
 
-function qrScan() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>QR</Text>
-    </View>
-  );
+
+function LoadApp(props) {
+  const isLoggedIn = props.isLoggedIn;
+  if (!isLoggedIn) {
+    return <Login/>;
+  }
+  return <NavBar/>;
 }
 
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home!</Text>
-    </View>
-  );
-}
+export default function App(){
 
-function Profile() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Profile</Text>
-    </View>
-  );
-}
+  const state= {
+    user:'',
+    page:'',
+    userLogged: false
+  }
 
-state 
-
-export default function MyTabs() {
-  return (
-    <>
-    {}
-    <StatusBar barStyle="light-content" />
-    <NavigationContainer>
-      <Tab.Navigator
-        initialRouteName="Feed"
-        activeColor="white"
-        labeled = {false}
-        barStyle={{ backgroundColor: 'green' }}
-      >
-        <Tab.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            tabBarLabel: 'Home',
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="home" color={color} size={26} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="QR"
-          component={qrScan}
-          options={{
-            tabBarLabel: 'Updates',
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="qrcode-scan" color={color} size={24} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Profile"
-          component={Profile}
-          options={{
-            tabBarLabel: 'Profile',
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="account" color={color} size={26} />
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer></>
-  );
+  return(
+  <NavigationContainer>
+  
+    <LoadApp isLoggedIn = {true}/>
+    </NavigationContainer>);
 }

@@ -12,15 +12,15 @@ import {
 {
   /*-----------------Importación de colores-----------------*/
 }
-import colors from "./src/utils/colors";
+
+import colors from "../utils/colors";
 
 {
   /*-----------------Importación de componentes-----------------*/
 }
-import Form from "./src/components/Form";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import Form from "../components/Form";
 
-export default function App() {
+export default function Login() {
   return (
     <>
       {/* Barra de notificaciones del telefono (Parte Superior) */}
@@ -31,7 +31,7 @@ export default function App() {
           <Text style={styles.textoHead}>CowID</Text>
           <Image
             style={styles.img}
-            source={require("./src/utils/images/cowLogo.png")}
+            source={require("../utils/images/cowLogo.png")}
           />
 
           <Form />
