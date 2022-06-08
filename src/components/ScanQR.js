@@ -27,11 +27,16 @@ export default function QRScan() {
     }, []
     );
 
-    const handleQrScanned = ({type,cowID}) =>{
+    const handleQrScanned = ({type,data}) =>{
         setScanned(true);
-        setCowID(cowID);
-        console.log(`Type: ${type} \n CowID: ${cowID}`)
+        setCowID(data);
+        //alert(`Bar code with type ${type} and data  has been scanned!`);
     }
+
+    const hola = () =>{
+        'hola'
+    }
+    
     
 
     if(hasPermission === null){
@@ -55,13 +60,14 @@ export default function QRScan() {
         <View style={styles.container}>
             <View style={styles.barcodebox}>
                 <BarCodeScanner
-                    onBarCodeScanned={scanned? undefined:handleQrScanned}
+                    onBarCodeScanned={scanned? hola:handleQrScanned}
                     style={{height:400, width:400}}
                 />
             </View>
-            <Text style={styles.maintext}>{cowID}</Text>
-            {scanned && <Button title={'Escanear de nueva'}
-            onPress={() => setScanned(false)} color='tomato'/>}
+            
+            {scanned && <Button title={'Escanear de nuevo'}
+            onPress={() => setScanned(false)} color='black'/>
+            }
         </View>
     );
 
@@ -70,6 +76,7 @@ export default function QRScan() {
 
 const styles = StyleSheet.create({
     container: {
+        alignItems: 'center',
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
@@ -83,7 +90,7 @@ const styles = StyleSheet.create({
     barcodebox: {
         alignItems: 'center',
         justifyContent: 'center',
-        height: 300,
+        height: 400,
         width: 300,
         overflow: 'hidden',
         borderRadius: 30,

@@ -1,10 +1,11 @@
 import React from 'react';
 import QRScan from './ScanQR'
+import colors from "../utils/colors";
 import {StyleSheet,View, Text} from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createBottomTabNavigator();
 
 function HomeScreen() {
   return (
@@ -25,10 +26,15 @@ function Profile() {
 export default function NavBar() {
   return (
       <Tab.Navigator
-          initialRouteName="Feed"
-          activeColor="white"
-          labeled = {false}
-          barStyle={{ backgroundColor: 'green' }}
+          tabBarOptions={{
+            shifting:true,
+            style:{
+              ...styles.Navbar
+            }
+          }
+
+          }
+          
         >
           <Tab.Screen
             name="Home"
@@ -44,7 +50,7 @@ export default function NavBar() {
             name="QR"
             component={QRScan}
             options={{
-              tabBarLabel: 'Updates',
+              tabBarLabel: 'QR',
               tabBarIcon: ({ color }) => (
                 <MaterialCommunityIcons name="qrcode-scan" color={color} size={24} />
               ),
@@ -72,21 +78,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
 
     },
-    NavBarContainer: {
-        position:'absolute',
-        bottom: 20,
-        width:"90%",
-    },
     Navbar:{
-        felxDirection:'row',
-        backgroundColor:'white',
-        alignItems:'center',
-        justifyContent: 'space-evenly',
-        borderRadius: 40
-    },
-
-    IconBehave: {
-        padding:14
+        marginBottom: 15,
+        marginHorizontal:15,
+        elevation:0,
+        backgroundColor:colors.TERTIARY_COLOR,
+        borderRadius:30,
+        height:50,
+        overflow: 'hidden'
     }
-
 });

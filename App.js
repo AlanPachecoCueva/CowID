@@ -1,15 +1,12 @@
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import NavBar from './src/components/NavBar';
 import Login from './src/components/Login';
-import React from "react";
+import React, {useState} from "react";
 import { NavigationContainer } from '@react-navigation/native';
-
-const Tab = createMaterialBottomTabNavigator();
 
 
 function LoadApp(props) {
   const isLoggedIn = props.isLoggedIn;
-  if (isLoggedIn) {
+  if (!isLoggedIn) {
     return <Login/>;
   }
   return <NavBar/>;
@@ -22,10 +19,11 @@ export default function App(){
     page:'',
     userLogged: false
   }
-
+  const [userLogged,setUserLogged] = useState(false)
+  const [user,setUser] = useState(null)
+ 
   return(
   <NavigationContainer>
-  
-    <LoadApp isLoggedIn = {false}/>
-    </NavigationContainer>);
+    <LoadApp isLoggedIn = {userLogged}/>
+  </NavigationContainer>);
 }
