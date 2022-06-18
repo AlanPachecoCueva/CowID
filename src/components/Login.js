@@ -30,7 +30,7 @@ export default function Login(props) {
           {/*Cabecera */}
           <Image
             style={styles.img}
-            source={require("../utils/images/cowLogo.png")}
+            source={require("../utils/images/LogoCowID.png")}
           />
 
           <FormLogin setLoggedIn = {props.setLogged} />
@@ -57,8 +57,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   img: {
-    width: "70%",
-    height: "70%",
-    bottom: -10,
+    width:"80%",
+    /*Para que la imagen se ajuste y no se corte*/
+    flex:1,
+    resizeMode:'contain',
+    /*--------------*/
+    bottom: "15%",
   },
 });
