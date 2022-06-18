@@ -1,6 +1,6 @@
-import {View, Text, Button,StyleSheet} from "react-native";
-import React ,{useState, useEffect}from "react";
-import { BarCodeScanner } from "expo-barcode-scanner";
+import {View, Text, Button,StyleSheet} from 'react-native';
+import React ,{useState, useEffect}from 'react';
+import { BarCodeScanner } from 'expo-barcode-scanner';
 
 
 export default function QRScan() {

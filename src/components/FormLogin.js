@@ -1,12 +1,18 @@
-import React from "react";
-import {StyleSheet, TextInput,Text, View} from "react-native";
-import { Button } from "react-native-paper";
+import React, {useState} from 'react';
+import {StyleSheet, TextInput, Text, View} from 'react-native';
+import { Button } from 'react-native-paper';
 
 {/*----------Importamos los colores----------*/}
-import Colors from "../utils/colors.js";
+import Colors from '../utils/colors.js';
 
 {/*---------Exportamos el componente---------*/}
-export default function(){
+export default function(props){  
+    
+    function setUserLoggedIn(user){
+        user = useState(true)
+
+    }
+    
     return(
         <View style = {styles.viewForm}>
             <Text style={[styles.slogan, styles.titulo]}>COWID</Text>
@@ -23,11 +29,10 @@ export default function(){
                 {/* Password */}
                 <TextInput placeholder="Contraseña" keyboardType="numeric" style={styles.input}/>
 
-                <Button style={styles.input}>Registrar</Button>
+                <Button style={styles.input} onPress={() => props.setLoggedIn(true)}>Registrar</Button>
             </View>
         </View>
     )
-
 }
 
 const styles = StyleSheet.create({

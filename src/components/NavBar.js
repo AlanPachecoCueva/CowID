@@ -1,7 +1,7 @@
 import React from 'react';
 import QRScan from './ScanQR'
-import colors from "../utils/colors";
-import {StyleSheet,View, Text} from "react-native";
+import colors from '../utils/colors';
+import {StyleSheet,View, Text} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 

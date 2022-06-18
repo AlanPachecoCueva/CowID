@@ -1,5 +1,6 @@
 //import { StatusBar } from 'expo-status-bar';
-import React from "react";
+import React from 'react';
+
 import {
   StyleSheet,
   Text,
@@ -12,15 +13,14 @@ import {
 {
   /*-----------------Importación de colores-----------------*/
 }
-
 import colors from "../utils/colors";
 
 {
   /*-----------------Importación de componentes-----------------*/
 }
-import Form from "./FormLogin";
+import FormLogin from "./FormLogin";
 
-export default function Login() {
+export default function Login(props) {
   return (
     <>
       {/* Barra de notificaciones del telefono (Parte Superior) */}
@@ -33,7 +33,7 @@ export default function Login() {
             source={require("../utils/images/cowLogo.png")}
           />
 
-          <Form />
+          <FormLogin setLoggedIn = {props.setLogged} />
         </View>
 
         <View>{/* <Text>Resultado</Text> */}</View>
