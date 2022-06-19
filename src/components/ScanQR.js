@@ -2,12 +2,18 @@ import {View, Text, Button,StyleSheet} from 'react-native';
 import React ,{useState, useEffect}from 'react';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
+import { GenerateQRScreen } from './GenerateQRScreen';
+
+import QRCode from 'react-native-qrcode-svg';
+
 
 export default function QRScan() {
 
     const [hasPermission, setHasPermission] = useState(null) 
     const [scanned,setScanned]  = useState(false)
     const [cowID,setCowID] = useState('Not yet scanned')
+
+
 
     //Pedir permiso de la camara
     const askCameraPermission = () =>{
@@ -27,10 +33,10 @@ export default function QRScan() {
     }, []
     );
 
-    const handleQrScanned = ({type,data}) =>{
+    const handleQrScanned = ({type, data}) =>{
         setScanned(true);
         setCowID(data);
-        //alert(`Bar code with type ${type} and data  has been scanned!`);
+        alert(`Código QR de tipo: ${type} ha sido escaneado! Contenido: ${data}`);
     }
 
     const hola = () =>{
@@ -57,10 +63,17 @@ export default function QRScan() {
     } 
 
     return (
+
         <View style={styles.container}>
+
+<View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+            <QRCode 
+            value={"string"}/>
+        </View>
+
             <View style={styles.barcodebox}>
                 <BarCodeScanner
-                    onBarCodeScanned={scanned? hola:handleQrScanned}
+                    onBarCodeScanned={scanned ? hola : handleQrScanned}
                     style={{height:400, width:400}}
                 />
             </View>
