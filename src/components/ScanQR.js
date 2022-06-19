@@ -2,11 +2,6 @@ import {View, Text, Button,StyleSheet} from 'react-native';
 import React ,{useState, useEffect}from 'react';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
-import { GenerateQRScreen } from './GenerateQRScreen';
-
-import QRCode from 'react-native-qrcode-svg';
-
-
 export default function QRScan() {
 
     const [hasPermission, setHasPermission] = useState(null) 
@@ -65,11 +60,6 @@ export default function QRScan() {
     return (
 
         <View style={styles.container}>
-
-<View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
-            <QRCode 
-            value={"string"}/>
-        </View>
 
             <View style={styles.barcodebox}>
                 <BarCodeScanner
