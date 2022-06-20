@@ -1,12 +1,17 @@
-import React from "react";
-import {StyleSheet, TextInput,Text, View} from "react-native";
-import { Button } from "react-native-paper";
+import React, {Component, useState} from 'react';
+import {Pressable, StyleSheet, TextInput, Text, View} from 'react-native';
 
 {/*----------Importamos los colores----------*/}
-import Colors from "../utils/colors.js";
+import Colors from '../utils/colors.js';
 
 {/*---------Exportamos el componente---------*/}
-export default function(){
+export default function(props){  
+    
+    function setUserLoggedIn(user){
+        user = useState(true)
+
+    }
+    
     return(
         <View style = {styles.viewForm}>
             <Text style={[styles.slogan, styles.titulo]}>COWID</Text>
@@ -23,11 +28,20 @@ export default function(){
                 {/* Password */}
                 <TextInput placeholder="Contraseña" keyboardType="numeric" style={styles.input}/>
 
-                <Button style={styles.input}>Registrar</Button>
+                <Pressable style={[styles.input, styles.btnRegister]} onPress={() => props.setLoggedIn(true)}>
+                    <Text style={styles.txtBtnRegister}>Registrar</Text>
+                </Pressable>
+                <View style={styles.viewIniciarSesion}>
+                    <Text style={styles.txtIniciaSesion}>Ya tienes cuenta? </Text>
+                    <Pressable style={[]} onPress={() => props.setLoggedIn(true)}>
+                        <Text style={[styles.txtIniciaSesion, styles.iniciarPress]}>Inicia sesión</Text>
+                    </Pressable>
+                </View>
+                
+                {/* <Button style={[styles.input, styles.btnRegister]} onPress={() => props(true)} title="Registrar"/> */}
             </View>
         </View>
     )
-
 }
 
 const styles = StyleSheet.create({
@@ -62,6 +76,8 @@ const styles = StyleSheet.create({
     viewInputs: {
         alignItems: "center",
         width:"100%",
+        bottom:"10%",
+        right: "-2%"
     },
 
     input: {
@@ -78,5 +94,33 @@ const styles = StyleSheet.create({
         color: "#000",
         paddingHorizontal: 20,
 
+    },
+    btnRegister:{
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 12,
+        paddingHorizontal: 32,
+        borderRadius: 4,
+        elevation: 3,
+        backgroundColor: 'black',
+    },
+    txtBtnRegister:{
+        fontSize: 16,
+        lineHeight: 21,
+        fontWeight: 'bold',
+        letterSpacing: 0.25,
+        color: '#fff',
+    },
+    txtIniciaSesion:{
+        fontSize: 16,
+        color:"#000"
+    },
+    viewIniciarSesion:{
+        fontSize: 16,
+        flexDirection: "row",
+
+    },
+    iniciarPress:{
+        fontWeight: "bold",
     }
 });

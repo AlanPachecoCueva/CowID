@@ -1,5 +1,10 @@
-import React from 'react';
-import QRScan from './ScanQR'
+import React from "react";
+
+// Componentes
+import QRScan from "./ScanQR";
+import HomeScreen from './HomeScreen';
+import ProfilseScreen from './ProfileScreen';
+
 import colors from "../utils/colors";
 import {StyleSheet,View, Text} from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -8,66 +13,51 @@ import { shadow } from 'react-native-paper';
 
 const Tab = createBottomTabNavigator();
 
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home!</Text>
-    </View>
-  );
-}
-
-function Profile() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Profile</Text>
-    </View>
-  );
-}
-
 export default function NavBar() {
   return (
-      <Tab.Navigator
-          tabBarOptions={{
-            shifting:true,
-            style:{
-              ...styles.Navbar
-            }
-          }
-
-          }
-          
-        >
-          <Tab.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{
-              tabBarLabel: 'Home',
-              tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name="home" color={color} size={26} />
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="QR"
-            component={QRScan}
-            options={{
-              tabBarLabel: 'QR',
-              tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name="qrcode-scan" color={color} size={24} />
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="Profile"
-            component={Profile}
-            options={{
-              tabBarLabel: 'Profile',
-              tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name="account" color={color} size={26} />
-              ),
-            }}
-          />
-        </Tab.Navigator>
+    <Tab.Navigator
+      tabBarOptions={{
+        shifting: true,
+        style: {
+          ...styles.Navbar,
+        },
+      }}
+    >
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarLabel: "Home",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="home" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="QR"
+        component={QRScan}
+        options={{
+          tabBarLabel: "QR",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="qrcode-scan"
+              color={color}
+              size={24}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfilseScreen}
+        options={{
+          tabBarLabel: "Profile",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="account" color={color} size={26} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 }
 

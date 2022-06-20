@@ -1,13 +1,14 @@
-import {View, Text, Button,StyleSheet} from "react-native";
-import React ,{useState, useEffect}from "react";
-import { BarCodeScanner } from "expo-barcode-scanner";
-
+import {View, Text, Button,StyleSheet} from 'react-native';
+import React ,{useState, useEffect}from 'react';
+import { BarCodeScanner } from 'expo-barcode-scanner';
 
 export default function QRScan() {
 
     const [hasPermission, setHasPermission] = useState(null) 
     const [scanned,setScanned]  = useState(false)
     const [cowID,setCowID] = useState('Not yet scanned')
+
+
 
     //Pedir permiso de la camara
     const askCameraPermission = () =>{
@@ -27,7 +28,7 @@ export default function QRScan() {
     }, []
     );
 
-    const handleQrScanned = ({type,data}) =>{
+    const handleQrScanned = ({type, data}) =>{
         setScanned(true);
         setCowID(data);
         alert(`Bar code with type ${type} and data ${data}  has been scanned!`);
@@ -57,10 +58,12 @@ export default function QRScan() {
     } 
 
     return (
+
         <View style={styles.container}>
+
             <View style={styles.barcodebox}>
                 <BarCodeScanner
-                    onBarCodeScanned={scanned? hola:handleQrScanned}
+                    onBarCodeScanned={scanned ? hola : handleQrScanned}
                     style={{height:400, width:400}}
                 />
             </View>
