@@ -30,7 +30,7 @@ export default function QRScan() {
     const handleQrScanned = ({type,data}) =>{
         setScanned(true);
         setCowID(data);
-        //alert(`Bar code with type ${type} and data  has been scanned!`);
+        alert(`Bar code with type ${type} and data ${data}  has been scanned!`);
     }
 
     const hola = () =>{
@@ -64,10 +64,8 @@ export default function QRScan() {
                     style={{height:400, width:400}}
                 />
             </View>
-            
-            {scanned && <Button title={'Escanear de nuevo'}
+            <Button title={'Escanear de nuevo'}
             onPress={() => setScanned(false)} color='black'/>
-            }
         </View>
     );
 

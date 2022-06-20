@@ -8,5 +8,7 @@ export default{
 
     TERTIARY_COLOR:"#000", //Black
     TERTIARY_COLOR_LIGHT: "#4E4E4E", 
+
+    NAV_BAR_ICON:"#e5d3b3"
     
 };

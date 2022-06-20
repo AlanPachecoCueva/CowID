@@ -4,6 +4,7 @@ import colors from "../utils/colors";
 import {StyleSheet,View, Text} from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { shadow } from 'react-native-paper';
 
 const Tab = createBottomTabNavigator();
 
@@ -78,13 +79,27 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
 
     },
+    shadow:{
+      shadowColor:"#c7934e",
+      shadowOffset:{
+        width:0,
+        height:10,
+      },
+      shadowRadius:3.5,
+      shadowOpacity:0.25,
+      elevation:5
+    },
     Navbar:{
+        paddingBottom: 10,
+        paddingTop:10,
         marginBottom: 15,
         marginHorizontal:15,
         elevation:0,
         backgroundColor:colors.TERTIARY_COLOR,
-        borderRadius:30,
-        height:50,
-        overflow: 'hidden'
+        color:colors.NAV_BAR_ICON,
+        borderRadius:15,
+        height:70,
+        overflow: 'hidden',
+        ...shadow
     }
 });
