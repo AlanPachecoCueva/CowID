@@ -21,8 +21,8 @@ export default function (props) {
 
             <View style={styles.viewInputs}>
                 
-                {/* Username */}
-                <TextInput placeholder="Nombre De Usuario" style={styles.input}/>
+                {/* E-mail */}
+                <TextInput placeholder="Correo Electrónico" keyboardType="email-address" style={styles.input}/>
 
                 {/* Password */}
                 <TextInput placeholder="Contraseña" style={styles.input}/>
