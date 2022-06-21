@@ -20,13 +20,13 @@ export default function(props){
             <View style={styles.viewInputs}>
                 
                 {/* Username */}
-                <TextInput placeholder="Nombre De Usuario" keyboardType="numeric" style={styles.input}/>
+                <TextInput placeholder="Nombre De Usuario" style={styles.input}/>
 
                 {/* E-mail */}
-                <TextInput placeholder="Correo Electrónico" keyboardType="numeric" style={styles.input}/>
+                <TextInput placeholder="Correo Electrónico" keyboardType="email-address" style={styles.input}/>
 
                 {/* Password */}
-                <TextInput placeholder="Contraseña" keyboardType="numeric" style={styles.input}/>
+                <TextInput placeholder="Contraseña" style={styles.input}/>
 
                 <Pressable style={[styles.input, styles.btnRegister]} onPress={() => props.setLoggedIn(true)}>
                     <Text style={styles.txtBtnRegister}>Registrar</Text>
