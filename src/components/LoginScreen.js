@@ -1,5 +1,8 @@
 import React, { Component, useState } from 'react';
 import { Pressable, StyleSheet, TextInput, Text, View } from 'react-native';
+import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword} from 'firebase/auth';
+import {initializeApp} from 'firebase/app';
+import {firebaseConfig} from '../../firebase-config';
 
 {/*----------Importamos los colores----------*/ }
 import Colors from '../utils/colors.js';
@@ -8,10 +11,27 @@ import Colors from '../utils/colors.js';
 
 export default function (props) {
 
-    
+    const [email,setEmail] = useState('')
+    const [password,setPassword] = useState('')
+    const [nombre,setNombre] = useState('')
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+
     function setUserLoggedIn(user){
         user = useState(true)
 
+    }
+
+    function logInUser(){
+        signInWithEmailAndPassword(auth,email,password)
+        .then(credentials =>{
+            const user = credentials.user;
+            console.log(user.email);
+            props.setLoggedIn(true);
+        })
+        .catch(error=>alert(error.message))
     }
 
     return (
@@ -22,12 +42,15 @@ export default function (props) {
             <View style={styles.viewInputs}>
                 
                 {/* E-mail */}
-                <TextInput placeholder="Correo Electrónico" keyboardType="email-address" style={styles.input}/>
+                <TextInput placeholder="Correo Electrónico" onChangeText={text => setEmail(text)}
+                 keyboardType="email-address" style={styles.input}/>
 
                 {/* Password */}
-                <TextInput placeholder="Contraseña" style={styles.input}/>
+                <TextInput placeholder="Contraseña"  onChangeText={text => setPassword(text)}
+                style={styles.input}/>
 
-                <Pressable style={[styles.input, styles.btnLogin]} onPress={() => props.setLoggedIn(true)}>
+                <Pressable style={[styles.input, styles.btnLogin]} onPress={logInUser}
+                /*onPress={() => props.setLoggedIn(true)}*/>
                     <Text style={styles.txtBtnLogin}>Login</Text>
                 </Pressable>
 

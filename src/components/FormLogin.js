@@ -5,13 +5,29 @@ import LoginScreen from './LoginScreen.js';
 
 {/*----------Importamos los colores----------*/}
 import Colors from '../utils/colors.js';
+import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword} from 'firebase/auth';
+import {initializeApp} from 'firebase/app';
+import {firebaseConfig} from '../../firebase-config';
 
 {/*---------Exportamos el componente---------*/}
 export default function(props){  
     
-    function setUserLoggedIn(user){
-        user = useState(true)
+    const [email,setEmail] = useState('')
+    const [password,setPassword] = useState('')
+    const [nombre,setNombre] = useState('')
 
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+
+    function registerUser(){
+        createUserWithEmailAndPassword(auth,email,password)
+        .then(credentials =>{
+            const user = credentials.user;
+            console.log(user.email);
+            props.setLoggedIn(true);
+        })
+        .catch(error=>alert(error.message))
     }
 
     return(
@@ -22,15 +38,19 @@ export default function(props){
             <View style={styles.viewInputs}>
                 
                 {/* Username */}
-                <TextInput placeholder="Nombre De Usuario" style={styles.input}/>
+                <TextInput placeholder="Nombre De Usuario" onChangeText={text => setNombre(text)}
+                 style={styles.input}/>
 
                 {/* E-mail */}
-                <TextInput placeholder="Correo Electrónico" keyboardType="email-address" style={styles.input}/>
+                <TextInput placeholder="Correo Electrónico" onChangeText={text => setEmail(text)}
+                keyboardType="email-address" style={styles.input}/>
 
                 {/* Password */}
-                <TextInput placeholder="Contraseña" style={styles.input}/>
+                <TextInput placeholder="Contraseña" onChangeText={text => setPassword(text)}
+                secureTextEntry  style={styles.input}/>
 
-                <Pressable style={[styles.input, styles.btnRegister]} onPress={() => props.setLoggedIn(true)}>
+                <Pressable style={[styles.input, styles.btnRegister]} /*onPress={() => props.setLoggedIn(true)}*/
+                    onPress = {registerUser}>
                     <Text style={styles.txtBtnRegister}>Registrar</Text>
                 </Pressable>
                 <View style={styles.viewIniciarSesion}>
