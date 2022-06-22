@@ -26,7 +26,7 @@ export default function(props){
                 <TextInput placeholder="Correo Electrónico" keyboardType="numeric" style={styles.input}/>
 
                 {/* Password */}
-                <TextInput placeholder="Contraseña" keyboardType="numeric" style={styles.input}/>
+                <TextInput placeholder="Contraseña" keyboardType="numeric" secureTextEntry style={styles.input}/>
 
                 <Pressable style={[styles.input, styles.btnRegister]} onPress={() => props.setLoggedIn(true)}>
                     <Text style={styles.txtBtnRegister}>Registrar</Text>
