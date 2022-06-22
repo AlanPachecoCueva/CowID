@@ -1,5 +1,5 @@
 //import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   StyleSheet,
@@ -19,8 +19,17 @@ import colors from "../utils/colors";
   /*-----------------Importación de componentes-----------------*/
 }
 import FormLogin from "./FormLogin";
+import LoginScreen from './LoginScreen';
 
 export default function Login(props) {
+
+  /*Constante para cambiar entre los formularios registar y login */
+  const[loginForm, setLoginForm] = useState(true);
+
+  const changeForm =()=> {
+    setLoginForm(!loginForm);
+  }
+
   return (
     <>
       {/* Barra de notificaciones del telefono (Parte Superior) */}
@@ -33,7 +42,9 @@ export default function Login(props) {
             source={require("../utils/images/LogoCowID.png")}
           />
 
-          <FormLogin setLoggedIn = {props.setLogged} />
+          {loginForm ? <FormLogin setLoggedIn = {props.setLogged} changeForm={changeForm}/> :  <LoginScreen setLoggedIn = {props.setLogged}  changeForm={changeForm}/> }
+          {/* <FormLogin setLoggedIn = {props.setLogged} />
+          <LoginScreen setLoggedIn = {props.setLogged}/> */}
         </View>
 
         <View>{/* <Text>Resultado</Text> */}</View>
