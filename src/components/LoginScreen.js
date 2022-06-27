@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react';
 import { Pressable, StyleSheet, TextInput, Text, View } from 'react-native';
-import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword} from 'firebase/auth';
+import {getAuth,signInWithEmailAndPassword} from 'firebase/auth';
 import {initializeApp} from 'firebase/app';
 import {firebaseConfig} from '../../firebase-config';
 
@@ -46,7 +46,7 @@ export default function (props) {
                  keyboardType="email-address" style={styles.input}/>
 
                 {/* Password */}
-                <TextInput placeholder="Contraseña"  onChangeText={text => setPassword(text)}
+                <TextInput placeholder="Contraseña" secureTextEntry onChangeText={text => setPassword(text)}
                 style={styles.input}/>
 
                 <Pressable style={[styles.input, styles.btnLogin]} onPress={logInUser}
