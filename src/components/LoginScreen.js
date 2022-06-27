@@ -1,17 +1,16 @@
-import React, {Component, useState} from 'react';
-import {Pressable, StyleSheet, TextInput, Text, View} from 'react-native';
-
-import LoginScreen from './LoginScreen.js';
-
-{/*----------Importamos los colores----------*/}
-import Colors from '../utils/colors.js';
+import React, { Component, useState } from 'react';
+import { Pressable, StyleSheet, TextInput, Text, View } from 'react-native';
 import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword} from 'firebase/auth';
 import {initializeApp} from 'firebase/app';
 import {firebaseConfig} from '../../firebase-config';
 
-{/*---------Exportamos el componente---------*/}
-export default function(props){  
-    
+{/*----------Importamos los colores----------*/ }
+import Colors from '../utils/colors.js';
+
+{/*---------Exportamos el componente---------*/ }
+
+export default function (props) {
+
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
     const [nombre,setNombre] = useState('')
@@ -20,8 +19,13 @@ export default function(props){
     const auth = getAuth(app);
 
 
-    function registerUser(){
-        createUserWithEmailAndPassword(auth,email,password)
+    function setUserLoggedIn(user){
+        user = useState(true)
+
+    }
+
+    function logInUser(){
+        signInWithEmailAndPassword(auth,email,password)
         .then(credentials =>{
             const user = credentials.user;
             console.log(user.email);
@@ -30,40 +34,35 @@ export default function(props){
         .catch(error=>alert(error.message))
     }
 
-    return(
+    return (
         <View style = {styles.viewForm}>
             <Text style={[styles.slogan, styles.titulo]}>COWID</Text>
             <Text style={styles.slogan}>el lugar perfecto para dejar tu leche</Text>
 
             <View style={styles.viewInputs}>
                 
-                {/* Username */}
-                <TextInput placeholder="Nombre De Usuario" onChangeText={text => setNombre(text)}
-                 style={styles.input}/>
-
                 {/* E-mail */}
                 <TextInput placeholder="Correo Electrónico" onChangeText={text => setEmail(text)}
-                keyboardType="email-address" style={styles.input}/>
+                 keyboardType="email-address" style={styles.input}/>
 
                 {/* Password */}
-                <TextInput placeholder="Contraseña" onChangeText={text => setPassword(text)}
-                secureTextEntry  style={styles.input}/>
+                <TextInput placeholder="Contraseña"  onChangeText={text => setPassword(text)}
+                style={styles.input}/>
 
-                <Pressable style={[styles.input, styles.btnRegister]} /*onPress={() => props.setLoggedIn(true)}*/
-                    onPress = {registerUser}>
-                    <Text style={styles.txtBtnRegister}>Registrar</Text>
+                <Pressable style={[styles.input, styles.btnLogin]} onPress={logInUser}
+                /*onPress={() => props.setLoggedIn(true)}*/>
+                    <Text style={styles.txtBtnLogin}>Login</Text>
                 </Pressable>
-                <View style={styles.viewIniciarSesion}>
-                    <Text style={styles.txtIniciaSesion}>Ya tienes cuenta? </Text>
-                    {/* <Pressable style={[]} onPress={() => props.setLoggedIn(true)}> */}
 
-                    {/* Esta funcion cambia el estado de la constante loginForm en Login.js para cambiar el formulario     */}
+                <View style={styles.viewRegistrarse}>
+                    <Text style={styles.txtRegistrarse}>No tienes cuenta? </Text>
+
+                {/* Esta funcion cambia el estado de la constante loginForm en Login.js para cambiar el formulario     */}
                     <Pressable style={[]} onPress={() => props.changeForm()}>
-                        <Text style={[styles.txtIniciaSesion, styles.iniciarPress]}>Inicia sesión</Text>
+                        <Text style={[styles.txtRegistrarse, styles.iniciarPress]}>Regístrate</Text>
                     </Pressable>
                 </View>
                 
-                {/* <Button style={[styles.input, styles.btnRegister]} onPress={() => props(true)} title="Registrar"/> */}
             </View>
         </View>
     )
@@ -120,7 +119,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
 
     },
-    btnRegister:{
+    btnLogin:{
         alignItems: 'center',
         justifyContent: 'center',
         paddingVertical: 12,
@@ -129,18 +128,18 @@ const styles = StyleSheet.create({
         elevation: 3,
         backgroundColor: 'black',
     },
-    txtBtnRegister:{
+    txtBtnLogin:{
         fontSize: 16,
         lineHeight: 21,
         fontWeight: 'bold',
         letterSpacing: 0.25,
         color: '#fff',
     },
-    txtIniciaSesion:{
+    txtRegistrarse:{
         fontSize: 16,
         color:"#000"
     },
-    viewIniciarSesion:{
+    viewRegistrarse:{
         fontSize: 16,
         flexDirection: "row",
 
