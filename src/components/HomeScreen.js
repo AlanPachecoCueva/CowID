@@ -1,35 +1,11 @@
-// import React from "react";
-// import { View, Text, Image } from "react-native";
-
-// // import QRCode from "react-native-qrcode-svg";
- import qrc from 'qrcode';
-
-
-// export default function HomeScreen() {
-
-
-// const base64img = QRCode.toDataURL('hello world');
-
-
-//   return (
-//     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-//       <Image value={base64img} />
-//     </View>
-//   );
-// }
-
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, TextInput, Button, Image } from "react-native";
 import { useRef, useState } from "react";
-import QRCode from "react-native-qrcode-svg";
-
-
-
+import QRCode from 'react-native-qrcode-svg';
 
 const QR = (props) => {
-  //let svg = useRef(null);
-  let svg;
 
+  const shownSvg = false
 
   const getDataURL = () => {
     svg?.toDataURL(callback);
@@ -37,8 +13,8 @@ const QR = (props) => {
     // console.log(svg["_reactInternals"]["tag"]);
     // console.log("Tipo de datos del svg: "+typeof(svg));
     // qrc.toDataURL(svg, function(err, url){
-    //   console.log("Esta es la url: "+ url);
-    //   props.qrData(url);
+    //  console.log("Esta es la url: "+ url);
+    //  props.qrData(url);
     // });
   };
 
@@ -49,11 +25,11 @@ const QR = (props) => {
   }
 
   return (
-    <>
-      <QRCode size={300} value={`${props.name}`} getRef={(c) => (svg = c)}  />
-
+    <View>
+      { shownSvg ? <QRCode size={300} value={`${props.name}`} getRef={(c) => (svg = c)}  /> : <View></View> }
+      
       <Button onPress={getDataURL} title="Call Funct" color="#1FAAE2" />
-    </>
+    </View>
   );
 };
 export default function HomeScreen() {
