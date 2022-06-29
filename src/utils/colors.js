@@ -7,7 +7,11 @@ export default{
     SECONDARY_COLOR_DARK: "#C7C7C7",
 
     TERTIARY_COLOR:"#000", //Black
-    TERTIARY_COLOR_LIGHT: "#4E4E4E", 
+    TERTIARY_COLOR_LIGHT: "#4E4E4E",
+    
+    QUATERNARY_COLOR:"#271D14", // Dark Brown
+
+    QUINARY_COLOR: "#C88D63",
 
     NAV_BAR_ICON:"#e5d3b3"
     

@@ -9,13 +9,13 @@ import ProfileInfo from "./ProfileInfo";
 import ProfileEdit from "./ProfileEdit";
 
 
-
+//Pagina que contiene las pantallas del apartado de perfil
 const ProfileStack = createNativeStackNavigator();
 
 const ProfileScreen = () => {
     return (
         <NavigationContainer independent={true}>        
-            <ProfileStack.Navigator >
+            <ProfileStack.Navigator screenOptions={{title:"Información"}}>
             <ProfileStack.Screen  name="ProfileInfo" component={ProfileInfo} />
             <ProfileStack.Screen  name="ProfileEdit" component={ProfileEdit} />
         </ProfileStack.Navigator>
