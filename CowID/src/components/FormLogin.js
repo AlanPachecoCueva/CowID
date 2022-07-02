@@ -6,8 +6,7 @@ import LoginScreen from './LoginScreen.js';
 {/*----------Importamos los colores----------*/}
 import Colors from '../utils/colors.js';
 import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword} from 'firebase/auth';
-import {initializeApp} from 'firebase/app';
-import {firebaseConfig} from '../../firebase-config';
+import firebase, {firebaseConfig} from '../utils/firebase';
 
 {/*---------Exportamos el componente---------*/}
 export default function(props){  
@@ -16,16 +15,15 @@ export default function(props){
     const [password,setPassword] = useState('')
     const [nombre,setNombre] = useState('')
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+    const auth = getAuth(firebase);
 
 
     function registerUser(){
         createUserWithEmailAndPassword(auth,email,password)
-        .then(credentials =>{
+        .then(Response =>{
             const user = credentials.user;
             console.log(user.email);
-            props.setLoggedIn(true);
+            props.setLoggedIn(Response);
         })
         .catch(error=>alert(error.message))
     }

@@ -24,7 +24,7 @@ import LoginScreen from './LoginScreen';
 export default function Login(props) {
 
   /*Constante para cambiar entre los formularios registar y login */
-  const[loginForm, setLoginForm] = useState(true);
+  const[loginForm, setLoginForm] = useState(false);
 
   const changeForm =()=> {
     setLoginForm(!loginForm);

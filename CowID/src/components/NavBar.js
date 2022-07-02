@@ -1,22 +1,37 @@
 import React from "react";
 
 // Componentes
-import QRScan from "./ScanQR";
+import QRScan from "./QRScreen";
 import HomeScreen from './HomeScreen';
-import ProfilseScreen from './ProfileScreen';
+import ProfileScreen from './ProfileScreen';
+import CowInfo from "./CowInfo";
 
 import colors from "../utils/colors";
-import {StyleSheet,View, Text} from "react-native";
+import {StyleSheet} from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { shadow } from 'react-native-paper';
 
 const Tab = createBottomTabNavigator();
 
+const Home ={
+  name:"HomeScreen", title:"Home"
+};
+const QR ={name:"QRScreen", title:"QR"
+};
+const Cows = {name:"CowInfo", title:"Vacas"
+};
+const Profile = {name:"Profilecreen", title:"Perfil"
+};
+
+
 export default function NavBar() {
   return (
     <Tab.Navigator
+      initialRouteName= {Home.name}
       tabBarOptions={{
+        activeTintColor:colors.QUINARY_COLOR,
+        inactiveTintColor:colors.INACTIVE_ICON,
         shifting: true,
         style: {
           ...styles.Navbar,
@@ -24,20 +39,20 @@ export default function NavBar() {
       }}
     >
       <Tab.Screen
-        name="Home"
+        name= {Home.name}
         component={HomeScreen}
         options={{
-          tabBarLabel: "Home",
+          tabBarLabel: Home.title,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home" color={color} size={26} />
           ),
         }}
       />
       <Tab.Screen
-        name="QR"
+        name={QR.name}
         component={QRScan}
         options={{
-          tabBarLabel: "QR",
+          tabBarLabel: QR.title,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="qrcode-scan"
@@ -48,10 +63,24 @@ export default function NavBar() {
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={ProfilseScreen}
+        name={Cows.name}
+        component={CowInfo}
         options={{
-          tabBarLabel: "Profile",
+          tabBarLabel: Cows.title,
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="cow"
+              color={color}
+              size={24}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name={Profile.name}
+        component={ProfileScreen}
+        options={{
+          tabBarLabel:Profile.title,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account" color={color} size={26} />
           ),
@@ -64,7 +93,7 @@ export default function NavBar() {
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:'#cf1414',
+        backgroundColor:colors.PRIMARY_COLOR,
         alignItems:'center',
         justifyContent: 'center'
 
@@ -85,8 +114,7 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         marginHorizontal:15,
         elevation:0,
-        backgroundColor:colors.TERTIARY_COLOR,
-        color:colors.NAV_BAR_ICON,
+        backgroundColor:colors.QUATERNARY_COLOR,
         borderRadius:15,
         height:70,
         overflow: 'hidden',

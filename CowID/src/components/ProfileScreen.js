@@ -15,7 +15,9 @@ const ProfileStack = createNativeStackNavigator();
 const ProfileScreen = () => {
     return (
         <NavigationContainer independent={true}>        
-            <ProfileStack.Navigator screenOptions={{title:"Información"}}>
+            <ProfileStack.Navigator 
+            initialRouteName="ProfileInfo"
+            screenOptions={{title:"Mi perfil"}}>
             <ProfileStack.Screen  name="ProfileInfo" component={ProfileInfo} />
             <ProfileStack.Screen  name="ProfileEdit" component={ProfileEdit} />
         </ProfileStack.Navigator>

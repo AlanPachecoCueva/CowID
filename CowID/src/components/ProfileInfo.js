@@ -3,8 +3,12 @@ import React from "react"
 /**Se importa material icons para el boton de editar perfil */
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { SafeAreaView, StyleSheet, Text, View, Button } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View, Image ,TouchableHighlight} from "react-native";
 import colors from "../utils/colors";
+import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
+import {getAuth} from 'firebase/auth';
+/****Firebase*/
+
 
 /*Constantes de prueba para borrar*/
 const DATA = {
@@ -23,11 +27,17 @@ const DATA = {
 
 export default function ProfileInfo({ navigation }) {
 
+    const auth = getAuth();
+
+    function cerrarSesion(){
+        auth.signOut().catch(error=>alert(error.message));
+    }
+
     return (
 
-        <SafeAreaView style={{ backgroundColor: colors.QUATERNARY_COLOR }}>
+        <SafeAreaView style={{backgroundColor: "#ffffff", alignItems: "center" }}>
             {/**Encabezado contiene titulo y boton */}
-            <View style={styles.headerContainer}>
+            {/*<View style={styles.headerContainer}>
                 <View>
                     <Text style={styles.title}>Información de Usuario</Text>
                 </View>
@@ -37,14 +47,17 @@ export default function ProfileInfo({ navigation }) {
                         name="account-edit"
                         backgroundColor={colors.PRIMARY_COLOR}
                         color={"#271d14"}
+                        te
                         size={30}
                         borderRadius={30}
                         margin={5}
                         onPress={() => { navigation.navigate('ProfileEdit') }}
                     />
                 </View>
-            </View>
+            </View>*/}
             {/**Informacion del usuario (pendiente a cambios) */}
+
+            <Image style = {styles.userImg} source={require('../../assets/users/agumon.jpg')}/>
             <View style={styles.infoContainer}>
                 {/**Nombre */}
                 <View style={styles.row}>
@@ -56,7 +69,7 @@ export default function ProfileInfo({ navigation }) {
                 <View style={styles.row}>
                     <Icon name="email"
                         size={35} />
-                    <Text style={styles.textInfo}>Correo: {DATA.user1.mail}</Text>
+                    <Text style={styles.textInfo}>Correo: {auth.currentUser?.email}</Text>
                 </View>
                 {/**Numero de telefono*/}
                 <View style={styles.row}>
@@ -64,7 +77,18 @@ export default function ProfileInfo({ navigation }) {
                         size={35} />
                     <Text style={styles.textInfo}>Teléfono: {DATA.user1.phone}</Text>
                 </View>
+                <Pressable style={styles.buttonContainer} onPress={navigation.navigate('ProfileEdit')}> 
+                    <Icon name="account-edit" color={colors.SECONDARY_COLOR} size={25}/>
+                    <Text style={styles.textButton}>Editar Perfil</Text>
+                </Pressable>
+                <Pressable style={styles.buttonSalir} backgroundColor={colors.QUINARY_COLOR} onPress={cerrarSesion}> 
+                    <Text style={styles.textButton} >Salir</Text> 
+                    <Icon name="logout" color={colors.SECONDARY_COLOR} size={25}/>
+                </Pressable>
+
+                
             </View>
+            
         </SafeAreaView>
 
     )
@@ -93,9 +117,25 @@ const styles = StyleSheet.create({
     },
 
     buttonContainer:{
-        marginTop:"10%"
+        flexDirection: "row",
+        margin:"5%",
+        paddingHorizontal:"10%",
+        paddingVertical:"3%",
+        alignItems: "center",
+        alignSelf:"center",
+        backgroundColor:colors.PRIMARY_COLOR,
+        borderRadius: 25
     },
-
+    buttonSalir:{
+        flexDirection: "row",
+        margin:"5%",
+        paddingHorizontal:"10%",
+        paddingVertical:"3%",
+        alignItems: "center",
+        alignSelf:"center",
+        backgroundColor:colors.QUATERNARY_COLOR,
+        borderRadius: 25
+    },
     row: {
         flexDirection: "row",
         padding: "4%",
@@ -106,12 +146,25 @@ const styles = StyleSheet.create({
         display: "flex",
         marginLeft: 20
     },
+    textButton: {
+        fontSize: 20,
+        display: "flex",
+        paddingRight: 4,
+        color:colors.SECONDARY_COLOR 
+    },
 
     title: {
         fontSize: 30,
         margin: 20,
         color: "#ffffff"
     },
-
+    
+    userImg:{
+        borderRadius: 125,
+        height: 200,
+        width: 200 , 
+        marginTop : 20,
+        shadowOffset: 5,
+    }
 });
 

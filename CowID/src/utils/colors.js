@@ -6,6 +6,9 @@ export default{
     SECONDARY_COLOR:"#fff", //White
     SECONDARY_COLOR_DARK: "#C7C7C7",
 
+    NAV_BAR_BACK:'271d14',
+    INACTIVE_ICON:'#ada7a3',
+
     TERTIARY_COLOR:"#000", //Black
     TERTIARY_COLOR_LIGHT: "#4E4E4E",
     

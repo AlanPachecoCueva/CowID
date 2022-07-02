@@ -1,8 +1,7 @@
 import React, { Component, useState } from 'react';
 import { Pressable, StyleSheet, TextInput, Text, View } from 'react-native';
 import {getAuth,signInWithEmailAndPassword} from 'firebase/auth';
-import {initializeApp} from 'firebase/app';
-import {firebaseConfig} from '../../firebase-config';
+import {firebase} from '../utils/firebase';
 
 {/*----------Importamos los colores----------*/ }
 import Colors from '../utils/colors.js';
@@ -14,22 +13,14 @@ export default function (props) {
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
     const [nombre,setNombre] = useState('')
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-
-    function setUserLoggedIn(user){
-        user = useState(true)
-
-    }
+    const auth = getAuth(firebase);
 
     function logInUser(){
         signInWithEmailAndPassword(auth,email,password)
-        .then(credentials =>{
-            const user = credentials.user;
+        .then(response =>{
+            const user = response.user;
             console.log(user.email);
-            props.setLoggedIn(true);
+            props.setLoggedIn(response);
         })
         .catch(error=>alert(error.message))
     }
