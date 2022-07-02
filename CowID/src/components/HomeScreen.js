@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, TextInput, Button, Image } from "react-native";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import QRCode from 'react-native-qrcode-svg';
 
 const QR = (props) => {
@@ -32,7 +32,20 @@ const QR = (props) => {
     </View>
   );
 };
+
+
+
 export default function HomeScreen() {
+  const loadCows = async () => {
+    const res = await fetch('http://192.168.100.33:3000/vacas');
+    const data = await res.json();
+    console.log(data);
+  }
+
+  useEffect(() => {
+    loadCows();
+  }, []);
+
   const input = useRef<TextInput>(null);
 
   const [qrDataUrl, setQrDataUrl] = useState(null);
@@ -46,9 +59,16 @@ export default function HomeScreen() {
       <QR qrData ={setQrDataUrl} name="Holiiii" style={{display: 'none'}}/>
       <Text>Imagen</Text>
       <Image source={{uri: qrDataUrl}} style={{width:300, height:300}}/>
+
+
+
+
+
     </View>
   );
 }
+
+
 
 const styles = StyleSheet.create({
   container: {
