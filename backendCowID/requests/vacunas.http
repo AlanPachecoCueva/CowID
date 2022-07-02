@@ -1,0 +1,32 @@
+# Para VACUNAS
+
+GET http://localhost:3000/vacunas
+
+###
+GET http://localhost:3000/vacunas/8
+
+###
+GET http://localhost:3000/vacunas/count
+
+###
+POST http://localhost:3000/vacunas/create
+Content-Type: application/json
+
+{
+    "VacaID": 8,
+    "Fecha": "2022/5/20",
+    "NombreVacuna": "AlphaCuna",
+    "Descripcion": "Para"
+}
+
+###
+GET http://localhost:3000/vacunas/delete/1
+
+###
+PUT http://localhost:3000/vacunas/update/8
+Content-Type: application/json
+
+{
+    "NombreVacuna": "Pfizer",
+    "Descripcion": "Contra CowId"
+}
