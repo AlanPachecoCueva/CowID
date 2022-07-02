@@ -4,6 +4,7 @@ import React from "react"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { SafeAreaView, StyleSheet, Text, View, Button } from "react-native";
+import colors from "../utils/colors";
 
 /*Constantes de prueba para borrar*/
 const DATA = {
@@ -24,17 +25,17 @@ export default function ProfileInfo({ navigation }) {
 
     return (
 
-        <SafeAreaView style={{ backgroundColor: '#271d14' }}>
+        <SafeAreaView style={{ backgroundColor: colors.QUATERNARY_COLOR }}>
             {/**Encabezado contiene titulo y boton */}
             <View style={styles.headerContainer}>
                 <View>
                     <Text style={styles.title}>Información de Usuario</Text>
                 </View>
-                <View style={{ marginTop: 30 }}>
+                <View style={styles.buttonContainer}>
 
                     <MaterialCommunityIcons.Button
                         name="account-edit"
-                        backgroundColor="#c88d63"
+                        backgroundColor={colors.PRIMARY_COLOR}
                         color={"#271d14"}
                         size={30}
                         borderRadius={30}
@@ -45,7 +46,7 @@ export default function ProfileInfo({ navigation }) {
             </View>
             {/**Informacion del usuario (pendiente a cambios) */}
             <View style={styles.infoContainer}>
-                 {/**Nombre */}
+                {/**Nombre */}
                 <View style={styles.row}>
                     <Icon name="account"
                         size={35} />
@@ -61,7 +62,7 @@ export default function ProfileInfo({ navigation }) {
                 <View style={styles.row}>
                     <Icon name="phone"
                         size={35} />
-                    <Text style={styles.textInfo}>telefono: {DATA.user1.phone}</Text>
+                    <Text style={styles.textInfo}>Teléfono: {DATA.user1.phone}</Text>
                 </View>
             </View>
         </SafeAreaView>
@@ -71,36 +72,46 @@ export default function ProfileInfo({ navigation }) {
 /**Los colores son : cafe oscuro: #271d14 para el fondo y blanco para los cuadros de texto */
 /**pendiente mejorar el manejo de height y width */
 const styles = StyleSheet.create({
+
+    
     infoContainer: {
         width: "100%",
-        height: "80%",
+        height: "100%",
         backgroundColor: "#ffffff",
-        borderTopRightRadius: 40,
-        borderTopLeftRadius: 40,
-        paddingTop: 40
+        borderTopRightRadius: 30,
+        borderTopLeftRadius: 30,
+        padding: "10%"
     },
 
-    headerContainer: {
 
+    headerContainer: {
         flexDirection: "row",
-        justifyContent: "center",
+        justifyContent:"space-between",
+        alignItems:"center",
+        maxWidth: "90%",
+        height:"20%"
+    },
+
+    buttonContainer:{
+        marginTop:"10%"
     },
 
     row: {
         flexDirection: "row",
-        padding: 20,
+        padding: "4%",
     },
 
     textInfo: {
-        fontSize: 25,
+        fontSize: 20,
         display: "flex",
         marginLeft: 20
     },
 
     title: {
-        fontSize: 40,
+        fontSize: 30,
         margin: 20,
         color: "#ffffff"
-    }
+    },
+
 });
 
