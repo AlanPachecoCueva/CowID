@@ -5,6 +5,7 @@ import QRScan from "./QRScreen";
 import HomeScreen from './HomeScreen';
 import ProfileScreen from './ProfileScreen';
 import CowInfo from "./CowInfo";
+import Statistics from "./Statistics"
 
 import colors from "../utils/colors";
 import {StyleSheet} from "react-native";
@@ -40,7 +41,7 @@ export default function NavBar() {
     >
       <Tab.Screen
         name= {Home.name}
-        component={HomeScreen}
+        component={Statistics}
         options={{
           tabBarLabel: Home.title,
           tabBarIcon: ({ color }) => (

@@ -1,14 +1,17 @@
-import React from "react"
+import React, { useEffect,useState } from "react"
 
 /**Se importa material icons para el boton de editar perfil */
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { SafeAreaView, StyleSheet, Text, View, Image ,TouchableHighlight} from "react-native";
+import { SafeAreaView, StyleSheet, Text, View, Image ,Pressable} from "react-native";
 import colors from "../utils/colors";
-import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import {getAuth} from 'firebase/auth';
+import defaultUsrImage from '../../assets/users/agumon.jpg'
+
+import * as ImagePicker from 'expo-image-picker'
 /****Firebase*/
 
+const defaultImage = require('../../assets/users/agumon.jpg');
 
 /*Constantes de prueba para borrar*/
 const DATA = {
@@ -27,7 +30,18 @@ const DATA = {
 
 export default function ProfileInfo({ navigation }) {
 
+    //Permisos de acceso a la galeria
+    const [hasGalleryPersmission,setHasGalleryPermission] = useState(null);
+    const [profilePic,setProfilePic] = useState(require('../../assets/users/agumon.jpg'));
     const auth = getAuth();
+    const currentUser = auth.currentUser;
+
+    useEffect(()=>{
+        if(currentUser?.photoURL){
+            console.log(profilePic);
+            setProfilePic(currentUser.photoURL);
+        }
+    })
 
     function cerrarSesion(){
         auth.signOut().catch(error=>alert(error.message));
@@ -57,7 +71,7 @@ export default function ProfileInfo({ navigation }) {
             </View>*/}
             {/**Informacion del usuario (pendiente a cambios) */}
 
-            <Image style = {styles.userImg} source={require('../../assets/users/agumon.jpg')}/>
+            <Image style = {styles.userImg} source={profilePic}/>
             <View style={styles.infoContainer}>
                 {/**Nombre */}
                 <View style={styles.row}>
@@ -77,7 +91,7 @@ export default function ProfileInfo({ navigation }) {
                         size={35} />
                     <Text style={styles.textInfo}>Teléfono: {DATA.user1.phone}</Text>
                 </View>
-                <Pressable style={styles.buttonContainer} onPress={navigation.navigate('ProfileEdit')}> 
+                <Pressable style={styles.buttonContainer} onPress={()=>{navigation.navigate('ProfileEdit')}}> 
                     <Icon name="account-edit" color={colors.SECONDARY_COLOR} size={25}/>
                     <Text style={styles.textButton}>Editar Perfil</Text>
                 </Pressable>
