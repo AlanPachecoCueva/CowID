@@ -1,7 +1,7 @@
 //Router me permite definir las rutas de la API para consultar los datos
 import { Router } from 'express';
 
-//Importa el método programado en vacas.js de controllers
+//Importa el método programado en produccion.js de controllers
 import { createProduccion, deleteProduccion, getProduccion, getProducciones, getProduccionesCount, updateProduccion } from '../controllers/produccion';
 
 const router = Router();
@@ -42,7 +42,7 @@ router.get('/producciones/count', getProduccionesCount);
  * /producciones/:id:
  *  get:
  *    summary: Obtiene una producciones por ID
- *    tags: [VaProduccionescas]
+ *    tags: [Producciones]
  */
 router.get('/producciones/:id', getProduccion);
 

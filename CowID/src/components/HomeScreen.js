@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TextInput, Button, Image } from "react-native";
 import { useRef, useState, useEffect } from "react";
 import QRCode from 'react-native-qrcode-svg';
 
+import { getVacas } from '../apiRoutes/apiVaca';
 const QR = (props) => {
 
   const shownSvg = false
@@ -37,9 +38,7 @@ const QR = (props) => {
 
 export default function HomeScreen() {
   const loadCows = async () => {
-    const res = await fetch('http://192.168.100.33:3000/vacas');
-    const data = await res.json();
-    console.log(data);
+    console.log(await getVacas());
   }
 
   useEffect(() => {
