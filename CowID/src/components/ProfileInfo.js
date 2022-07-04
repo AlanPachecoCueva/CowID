@@ -6,12 +6,9 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { SafeAreaView, StyleSheet, Text, View, Image ,Pressable} from "react-native";
 import colors from "../utils/colors";
 import {getAuth} from 'firebase/auth';
-import defaultUsrImage from '../../assets/users/agumon.jpg'
+import {firebase} from '../utils/firebase';
 
-import * as ImagePicker from 'expo-image-picker'
 /****Firebase*/
-
-const defaultImage = require('../../assets/users/agumon.jpg');
 
 /*Constantes de prueba para borrar*/
 const DATA = {
@@ -30,15 +27,13 @@ const DATA = {
 
 export default function ProfileInfo({ navigation }) {
 
-    //Permisos de acceso a la galeria
-    const [hasGalleryPersmission,setHasGalleryPermission] = useState(null);
     const [profilePic,setProfilePic] = useState(require('../../assets/users/agumon.jpg'));
-    const auth = getAuth();
+    const auth = getAuth(firebase);
     const currentUser = auth.currentUser;
 
     useEffect(()=>{
         if(currentUser?.photoURL){
-            console.log(profilePic);
+            console.log(currentUser.photoURL);
             setProfilePic(currentUser.photoURL);
         }
     })
@@ -50,28 +45,7 @@ export default function ProfileInfo({ navigation }) {
     return (
 
         <SafeAreaView style={{backgroundColor: "#ffffff", alignItems: "center" }}>
-            {/**Encabezado contiene titulo y boton */}
-            {/*<View style={styles.headerContainer}>
-                <View>
-                    <Text style={styles.title}>Información de Usuario</Text>
-                </View>
-                <View style={styles.buttonContainer}>
-
-                    <MaterialCommunityIcons.Button
-                        name="account-edit"
-                        backgroundColor={colors.PRIMARY_COLOR}
-                        color={"#271d14"}
-                        te
-                        size={30}
-                        borderRadius={30}
-                        margin={5}
-                        onPress={() => { navigation.navigate('ProfileEdit') }}
-                    />
-                </View>
-            </View>*/}
-            {/**Informacion del usuario (pendiente a cambios) */}
-
-            <Image style = {styles.userImg} source={profilePic}/>
+            <Image style = {styles.userImg} source={{uri:profilePic}}/>
             <View style={styles.infoContainer}>
                 {/**Nombre */}
                 <View style={styles.row}>
@@ -138,7 +112,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         alignSelf:"center",
         backgroundColor:colors.PRIMARY_COLOR,
-        borderRadius: 25
+        borderRadius: 15
     },
     buttonSalir:{
         flexDirection: "row",
@@ -148,7 +122,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         alignSelf:"center",
         backgroundColor:colors.QUATERNARY_COLOR,
-        borderRadius: 25
+        borderRadius: 15
     },
     row: {
         flexDirection: "row",
@@ -178,7 +152,6 @@ const styles = StyleSheet.create({
         height: 200,
         width: 200 , 
         marginTop : 20,
-        shadowOffset: 5,
     }
 });
 
