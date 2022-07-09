@@ -11,7 +11,7 @@ export const getVacas = async () =>{
     const data = await res.json();
     
     //Se imprime en consola
-    console.log(data);
+    //console.log(data);
 
     //Se retorna
     return data;

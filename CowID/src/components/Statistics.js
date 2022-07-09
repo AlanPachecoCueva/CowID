@@ -1,7 +1,7 @@
-import react from "react";
+import react, {useEffect} from "react";
 import { ScrollView, SafeAreaView, StyleSheet, Text, View, Button, Dimensions } from "react-native";
 import Colors from '../utils/colors.js';
-
+import { getVacas } from '../apiRoutes/apiVaca';
 /**Estos comandos permiten instalar las herramientas para el grafico de barras
  * yarn add react-native-chart-kit */
 /**yarn add react-native-svg */
@@ -36,7 +36,13 @@ const granja = {
 //pagina de anadir vaca
 export default function Statistics() {
 
-
+    const loadCows = async () => {
+        console.log(await getVacas());
+      }
+    
+      useEffect(() => {
+        loadCows();
+      }, []);
 
     return (
         <ScrollView style={styles.viewStyle}>

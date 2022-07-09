@@ -37,11 +37,13 @@ const QR = (props) => {
 
 
 export default function HomeScreen() {
+
   const loadCows = async () => {
     console.log(await getVacas());
   }
 
   useEffect(() => {
+    console.log("Hola");
     loadCows();
   }, []);
 
@@ -58,6 +60,7 @@ export default function HomeScreen() {
       <QR qrData ={setQrDataUrl} name="Holiiii" style={{display: 'none'}}/>
       <Text>Imagen</Text>
       <Image source={{uri: qrDataUrl}} style={{width:300, height:300}}/>
+      
 
 
 
