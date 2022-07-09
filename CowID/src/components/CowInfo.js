@@ -4,37 +4,47 @@ import Colors from '../utils/colors.js';
 import { Pressable, SafeAreaView, StyleSheet, Text, View, Button, FlatList, TextInput, ImageBackground, Image } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import DatePicker from 'react-native-date-picker'
 
 
 /**Se importan las pantallas para agregar los litros diarios y los chequeos medicos */
 import Produccion from "./Produccion.js";
 import Veterinaria from "./Veterinaria.js";
 
-import { DatePicker } from 'react-native-date-picker'
 
 /**Constante temporal para borrar incluye los datos de la vaca escaneada */
 const DATA = {
     vaca: {
-        peso: 30,
-        fechaNacimiento: "junio",
-        edad: 12,
-        cantidadPartos: 2,
+        id: 12348,
+        nombre: "lala",
+        peso: 22,
+        fechaNacimiento: "enero",
+        edad: 2,
+        cantidadPartos: 1,
         produciendo: true,
-        ubicacion: "Parcela 1"
+        ubicacion: "Parcela 2"
 
     }
 }
 
 //diferencia el nombre de la vaca de los botones
 //tratamiento en la informacion de la vaca
-export default function CowInfo() {
+export default function CowInfo({ navigation, route }) {
 
-    const [cowScreen, setCowScreen] = useState(2);
+    function dateSelect() {
+        const [date, setDate] = useState(new Date())
+        return <DatePicker date={date} onDateChange={setDate} />
+    }
+
+    const [cowScreen, setCowScreen] = useState(0);
 
     function changeScreen(screenID) {
         setCowScreen(screenID);
     }
 
+    if (route.params !== undefined) {
+        DATA.vaca = route.params
+    }
 
     return (
         <SafeAreaView>
@@ -58,7 +68,7 @@ export default function CowInfo() {
 
                     {/*       Aqui va el nombre e identificador de la vaca       */}
                     <View style={styles.titleContainer}>
-                        <Text style={styles.title}>Lola ID: 25</Text>
+                        <Text style={styles.title}>{DATA.vaca.nombre} {DATA.vaca.id}</Text>
                     </View>
                 </View>
                 <View style={styles.body}>
@@ -115,18 +125,20 @@ export default function CowInfo() {
                 return (
                     <FlatList
                         data={[
-                            { key: 'Peso: ' + DATA.vaca.peso },
-                            { key: 'Edad: ' + DATA.vaca.edad },
+                            { key: 'Peso: ' + DATA.vaca.peso + ' kg' },
+                            { key: 'Edad: ' + DATA.vaca.edad + ' años' },
                             { key: 'Cantidad de partos: ' + DATA.vaca.cantidadPartos },
                             { key: 'Produciendo: ' + (DATA.vaca.cantidadPartos ? "Si" : "No") },
+                            { key: 'Ubicación: ' + DATA.vaca.ubicacion },
 
                         ]}
-                        renderItem={({ item }) => <Text style={{ fontSize: 25, marginTop: "2%", fontFamily: "sans-serif-condensed"
-                    }}>{item.key}</Text>}
+                        renderItem={({ item }) => <Text style={{
+                            fontSize: 25, marginTop: "2%", fontFamily: "sans-serif-condensed"
+                        }}>{item.key}</Text>}
                     />
                 )
 
-                /**Formulario para agregar leche */
+            /**Formulario para agregar leche */
             case 1:
                 return (
                     <Produccion />
@@ -137,17 +149,17 @@ export default function CowInfo() {
                     <Veterinaria setScreen={changeScreen} />
                 )
             case 3:
-                /**Formulario de embarazo para agregar fechas de inseminacion */
+                /**Formulario de gestación para agregar fechas de inseminacion */
                 return (
                     <View>
                         <View style={styles.inputContainer}>
                             <Text style={{ fontFamily: "sans-serif-condensed", fontSize: 20 }}>Fecha de inseminación</Text>
                             <TextInput placeholder="Inseminación" keyboardType="ascii-capable" style={[styles.input]} />
-
+                           
                         </View>
                     </View>
                 )
-                case 4:
+            case 4:
                 /**Formulario de enfermedad */
                 return (
                     <View>
