@@ -128,7 +128,7 @@ export default function CowInfo({ navigation, route }) {
                             { key: 'Peso: ' + DATA.vaca.peso + ' kg' },
                             { key: 'Edad: ' + DATA.vaca.edad + ' años' },
                             { key: 'Cantidad de partos: ' + DATA.vaca.cantidadPartos },
-                            { key: 'Produciendo: ' + (DATA.vaca.cantidadPartos ? "Si" : "No") },
+                            { key: 'Produciendo: ' + DATA.vaca.cantidadPartos ? "Si" : "No" },
                             { key: 'Ubicación: ' + DATA.vaca.ubicacion },
 
                         ]}
@@ -155,7 +155,7 @@ export default function CowInfo({ navigation, route }) {
                         <View style={styles.inputContainer}>
                             <Text style={{ fontFamily: "sans-serif-condensed", fontSize: 20 }}>Fecha de inseminación</Text>
                             <TextInput placeholder="Inseminación" keyboardType="ascii-capable" style={[styles.input]} />
-                           
+
                         </View>
                     </View>
                 )

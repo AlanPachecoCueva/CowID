@@ -1,6 +1,6 @@
 import { TabRouter, useNavigation } from "@react-navigation/native";
 import React, { useState, useEffect } from "react"
-import { ScrollView, feAreaView, StyleSheet, Text, View, TextInput, Image, Pressable } from "react-native";
+import { ScrollView, feAreaView, StyleSheet, Text, View, TextInput, Image, Pressable, Switch } from "react-native";
 
 /**Se importa material icons para el boton de editar perfil */
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -9,20 +9,40 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 //import {getStorage,ref, uploadBytes} from 'firebase/storage';
 import colors from "../utils/colors";
-import CowScreen from "./CowScreen";
-
-
 
 {/* Pantalla para gaurdar los datos de la vaca */ }
-export default function AddCow({ navigation,route}) {
+export default function AddCow({ navigation, route }) {
 
-    const[newId, setNewId] = useState(()=> route.params.data.length)
-    const[name, setName] = useState('')
-    const[weight, setWeight] = useState(0)
-    const[birth, setBirth] = useState(0)
-    const[calving, setCalving] = useState(0)
-    const[produce, setProduce] = useState(false)
-    const[ubication, setUbication] = useState("Parcela 1")
+    console.log(parseInt(route.params.length))
+
+    const [newId, setNewId] = useState(() => route.params.length)
+    const [name, setName] = useState('')
+    const [weight, setWeight] = useState(0)
+    const [birth, setBirth] = useState(0)
+    const [calving, setCalving] = useState(0)
+    const [produce, setProduce] = useState(false)
+    const [ubication, setUbication] = useState("Parcela 1")
+
+    const [isEnabled, setIsEnabled] = useState(false);
+
+    function resetCow() {
+        setNewId(() => route.params.length);
+        setName('');
+        setWeight(0);
+        setBirth('');
+        setCalving(0)
+        setProduce(false);
+        setUbication('')
+    }
+    const toggleSwitch = () => {
+        setIsEnabled(previousState => !previousState);
+        isEnabled ? setProduce(true) : setProduce(false)
+        // if(isEnabled){
+        //     setProduce(true)
+        // } else {
+        //     setProduce(false)
+        // }
+    }
 
     let vaca = {
         id: newId,
@@ -35,25 +55,15 @@ export default function AddCow({ navigation,route}) {
         ubicacion: ubication
     }
 
- 
-    function required(check){
-        if(!check){
-            return(<Text>Campo Requrido</Text>)
-        }
-    }
 
-    if(route.params !== undefined){
-        console.warn(route.params.data.length);   
-        console.log(route.params.data)
-        
-    }
-   
+    // if(route.params !== undefined){
+    //     console.warn(route.params.data.length);   
+    //     console.warn(newId)
+
+    // }
+
     return (
-      
-
         <>
-        
-    
             <ScrollView style={{ backgroundColor: "#ffffff" }}>
                 {/* <View style={styles.formHeader}>
                     <Text style={styles.title}>Completa la información</Text>
@@ -77,41 +87,44 @@ export default function AddCow({ navigation,route}) {
                     {/* Nombre de la vaca */}
                     <View style={styles.inputContainer}>
                         <Text>Nombre de la vaca</Text>
-                        
-                        <TextInput placeholder="Nombre de la vaca" keyboardType="ascii-capable" style={styles.inputText} onChangeText={(val)=>setName(val)}/>
+
+                        <TextInput placeholder="Nombre de la vaca" keyboardType="ascii-capable" style={styles.inputText} onChangeText={(val) => setName(val)} />
                     </View>
 
                     {/* Nacimiento*/}
                     <View style={styles.inputContainer}>
                         <Text>Fecha de nacimiento</Text>
-                        <TextInput placeholder="Fecha de nacimiento" keyboardType="decimal-pad" style={styles.inputText} onChangeText={(val)=>setBirth(val)}/>
+                        <TextInput placeholder="Fecha de nacimiento" keyboardType="decimal-pad" style={styles.inputText} onChangeText={(val) => setBirth(val)} />
                     </View>
 
                     {/*  Peso */}
                     <View style={styles.inputContainer}>
                         <Text>Peso</Text>
-                        <TextInput placeholder="Peso" keyboardType="number-pad" style={styles.inputText} onChangeText={(val)=>setWeight(val)}/>
+                        <TextInput placeholder="Peso" keyboardType="number-pad" style={styles.inputText} onChangeText={(val) => setWeight(val)} />
                     </View>
 
                     {/* partos */}
                     <View style={styles.inputContainer}>
                         <Text>Cantidad de partos</Text>
-                        <TextInput placeholder="Cantidad de partos" keyboardType="decimal-pad" style={styles.inputText} onChangeText={(val)=>setCalving(val)}/>
+                        <TextInput placeholder="Cantidad de partos" keyboardType="decimal-pad" style={styles.inputText} onChangeText={(val) => setCalving(val)} />
                     </View>
 
                     {/* produccion */}
                     <View style={styles.inputContainer}>
                         <Text>¿Está produciendo?</Text>
-                        <TextInput placeholder="Si o no" keyboardType="decimal-pad" style={styles.inputText} onChangeText={(val)=>setProduce(val)}/>
+                        <Switch trackColor={{ false: "#767577", true: "#81b0ff" }}
+                            thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+                            onValueChange={toggleSwitch}
+                            value={isEnabled}></Switch>
                     </View>
 
                     {/* ubicación */}
                     <View style={styles.inputContainer}>
-                        <Text>¿Está produciendo?</Text>
-                        <TextInput placeholder="Si o no" keyboardType="ascii-capable" style={styles.inputText} onChangeText={(val)=>setUbication(val)}/>
+                        <Text>Ubicación</Text>
+                        <TextInput placeholder="Parcelas" keyboardType="ascii-capable" style={styles.inputText} onChangeText={(val) => setUbication(val)} />
                     </View>
 
-                   
+
                     {/* Boton para agregar la vaca */}
                     <View style={styles.buttonContainer}>
                         <MaterialCommunityIcons.Button
@@ -121,10 +134,9 @@ export default function AddCow({ navigation,route}) {
                             size={30}
                             borderRadius={30}
                             margin={5}
-                            onPress={()=>{route.params.data.push(vaca); navigation.navigate('CowScreen')}}
+                            onPress={() => { navigation.goBack(); route.params.push(vaca); }}
                         ><Text style={{ fontSize: 18 }}>Agregar</Text>
                         </MaterialCommunityIcons.Button>
-
                     </View>
 
                 </View>

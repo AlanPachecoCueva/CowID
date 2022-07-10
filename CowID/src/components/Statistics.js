@@ -1,4 +1,4 @@
-import react from "react";
+import react, { useEffect } from "react";
 import { ScrollView, SafeAreaView, StyleSheet, Text, View, Button, Dimensions } from "react-native";
 import Colors from '../utils/colors.js';
 
@@ -12,7 +12,7 @@ import { BarChart } from "react-native-chart-kit";
 /**Se importa material icons para el boton de editar perfil */
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-
+import { getVacas } from "../apiRoutes/apiVaca.js";
 
 
 /**Constante para borrar contiene los datos del grafico de barras  */
@@ -34,8 +34,21 @@ const granja = {
 //cantidad en gestacion
 //cantidad de vacas 
 //pagina de anadir vaca
+
 export default function Statistics() {
 
+
+    const loadCows = async () => {
+        const res = await getVacas();
+        console.log(await getVacas());
+        const aptaP = res[0][0];
+        console.log("APTA: "+aptaP)
+        return res;
+    }
+
+    useEffect(() => {
+        loadCows();
+    }, []);
 
 
     return (

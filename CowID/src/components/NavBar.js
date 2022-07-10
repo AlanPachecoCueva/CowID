@@ -13,9 +13,11 @@ import colors from "../utils/colors";
 import { StyleSheet } from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { shadow } from 'react-native-paper';
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 const Home = {
   name: "HomeScreen", title: "Home"
@@ -35,6 +37,16 @@ const CowCreation = {
 const CowInfoScreen = {
   name: "CowInfo", title: "Info"
 };
+
+function CowHandler() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name={Cows.name} component={CowScreen} />
+      <Stack.Screen name={CowCreation.name} component={AddCow} />
+      <Stack.Screen name={CowInfoScreen.name} component={CowInfo}/>
+    </Stack.Navigator>
+  )
+}
 
 
 export default function NavBar() {
@@ -74,11 +86,10 @@ export default function NavBar() {
           ),
         }}
       />
-      <Tab.Screen
-        name={Cows.name}
-        component={CowScreen}
-        options={{
-          tabBarLabel: Cows.title,
+      <Tab.Screen name="CowHandler"
+        component={CowHandler} 
+          options={{
+          tabBarLabel: CowScreen.title,
           tabBarItemStyle: { color: "#000" },
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
@@ -89,37 +100,8 @@ export default function NavBar() {
           ),
         }}
       />
-      <Tab.Screen
-        name={CowCreation.name}
-        component={AddCow}
-        options={{
-          tabBarVisible: false,
-          tabBarButton: (props) => null,
-        }}
-      />
 
-      <Tab.Screen
-        name={CowInfo.name}
-        component={CowInfo}
-        options={{
-          tabBarVisible: true,
-          tabBarButton: (props) => null,
-        }}
-      />
-      {/* <Tab.Screen
-        name={Cows.name}
-        component={CowInfo}
-        options={{
-          tabBarLabel: Cows.title,
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons
-              name="cow"
-              color={color}
-              size={24}
-            />
-          ),
-        }}
-      /> */}
+
 
       <Tab.Screen
         name={Profile.name}

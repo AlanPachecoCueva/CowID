@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react"
 
 import { NavigationContainer, useRoute, route } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { SafeAreaView, StyleSheet, Text, View, Image, Pressable, FlatList, Touchable, TouchableOpacity } from "react-native";
@@ -10,14 +10,12 @@ import colors from "../utils/colors";
 
 import { getAuth } from 'firebase/auth';
 import { firebase } from '../utils/firebase';
+import { useIsFocused } from '@react-navigation/native';
 
-import AddCow from "./AddCow";
-import CowInfo from "./CowInfo";
 // import CowScreen from "./CowScreen";
 
 /**En esta pagina se listan todas las vacas, ademas se puede agregar nuevas vacas */
 
-const VacasStack = createNativeStackNavigator();
 
 const DATA = [
     {
@@ -27,7 +25,7 @@ const DATA = [
         fechaNacimiento: "junio",
         edad: 12,
         cantidadPartos: 2,
-        produciendo: true,
+        produciendo: false,
         ubicacion: "Parcela 1"
 
     },
@@ -39,17 +37,37 @@ const DATA = [
         fechaNacimiento: "abril",
         edad: 10,
         cantidadPartos: 4,
-        produciendo: false,
+        produciendo: true,
         ubicacion: "Parcela 2"
 
     }
 ]
 
+
+
+
 const CowScreen = ({ navigation, route }) => {
-
-    /**Funcion que detecta si se agrega una vaca o no mediante los params de AgregarVaca.js */
-    console.log(DATA)
-
+    const [upList, setUpList] = useState(false);
+    // React.useEffect(() => {
+    //     const unsubscribe = navigation.addListener('focus', () => {
+    //       setUpList(true);
+    //     });
+    
+    //     // Return the function to unsubscribe from the event so it gets removed on unmount
+    //     return unsubscribe;
+    //   }, [navigation]);
+   
+    // React.useEffect(() => {
+    //     const unsubscribe = navigation.addListener('focus', () => {
+    //       setUpList(true)
+    //     });
+    
+    //     // Return the function to unsubscribe from the event so it gets removed on unmount
+    //     return unsubscribe;
+    //   }, [navigation]);
+    
+    
+    { console.warn(DATA) }
     return (
         <SafeAreaView style={{ backgroundColor: colors.QUATERNARY_COLOR, alignItems: "center" }}>
             {/* <Image style = {styles.userImg} source={{uri:profilePic}}/> */}
@@ -60,6 +78,7 @@ const CowScreen = ({ navigation, route }) => {
                 <FlatList
                     data={DATA}
                     keyExtractor={item => item.id}
+                    extraData={upList}
                     renderItem={({ item, index }) => {
                         return (
                             <View style={styles.cowElement}>
@@ -67,15 +86,15 @@ const CowScreen = ({ navigation, route }) => {
                                 <View style={{ width: "15%", alignContent: "flex-start", padding: "2%" }}>
                                     <TouchableOpacity style={styles.circle}></TouchableOpacity>
                                 </View>
-                                {/* Nombre de la vaca */}
+
                                 <View style={{ width: "45%", flexWrap: "wrap" }}>
                                     <Text style={{ fontSize: 30 }}>{item.nombre}</Text>
                                 </View>
-                                {/* Edad de la vaca */}
+
                                 <View style={{ width: "25%" }}>
                                     <Text style={{ fontSize: 30 }}>{item.edad}</Text>
                                 </View>
-                                {/* Boton para editar la informacion de la vaca */}
+
                                 <View style={{ width: "15%" }}>
                                     <Pressable style={[styles.buttonContainer, { marginRight: "15%" }]} onPress={() => { navigation.navigate("CowInfo", item) }}>
                                         <Icon name="pencil" color={colors.SECONDARY_COLOR} size={25} />
@@ -88,7 +107,7 @@ const CowScreen = ({ navigation, route }) => {
                 />
                 {/* Boton para agregar una vaca a la lista, envia la lista como params */}
                 <View style={{ marginBottom: "60%" }}>
-                    <Pressable style={styles.buttonContainer} onPress={() => { navigation.navigate('AddCow',{data:DATA}) }}>
+                    <Pressable style={styles.buttonContainer} onPress={() => { navigation.navigate('AddCow', DATA) }}>
                         <Icon name="plus" color={colors.SECONDARY_COLOR} size={25} />
                     </Pressable>
                 </View>
