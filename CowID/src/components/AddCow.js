@@ -37,11 +37,7 @@ export default function AddCow({ navigation, route }) {
     const toggleSwitch = () => {
         setIsEnabled(previousState => !previousState);
         isEnabled ? setProduce(true) : setProduce(false)
-        // if(isEnabled){
-        //     setProduce(true)
-        // } else {
-        //     setProduce(false)
-        // }
+    
     }
 
     let vaca = {

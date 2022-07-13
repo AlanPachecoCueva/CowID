@@ -48,24 +48,7 @@ const DATA = [
 
 const CowScreen = ({ navigation, route }) => {
     const [upList, setUpList] = useState(false);
-    // React.useEffect(() => {
-    //     const unsubscribe = navigation.addListener('focus', () => {
-    //       setUpList(true);
-    //     });
-    
-    //     // Return the function to unsubscribe from the event so it gets removed on unmount
-    //     return unsubscribe;
-    //   }, [navigation]);
-   
-    // React.useEffect(() => {
-    //     const unsubscribe = navigation.addListener('focus', () => {
-    //       setUpList(true)
-    //     });
-    
-    //     // Return the function to unsubscribe from the event so it gets removed on unmount
-    //     return unsubscribe;
-    //   }, [navigation]);
-    
+
     
     { console.warn(DATA) }
     return (
