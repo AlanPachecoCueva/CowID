@@ -1,4 +1,4 @@
-import react, {useEffect} from "react";
+import react, {useEffect, useState } from "react";
 import { ScrollView, SafeAreaView, StyleSheet, Text, View, Button, Dimensions } from "react-native";
 import Colors from '../utils/colors.js';
 import { getVacas } from '../apiRoutes/apiVaca';
@@ -36,13 +36,20 @@ const granja = {
 //pagina de anadir vaca
 export default function Statistics() {
 
-    const loadCows = async () => {
-        console.log(await getVacas());
-      }
+    // const[cowList, setCowList] = useState();
+    // const loadCows = async () => {
+    //     //console.log(await getVacas());
+    //     setCowList(await getVacas());
+    //   }
+
+      
     
-      useEffect(() => {
-        loadCows();
-      }, []);
+    //   useEffect(() => {
+    //     loadCows();
+    //   }, []);
+
+    //   console.log(cowList);
+
 
     return (
         <ScrollView style={styles.viewStyle}>

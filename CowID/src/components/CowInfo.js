@@ -1,11 +1,12 @@
 import react from "react";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Colors from '../utils/colors.js';
 import { Pressable, SafeAreaView, StyleSheet, Text, View, Button, FlatList, TextInput, ImageBackground, Image } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import DatePicker from 'react-native-date-picker'
 
+import { getVacas, getVaca } from '../apiRoutes/apiVaca';
 
 /**Se importan las pantallas para agregar los litros diarios y los chequeos medicos */
 import Produccion from "./Produccion.js";
@@ -31,20 +32,41 @@ const DATA = {
 //tratamiento en la informacion de la vaca
 export default function CowInfo({ navigation, route }) {
 
-    function dateSelect() {
-        const [date, setDate] = useState(new Date())
-        return <DatePicker date={date} onDateChange={setDate} />
-    }
-
     const [cowScreen, setCowScreen] = useState(0);
 
     function changeScreen(screenID) {
         setCowScreen(screenID);
     }
 
+    const [cow, setCow] = useState();
+    const [cowId, setCowId] = useState(route.params);
+
+    
+/*
     if (route.params !== undefined) {
-        DATA.vaca = route.params
+        //DATA.vaca = route.params
+        () => setCowId(temporalID);
+       
+    }*/
+
+    const loadCow = async () => {
+
+        const cowI = await getVaca(cowId);
+        () => setCow(cowI);
     }
+
+    useEffect(() => {
+        //setCowId(route.params);
+        console.log(typeof (route.params));
+        console.log("ID: " + cowId);
+        loadCow();
+    }, []);
+
+    //loadCow();
+    console.log(cowId);
+    //console.log(cow.QR);
+
+
 
     return (
         <SafeAreaView>
@@ -68,7 +90,8 @@ export default function CowInfo({ navigation, route }) {
 
                     {/*       Aqui va el nombre e identificador de la vaca       */}
                     <View style={styles.titleContainer}>
-                        <Text style={styles.title}>{DATA.vaca.nombre} {DATA.vaca.id}</Text>
+                        {/* <Text style={styles.title}>{DATA.vaca.nombre} {DATA.vaca.id}</Text> */}
+                        <Text style={styles.title}>Vaca id:{cow.id}</Text>
                     </View>
                 </View>
                 <View style={styles.body}>

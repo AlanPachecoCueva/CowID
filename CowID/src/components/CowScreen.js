@@ -8,7 +8,8 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { SafeAreaView, StyleSheet, Text, View, Image, Pressable, FlatList, Touchable, TouchableOpacity } from "react-native";
 import colors from "../utils/colors";
 
-import { getAuth } from 'firebase/auth';
+import { getVacas, getVaca } from '../apiRoutes/apiVaca';
+import { getAuth, signOut } from 'firebase/auth';
 import { firebase } from '../utils/firebase';
 import { useIsFocused } from '@react-navigation/native';
 
@@ -17,7 +18,7 @@ import { useIsFocused } from '@react-navigation/native';
 /**En esta pagina se listan todas las vacas, ademas se puede agregar nuevas vacas */
 
 
-const DATA = [
+let DATA = [
     {
         id: 12345,
         nombre: "pepa",
@@ -48,18 +49,43 @@ const DATA = [
 
 const CowScreen = ({ navigation, route }) => {
     const [upList, setUpList] = useState(false);
+    const [cowList, setCowList] = useState();
+    const [cowId, setCowId] = useState(8);
+    const [cow, setCow] = useState();
 
-    
-    { console.warn(DATA) }
+    const loadCows = async () => {
+        // console.log(await getVacas());
+        let cowL = await getVacas();
+
+        setCowList(cowL[0]);
+
+    }
+
+    const loadCow = async () => {
+        let cowI = await getVaca(cowId);
+        ()=>setCow(cowI);
+    }
+
+    useEffect(() => {
+        loadCows();
+        loadCow();
+
+    }, []);
+
+    /*console.log(cowList)
+    console.log(cow);*/
+
+    { /*console.warn(DATA)*/ }
     return (
         <SafeAreaView style={{ backgroundColor: colors.QUATERNARY_COLOR, alignItems: "center" }}>
             {/* <Image style = {styles.userImg} source={{uri:profilePic}}/> */}
             <View style={styles.headerContainer}>
                 <Text style={styles.title}>Vacas de mi granja</Text>
             </View>
+
             <View style={styles.infoContainer}>
                 <FlatList
-                    data={DATA}
+                    data={cowList}
                     keyExtractor={item => item.id}
                     extraData={upList}
                     renderItem={({ item, index }) => {
@@ -70,16 +96,15 @@ const CowScreen = ({ navigation, route }) => {
                                     <TouchableOpacity style={styles.circle}></TouchableOpacity>
                                 </View>
 
-                                <View style={{ width: "45%", flexWrap: "wrap" }}>
-                                    <Text style={{ fontSize: 30 }}>{item.nombre}</Text>
-                                </View>
+                                <View style={{ width: "65%", flexWrap: "nowrap", }}>
+                                    <Text style={{ fontSize: 30 }}>id: {item.id}</Text>
 
-                                <View style={{ width: "25%" }}>
-                                    <Text style={{ fontSize: 30 }}>{item.edad}</Text>
+                                    <Text style={{ fontSize: 30 }}>Ubicación: {item.ParcelaUbicacion}</Text>
+                                
                                 </View>
 
                                 <View style={{ width: "15%" }}>
-                                    <Pressable style={[styles.buttonContainer, { marginRight: "15%" }]} onPress={() => { navigation.navigate("CowInfo", item) }}>
+                                    <Pressable style={[styles.buttonContainer, { marginRight: "15%" }]} onPress={() => { navigation.navigate("CowInfo", item.id) }}>
                                         <Icon name="pencil" color={colors.SECONDARY_COLOR} size={25} />
                                     </Pressable>
                                 </View>
