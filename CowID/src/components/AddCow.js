@@ -1,30 +1,43 @@
 import React, { useState, useEffect } from "react"
-import { ScrollView, feAreaView, StyleSheet, 
-    Text, View, TextInput, Button,
-    Image, Pressable, Switch } from "react-native";
+import { ScrollView, StyleSheet, 
+    Text, View, TextInput, Pressable, Switch } from "react-native";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-/**Se importa material icons para el boton de editar perfil */
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-/**Imports para manejo de la imagen */
-
-//import {getStorage,ref, uploadBytes} from 'firebase/storage';
 import colors from "../utils/colors";
 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-{/* Pantalla para gaurdar los datos de la vaca */ }
+/* Metodos de la api*/
+import {saveVaca} from '../apiRoutes/apiVaca'
+
 export default function AddCow({ navigation, route }) {
 
     console.log(parseInt(route.params.length))
+    const[cow,setCow] = useState({
+        peso: 51.0, 
+        fechaNacimiento: '2022/07/16',
+        numeroPartos:3, 
+        qr:'',
+        parcelaUbicacion:'', 
+        edadDestete:7, 
+        aptaParaProduccion:0
+    })
 
-    const [newId, setNewId] = useState(() => route.params.length)
+    const textChange = (type,value) =>{
+        setCow({
+            ...cow,
+            [type]:value,
+        })
+    }
     const [name, setName] = useState('')
     const [weight, setWeight] = useState(0)
     const [birth, setBirth] = useState('2022/07/10')
     const [calving, setCalving] = useState(0)
     const [produce, setProduce] = useState(false)
     const [ubication, setUbication] = useState("Parcela 1")
+
+    
 
     const [isEnabled, setIsEnabled] = useState(false);
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -49,8 +62,12 @@ export default function AddCow({ navigation, route }) {
     };
 
 
+    const saveCow = async (vaca) => {
+        await saveVaca(cow);
+        navigation.goBack();
+    }
+
     function resetCow() {
-        setNewId(() => route.params.length);
         setName('');
         setWeight(0);
         setBirth('');
@@ -63,17 +80,6 @@ export default function AddCow({ navigation, route }) {
         isEnabled ? setProduce(true) : setProduce(false)
     }
 
-    let vaca = {
-        id: newId,
-        nombre: name,
-        peso: weight,
-        fechaNacimiento: birth,
-        edad: birth,
-        cantidadPartos: calving,
-        produciendo: produce,
-        ubicacion: ubication
-    }
-
     return (
         <>
             <ScrollView style={{ backgroundColor: "#ffffff" }}>
@@ -83,14 +89,15 @@ export default function AddCow({ navigation, route }) {
                     isVisible={isDatePickerVisible}
                     mode="date"
                     onConfirm={handleConfirm}
-                    date={new Date(birth)}
+                    date={new Date(cow.FechaNacimiento)}
                     onCancel={hideDatePicker}
                 />
 
                     {/* Nombre de la vaca */}
                     <View style={styles.inputContainer}>
                         <Text>Nombre de la vaca</Text>
-                        <TextInput placeholder="Nombre de la vaca"  keyboardType="ascii-capable" style={styles.inputText} onChangeText={(val) => setName(val)} />
+                        <TextInput placeholder="Nombre de la vaca"  keyboardType="ascii-capable" 
+                        style={styles.inputText} onChangeText={(val) => textChange("Nombre",val)} />
                     </View>
 
                     {/* Nacimiento*/}
@@ -109,13 +116,13 @@ export default function AddCow({ navigation, route }) {
                     {/*  Peso */}
                     <View style={styles.inputContainer}>
                         <Text>Peso</Text>
-                        <TextInput placeholder="Peso"  keyboardType="number-pad" style={styles.inputText} onChangeText={(val) => setWeight(val)} />
+                        <TextInput placeholder="Peso"  keyboardType="number-pad" style={styles.inputText} onChangeText={(val) => textChange("Peso",val)} />
                     </View>
 
                     {/* partos */}
                     <View style={styles.inputContainer}>
                         <Text>Cantidad de partos</Text>
-                        <TextInput placeholder="Cantidad de partos" keyboardType="decimal-pad" style={styles.inputText} onChangeText={(val) => setCalving(val)} />
+                        <TextInput placeholder="Cantidad de partos" keyboardType="decimal-pad" style={styles.inputText} onChangeText={(val) => textChange("NumeroPartos",val)} />
                     </View>
 
                     {/* produccion */}
@@ -130,7 +137,7 @@ export default function AddCow({ navigation, route }) {
                     {/* ubicación */}
                     <View style={styles.inputContainer}>
                         <Text style={styles.inputLabel} >Ubicación</Text>
-                        <TextInput placeholder="Parcelas" keyboardType="ascii-capable" style={styles.inputText} onChangeText={(val) => setUbication(val)} />
+                        <TextInput placeholder="Parcelas" keyboardType="ascii-capable" style={styles.inputText} onChangeText={(val) => textChange("ParcelaUbicacion",val)} />
                     </View>
 
 
@@ -143,7 +150,15 @@ export default function AddCow({ navigation, route }) {
                             size={30}
                             borderRadius={30}
                             margin={5}
-                            onPress={() => { navigation.goBack(); route.params.push(vaca); }}
+                            onPress={() => {saveCow({
+                                Peso: '0.0', 
+                                FechaNacimiento: '2022/07/16',
+                                NumeroPartos:'0', 
+                                QR:'',
+                                ParcelaUbicacion:'', 
+                                EdadDestete:'0', 
+                                AptaParaProduccion:'0'
+                            })}}
                         ><Text style={{ fontSize: 18 }}>Agregar</Text>
                         </MaterialCommunityIcons.Button>
                     </View>
