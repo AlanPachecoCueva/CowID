@@ -32,10 +32,10 @@ export default function ProfileInfo({ navigation }) {
     const currentUser = auth.currentUser;
 
     useEffect(()=>{
-        if(currentUser?.photoURL){
+        /*if(currentUser?.photoURL){
             console.log(currentUser.photoURL);
             setProfilePic(currentUser.photoURL);
-        }
+        }*/
     })
 
     function cerrarSesion(){
@@ -45,7 +45,7 @@ export default function ProfileInfo({ navigation }) {
     return (
 
         <SafeAreaView style={{backgroundColor: "#ffffff", alignItems: "center" }}>
-            <Image style = {styles.userImg} source={{uri:profilePic}}/>
+            <Image style = {styles.userImg} source={require('../../assets/users/agumon.jpg')}/>
             <View style={styles.infoContainer}>
                 {/**Nombre */}
                 <View style={styles.row}>
