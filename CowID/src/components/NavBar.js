@@ -42,7 +42,7 @@ function CowHandler() {
   return (
     <Stack.Navigator>
       <Stack.Screen name={Cows.name} component={CowScreen} />
-      <Stack.Screen name={CowCreation.name} component={AddCow} />
+      <Stack.Screen name={CowCreation.name} component={AddCow} options={{title:"Agregar vaca"}}/>
       <Stack.Screen name={CowInfoScreen.name} component={CowInfo}/>
     </Stack.Navigator>
   )
@@ -86,7 +86,7 @@ export default function NavBar() {
           ),
         }}
       />
-      <Tab.Screen name="CowHandler"
+      <Tab.Screen name="Cows"
         component={CowHandler} 
           options={{
           tabBarLabel: CowScreen.title,

@@ -10,6 +10,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-community/datetimepicker": "6.1.2",
     "@react-navigation/bottom-tabs": "5.x",
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/native-stack": "^6.6.2",
@@ -27,6 +28,7 @@
     "react-native-custom-qr-codes-expo": "^2.2.0",
     "react-native-date-picker": "^4.2.2",
     "react-native-ico-material-design": "^1.5.3",
+    "react-native-modal-datetime-picker": "^13.1.2",
     "react-native-paper": "^4.12.1",
     "react-native-qrcode": "^0.2.7",
     "react-native-qrcode-svg": "^6.1.2",
