@@ -1,4 +1,4 @@
-import react, {useEffect} from "react";
+import react, {useEffect, useState } from "react";
 import { ScrollView, SafeAreaView, StyleSheet, Text, View, Button, Dimensions } from "react-native";
 import Colors from '../utils/colors.js';
 import { getVacas } from '../apiRoutes/apiVaca';
@@ -36,18 +36,20 @@ const granja = {
 //pagina de anadir vaca
 export default function Statistics() {
 
-    const loadCows = async () => {
-        const res = await getVacas();
-        //console.log(await getVacas());
-        const aptaP = res[0][0]["AptaParaProduccion"];
-        console.log("APTA: "+aptaP);
-        return res;
+    // const[cowList, setCowList] = useState();
+    // const loadCows = async () => {
+    //     //console.log(await getVacas());
+    //     setCowList(await getVacas());
+    //   }
 
-    }
+      
     
-    useEffect(() => {
-        loadCows();
-    }, []);
+    //   useEffect(() => {
+    //     loadCows();
+    //   }, []);
+
+    //   console.log(cowList);
+
 
     return (
         <ScrollView style={styles.viewStyle}>
@@ -184,6 +186,10 @@ const styles = StyleSheet.create({
     cardText: {
 
         fontSize: 20
+    }
+    ,
+    viewStyle:{
+        paddingTop:"10%"
     }
 
 })

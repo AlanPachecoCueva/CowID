@@ -34,10 +34,10 @@ export default function ProfileEdit({ navigation }) {
     }*/
 
     useEffect(()=>{
-        if(currentUser?.photoURL){
+        /*if(currentUser?.photoURL){
             console.log(profilePic);
             setProfilePic(currentUser.photoURL);
-        }
+        }*/
     });
 
     useEffect(()=>{
