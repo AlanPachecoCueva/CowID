@@ -37,12 +37,17 @@ const granja = {
 export default function Statistics() {
 
     const loadCows = async () => {
-        console.log(await getVacas());
-      }
+        const res = await getVacas();
+        //console.log(await getVacas());
+        const aptaP = res[0][0]["AptaParaProduccion"];
+        console.log("APTA: "+aptaP);
+        return res;
+
+    }
     
-      useEffect(() => {
+    useEffect(() => {
         loadCows();
-      }, []);
+    }, []);
 
     return (
         <ScrollView style={styles.viewStyle}>
