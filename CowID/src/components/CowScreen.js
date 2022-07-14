@@ -56,7 +56,7 @@ const CowScreen = ({ navigation, route }) => {
     const loadCows = async () => {
         // console.log(await getVacas());
         let cowL = await getVacas();
-
+        console.log(cowL[0])
         setCowList(cowL[0]);
 
     }
@@ -67,10 +67,11 @@ const CowScreen = ({ navigation, route }) => {
     }
 
     useEffect(() => {
-        loadCows();
-        loadCow();
-
-    }, []);
+        const refresh = navigation.addListener('focus', () => {
+            loadCows();
+          });
+          return refresh;
+        }, [navigation]);
 
     /*console.log(cowList)
     console.log(cow);*/

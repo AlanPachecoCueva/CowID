@@ -3,7 +3,6 @@ import { ScrollView, StyleSheet,
     Text, View, TextInput, Pressable, Switch } from "react-native";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import colors from "../utils/colors";
 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -13,7 +12,7 @@ import {saveVaca} from '../apiRoutes/apiVaca'
 
 export default function AddCow({ navigation, route }) {
 
-    console.log(parseInt(route.params.length))
+    const [birthDateAux,setBirthDateAux] = useState('2022/07/16');
     const[cow,setCow] = useState({
         peso: 51.0, 
         fechaNacimiento: '2022/07/16',
@@ -22,7 +21,11 @@ export default function AddCow({ navigation, route }) {
         parcelaUbicacion:'', 
         edadDestete:7, 
         aptaParaProduccion:0
-    })
+    });
+
+    useEffect(() => {
+        setBirthDateAux(cow.fechaNacimiento);
+        }, []);
 
     const textChange = (type,value) =>{
         setCow({
@@ -30,14 +33,6 @@ export default function AddCow({ navigation, route }) {
             [type]:value,
         })
     }
-    const [name, setName] = useState('')
-    const [weight, setWeight] = useState(0)
-    const [birth, setBirth] = useState('2022/07/10')
-    const [calving, setCalving] = useState(0)
-    const [produce, setProduce] = useState(false)
-    const [ubication, setUbication] = useState("Parcela 1")
-
-    
 
     const [isEnabled, setIsEnabled] = useState(false);
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -57,8 +52,9 @@ export default function AddCow({ navigation, route }) {
     }
 
     const handleConfirm = (date) => {
-        setBirth(formatDate(date));
         hideDatePicker();
+        textChange("fechaNacimiento",formatDate(date));
+        setBirthDateAux(formatDate(date));
     };
 
 
@@ -77,92 +73,68 @@ export default function AddCow({ navigation, route }) {
     }
     const toggleSwitch = () => {
         setIsEnabled(previousState => !previousState);
-        isEnabled ? setProduce(true) : setProduce(false)
+        !isEnabled ? textChange("aptaParaProduccion",false) : textChange("aptaParaProduccion",true);
+        console.log(cow.aptaParaProduccion);
     }
 
     return (
         <>
             <ScrollView style={{ backgroundColor: "#ffffff" }}>
                 <View style={styles.formContainer}>
-                
-                <DateTimePickerModal
-                    isVisible={isDatePickerVisible}
-                    mode="date"
-                    onConfirm={handleConfirm}
-                    date={new Date(cow.FechaNacimiento)}
-                    onCancel={hideDatePicker}
-                />
-
-                    {/* Nombre de la vaca */}
-                    <View style={styles.inputContainer}>
-                        <Text>Nombre de la vaca</Text>
-                        <TextInput placeholder="Nombre de la vaca"  keyboardType="ascii-capable" 
-                        style={styles.inputText} onChangeText={(val) => textChange("Nombre",val)} />
-                    </View>
-
+ 
                     {/* Nacimiento*/}
-                    <View style={styles.inputContainer}>
-                        <Text>Fecha de nacimiento</Text>
-                        <View style={styles.inputHorizontalContainer}>
-                            <TextInput placeholder="Seleccione una fecha" editable={true} keyboardType='number-pad'
-                            value={birth}
-                            style={styles.inputText}/>
-                            <Pressable style={styles.buttonSalir} backgroundColor={colors.QUINARY_COLOR} onPress={showDatePicker}> 
-                                <Icon name="calendar" color={colors.SECONDARY_COLOR} size={25}/>
-                            </Pressable>
-                        </View>
+                    <Text style={styles.inputLabel}>Fecha de nacimiento</Text>
+                    <View style={[styles.inputHorizontalContainer,{marginTop:"1%"}]}>
+                        <TextInput placeholder="Seleccione una fecha" editable={true} keyboardType='number-pad'
+                        value={birthDateAux}
+                        style={styles.inputDate}/>
+                        <Pressable style={styles.buttonSalir} backgroundColor={colors.QUINARY_COLOR} onPress={showDatePicker}> 
+                            <Icon name="calendar" color={colors.SECONDARY_COLOR} size={25}/>
+                        </Pressable>
+                        <DateTimePickerModal
+                                isVisible={isDatePickerVisible}
+                                mode="date"
+                                onConfirm={handleConfirm}
+                                date={new Date(cow.fechaNacimiento)}
+                                onCancel={hideDatePicker}
+                        />
                     </View>
 
                     {/*  Peso */}
-                    <View style={styles.inputContainer}>
-                        <Text>Peso</Text>
-                        <TextInput placeholder="Peso"  keyboardType="number-pad" style={styles.inputText} onChangeText={(val) => textChange("Peso",val)} />
-                    </View>
-
+                    <Text style={styles.inputLabel}>Peso</Text>
+                    <TextInput placeholder="Peso"  keyboardType="number-pad" style={styles.inputText} 
+                    onChangeText={(val) => textChange("peso",val)} />
                     {/* partos */}
-                    <View style={styles.inputContainer}>
-                        <Text>Cantidad de partos</Text>
-                        <TextInput placeholder="Cantidad de partos" keyboardType="decimal-pad" style={styles.inputText} onChangeText={(val) => textChange("NumeroPartos",val)} />
-                    </View>
+            
+                    <Text style={styles.inputLabel}>Cantidad de partos</Text>
+                    <TextInput placeholder="Cantidad de partos" keyboardType="decimal-pad" style={styles.inputText}
+                        onChangeText={(val) => textChange("numeroPartos",val)} />
+
+                    {/* ubicación */}
+                    
+                    <Text style={styles.inputLabel} >Ubicación</Text>
+                    <TextInput placeholder="Parcelas" keyboardType="ascii-capable" style={styles.inputText} onChangeText={(val) => textChange("parcelaUbicacion",val)} />
+                    
+                    <Text style={styles.inputLabel}>Edad de destete</Text>
+                    <TextInput placeholder="Edad destete" keyboardType="number-pad" style={styles.inputText}
+                        onChangeText={(val) => textChange("edadDestete",val)} />
 
                     {/* produccion */}
                     <View style={styles.inputHorizontalContainer}>
-                        <Text style={{paddingRight:20}}>¿Está produciendo?</Text>
+                        <Text style={{paddingRight:20,fontSize:20}}>¿Está produciendo?</Text>
                         <Switch trackColor={{ false: "#767577", true: "#c7934e" }}
                             thumbColor={isEnabled ? "#271d14" : "#271d14"}
                             onValueChange={toggleSwitch}
                             value={isEnabled}></Switch>
                     </View>
 
-                    {/* ubicación */}
-                    <View style={styles.inputContainer}>
-                        <Text style={styles.inputLabel} >Ubicación</Text>
-                        <TextInput placeholder="Parcelas" keyboardType="ascii-capable" style={styles.inputText} onChangeText={(val) => textChange("ParcelaUbicacion",val)} />
-                    </View>
-
-
                     {/* Boton para agregar la vaca */}
-                    <View style={styles.buttonContainer}>
-                        <MaterialCommunityIcons.Button
-                            name="plus"
-                            backgroundColor={colors.PRIMARY_COLOR}
-                            color={colors.QUATERNARY_COLOR}
-                            size={30}
-                            borderRadius={30}
-                            margin={5}
-                            onPress={() => {saveCow({
-                                Peso: '0.0', 
-                                FechaNacimiento: '2022/07/16',
-                                NumeroPartos:'0', 
-                                QR:'',
-                                ParcelaUbicacion:'', 
-                                EdadDestete:'0', 
-                                AptaParaProduccion:'0'
-                            })}}
-                        ><Text style={{ fontSize: 18 }}>Agregar</Text>
-                        </MaterialCommunityIcons.Button>
-                    </View>
-
+                    <Pressable style={styles.buttonContainer} backgroundColor={colors.PRIMARY_COLOR} onPress={() => {saveCow(cow)}}> 
+                            <Icon name="plus-box" style={{paddingRight:10}} color={colors.SECONDARY_COLOR} size={25}/>
+                            <Text style={{ fontSize: 18 ,color:colors.SECONDARY_COLOR,fontWeight:"bold"}}>Agregar</Text>
+                    </Pressable>
+                    
+                    
                 </View>
             </ScrollView>
         </>
@@ -174,26 +146,13 @@ export default function AddCow({ navigation, route }) {
 const styles = StyleSheet.create({
 
     formContainer: {
-        paddingHorizontal:20,
+        paddingHorizontal:25,
+        paddingBottom:25,
         alignContent:"center"
     },
-    formHeader: {
-        width: "100%",
-        fontSize: 30,
-        textAlign: "center",
-        color: "#ffffff",
-        marginBottom: 40,
-        marginTop: 40,
-        alignItems: "center"
-    },
-
-    title: {
-        fontSize: 40,
-        fontWeight: "bold"
-    },
-
     inputLabel:{
-        marginTop:"0%"
+        marginTop:"5%",
+        fontSize:17
     },
 
     inputText: {
@@ -206,18 +165,19 @@ const styles = StyleSheet.create({
         borderWidth:1,
         borderColor:colors.QUINARY_COLOR
     },
-    userImg: {
-        borderRadius: 125,
-        height: 200,
-        width: 200,
-        marginTop: 20,
-    },
-    inputContainer: {
-        marginTop: "5%",
+    inputDate: {
         fontSize: 20,
+        paddingVertical:7,
+        paddingLeft:15,
+        paddingRight:30,
+        borderRadius:10,
+        marginTop: "3%",
+        marginBottom:"0%",
+        borderWidth:1,
+        borderColor:colors.QUINARY_COLOR
     },
     inputHorizontalContainer: {
-        marginTop: "2%",
+        marginTop: "5%",
         flexDirection:"row",
         fontSize: 20,
         alignItems: "center",
@@ -226,32 +186,22 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         marginTop: "10%",
         paddingHorizontal: "10%",
-        paddingVertical: "1%",
+        paddingVertical: "3%",
         alignItems: "center",
         alignSelf: "center",
         backgroundColor: colors.PRIMARY_COLOR,
-        borderRadius: 25
+        borderRadius: 15
     },
     buttonSalir:{
         flexDirection: "row",
-        marginLeft:"5%",
+        marginTop:"3%",
+        marginStart:"-5%",
         paddingHorizontal:"3%",
-        paddingVertical:"3%",
-        backgroundColor:colors.QUATERNARY_COLOR,
-        borderRadius: 10
+        paddingVertical:"2.6%",
+        backgroundColor:colors.QUINARY_COLOR,
+        borderBottomLeftRadius:0,
+        borderTopLeftRadius: 0,
+        borderBottomRightRadius:10,
+        borderTopRightRadius: 10
     },
-
-    imageContainer: {
-        flexDirection: "row",
-        alignSelf: "center",
-    },
-    button: {
-        flexDirection: "row",
-        paddingVertical: "1%",
-        paddingLeft: '2.5%',
-        alignSelf: "center",
-        backgroundColor: colors.QUATERNARY_COLOR,
-        borderRadius: 25
-    }
-
 });

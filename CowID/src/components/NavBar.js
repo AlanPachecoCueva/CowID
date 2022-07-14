@@ -86,7 +86,7 @@ export default function NavBar() {
           ),
         }}
       />
-      <Tab.Screen name="Cows"
+      <Tab.Screen name="Vacas"
         component={CowHandler} 
           options={{
           tabBarLabel: CowScreen.title,
