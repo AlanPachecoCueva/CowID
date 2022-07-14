@@ -187,5 +187,9 @@ const styles = StyleSheet.create({
 
         fontSize: 20
     }
+    ,
+    viewStyle:{
+        paddingTop:"10%"
+    }
 
 })
