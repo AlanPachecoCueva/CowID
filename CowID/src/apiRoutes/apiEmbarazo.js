@@ -21,7 +21,8 @@ export const getEmbarazos = async () =>{
 //obtiene el último Embarazo
 export const getLastEmbarazo = async (id) =>{
     const res = await fetch(`${URI}embarazos/ultimo`);
-    return await res.json();
+    var t = await res.text();
+    return t;
 };
 
 

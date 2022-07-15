@@ -44,7 +44,8 @@ export const saveVaca = async (newVaca) =>{
 //obtiene la última vaca
 export const getLastVaca = async (id) =>{
     const res = await fetch(`${URI}vacas/ultima`);
-    return await res.json();
+    var t = await res.text();
+    return t;
 };
 
 //Elimina una vaca

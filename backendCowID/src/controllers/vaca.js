@@ -30,7 +30,8 @@ export const getVacasCount = async (req, res) => {
 export const getLastVaca = async (req, res) => {
     const db = await connect();
     const [rows] = await db.query("SELECT * FROM Vaca ORDER BY id DESC limit 1");
-
+    
+    console.log(rows);
     res.json(rows[0]);
 }
 
