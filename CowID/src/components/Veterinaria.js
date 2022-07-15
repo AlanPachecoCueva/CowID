@@ -19,7 +19,7 @@ export default function Veterinaria(props) {
             </Pressable>
             {/* Cambia a la pantalla de vacuna */}
             <Pressable style={[styles.input, styles.btnLogin]}
-                onPress={() => props.setScreen(5)}>
+                onPress={() => props.setScreen(7)}>
                 <Text style={styles.txtBtnLogin}>Vacuna</Text>
             </Pressable>
         </View>

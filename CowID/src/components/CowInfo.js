@@ -85,6 +85,23 @@ export default function CowInfo({ navigation, route }) {
         id: 1
     }]);
 
+    const [vacunas, setVacunas] = useState([{
+        Descripcion: "",
+        FechaCuracion: "",
+        FechaDeteccion: "",
+        Nombre: "",
+        VacaID: 0,
+        id: 0
+    },
+    {
+        Descripcion: "",
+        FechaCuracion: "",
+        FechaDeteccion: "",
+        Nombre: "",
+        VacaID: 1,
+        id: 1
+    }]);
+
 
     /**Se obtiene la vaca actual de la api */
     const loadCow = async () => {
@@ -144,8 +161,8 @@ export default function CowInfo({ navigation, route }) {
     }
 
     const loadVacunas = async () => {
-        const enfermedadesTmp = await getEnfermedades();
-        setEnfermedades(enfermedadesTmp[0]);
+        const vacunasTmp = await getEnfermedades();
+        setVacunas(vacunasTmp[0]);
         console.log(enfermedades);
     }
 
@@ -169,6 +186,7 @@ export default function CowInfo({ navigation, route }) {
             loadProducciones();
             getProduccion();
             loadEnfermedades();
+            loadVacunas();
         });
         return refresh;
     }, [navigation]);
@@ -339,7 +357,7 @@ export default function CowInfo({ navigation, route }) {
             case 6:
                 /**Lista de enfermedades */
                 return (
-                    <View>
+                    <View style={{ paddingBottom: "40%" }}>
                         <FlatList
                             data={enfermedades}
                             keyExtractor={item => item.id}
@@ -355,6 +373,11 @@ export default function CowInfo({ navigation, route }) {
                             }
                             }
                         />
+
+                        <Pressable style={styles.buttonAddContainer} >
+                            <Icon name="plus" color={colors.SECONDARY_COLOR} size={25} onPress={() => setCowScreen(4)} />
+                        </Pressable>
+
 
                     </View>
                 )
@@ -362,14 +385,14 @@ export default function CowInfo({ navigation, route }) {
             case 7:
                 /**Lista de vacunas */
                 return (
-                    <View>
+                    <View style={{ paddingBottom: "40%" }}>
                         <FlatList
-                            data={enfermedades}
+                            data={vacunas}
                             keyExtractor={item => item.id}
                             renderItem={({ item }) => {
                                 return (
                                     <View style={styles.cowElement}>
-                                        <Text style={{ fontSize: 18 }}>Nombre: {item.Nombre}</Text>
+                                        <Text style={{ fontSize: 18 }}>Nombre vacuna: {item.Nombre}</Text>
                                         <Text style={{ fontSize: 18 }}>Descripcion: {item.Descripcion}</Text>
                                         <Text style={{ fontSize: 18 }}>Fecha de detección: {item.FechaDeteccion}</Text>
                                         <Text style={{ fontSize: 18 }}>Fecha de curación: {item.FechaCuracion}</Text>
@@ -378,7 +401,9 @@ export default function CowInfo({ navigation, route }) {
                             }
                             }
                         />
-
+                        <Pressable style={styles.buttonAddContainer} >
+                            <Icon name="plus" color={colors.SECONDARY_COLOR} size={25} onPress={() => setCowScreen(5)} />
+                        </Pressable>
                     </View>
                 )
 
@@ -496,7 +521,18 @@ const styles = StyleSheet.create({
         marginBottom: "5%",
         backgroundColor: colors.PRIMARY_COLOR,
         borderRadius: 25
-    }
+    },
+
+    buttonAddContainer: {
+        flexDirection: "row",
+        paddingHorizontal: "3%",
+        paddingVertical: "3%",
+        alignItems: "center",
+        alignSelf: "flex-end",
+        backgroundColor: colors.QUATERNARY_COLOR,
+        borderRadius: 15,
+        marginTop: "10%"
+    },
 
 
 })
