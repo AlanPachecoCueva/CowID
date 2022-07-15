@@ -1,71 +1,208 @@
 import react from "react";
 import React, { useState, useEffect } from 'react';
-import Colors from '../utils/colors.js';
+
+import colors from "../utils/colors";
 import { Pressable, SafeAreaView, StyleSheet, Text, View, Button, FlatList, TextInput, ImageBackground, Image } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import DatePicker from 'react-native-date-picker'
 
 import { getVacas, getVaca } from '../apiRoutes/apiVaca';
+import { getProducciones, getProduccion, saveProduccion, updateProduccion, deleteVaca } from "../apiRoutes/apiProduccion.js";
+import { getEnfermedad, getEnfermedades, saveVaca, updateEnfermedad } from "../apiRoutes/apiEnfermedad.js";
+import { getVacuna, deleteVacuna, updateVacuna, getVacunas } from "../apiRoutes/apiVacuna";
 
 /**Se importan las pantallas para agregar los litros diarios y los chequeos medicos */
 import Produccion from "./Produccion.js";
 import Veterinaria from "./Veterinaria.js";
 
 
-/**Constante temporal para borrar incluye los datos de la vaca escaneada */
-const DATA = {
-    vaca: {
-        id: 12348,
-        nombre: "lala",
-        peso: 22,
-        fechaNacimiento: "enero",
-        edad: 2,
-        cantidadPartos: 1,
-        produciendo: true,
-        ubicacion: "Parcela 2"
-
-    }
-}
-
 //diferencia el nombre de la vaca de los botones
 //tratamiento en la informacion de la vaca
 export default function CowInfo({ navigation, route }) {
 
+    /**Constante y funcion para administrar los componentes produccion y veterianaria */
     const [cowScreen, setCowScreen] = useState(0);
 
     function changeScreen(screenID) {
         setCowScreen(screenID);
     }
 
-    const [cow, setCow] = useState();
+    /**Constante que guarda la vaca actual */
+    const [cow, setCow] = useState({
+        peso: 51.0,
+        fechaNacimiento: '2022/07/16',
+        numeroPartos: 3,
+        qr: '',
+        parcelaUbicacion: '',
+        edadDestete: 7,
+        aptaParaProduccion: 0,
+        id: 1
+    });
+
+    const [producciones, setProducciones] = useState([{
+        CantidadManana: 0,
+        CantidadTarde: 0,
+        Fecha: '2022/07/14',
+        VacaID: 50,
+        id: 55
+    },
+    {
+        CantidadManana: 0,
+        CantidadTarde: 0,
+        Fecha: '2022/07/14',
+        VacaID: 51,
+        id: 56
+    }]);
+
+    /**se guarda la produccion de la vaca actual */
+    const [produccion, setProduccion] = useState({
+        CantidadManana: 0,
+        CantidadTarde: 0,
+        Fecha: '2022/07/14',
+        VacaID: 550,
+        id: 551
+    });
+
+
     const [cowId, setCowId] = useState(route.params);
+    const [enfermedad, setEnfermedad] = useState();
+    const [descripcion, setDescripcion] = useState();
+    const [enfermedades, setEnfermedades] = useState([{
+        Descripcion: "",
+        FechaCuracion: "",
+        FechaDeteccion: "",
+        Nombre: "",
+        VacaID: 0,
+        id: 0
+    },
+    {
+        Descripcion: "",
+        FechaCuracion: "",
+        FechaDeteccion: "",
+        Nombre: "",
+        VacaID: 1,
+        id: 1
+    }]);
 
-    
-/*
-    if (route.params !== undefined) {
-        //DATA.vaca = route.params
-        () => setCowId(temporalID);
-       
-    }*/
+    const [vacunas, setVacunas] = useState([{
+        Descripcion: "",
+        FechaCuracion: "",
+        FechaDeteccion: "",
+        Nombre: "",
+        VacaID: 0,
+        id: 0
+    },
+    {
+        Descripcion: "",
+        FechaCuracion: "",
+        FechaDeteccion: "",
+        Nombre: "",
+        VacaID: 1,
+        id: 1
+    }]);
 
+
+    /**Se obtiene la vaca actual de la api */
     const loadCow = async () => {
-
         const cowI = await getVaca(cowId);
-        () => setCow(cowI);
+        setCow(cowI);
     }
 
+    /**Se guardan todas las producciones en la constante producciones */
+    const loadProducciones = async () => {
+        const produccionesTmp = await getProducciones();
+        //setProducciones(produccionesTmp[0]);
+        //console.log(typeof (producciones));
+    }
+
+    //const getProduccion = () => {
+    // producciones.forEach((element, index) => {
+    //      if (element.VacaID === cowId) {
+    //         console.log(element.id);
+    //         console.log("index: "+index)
+    //         setProduccion(element);
+    //     }
+    // });
+    /**Se itera en el arreglo de producciones buscando el de la vaca actual */
+    const getProduccion = () => {
+        // const prodAct = producciones.find(data => data.VacaID === cowId);
+        // setProduccion(prodAct);
+        producciones.forEach((element) => {
+            if (element.VacaID === cowId) {
+                console.log(element.id);
+                setProduccion(element);
+            }
+        })
+    };
+
+    /**Si una vaca no tiene producciones crear una */
+    const nuevaProduccion = async () => {
+        if (produccion === undefined) {
+
+            const newProd = {
+                CantidadManana: 0,
+                CantidadTarde: 0,
+                Fecha: '2022/07/15',
+                VacaID: cowId,
+            }
+            await saveProduccion(newProd);
+            console.log("nuevas: " + producciones);
+        }
+    }
+
+
+
+
+    const loadEnfermedades = async () => {
+        const enfermedadesTmp = await getEnfermedades();
+        setEnfermedades(enfermedadesTmp[0]);
+        console.log(enfermedades);
+    }
+
+    const loadVacunas = async () => {
+        const vacunasTmp = await getEnfermedades();
+        setVacunas(vacunasTmp[0]);
+        console.log(enfermedades);
+    }
+
+    const loadEnfermedad = async () => {
+        const enfermedadTmp = await getEnfermedad(cowId);
+        setEnfermedad(enfermedadTmp);
+        console.log(enfermedad);
+    }
+
+
+    // useEffect(() => {
+    //     //setCowId(route.params);
+    //     console.log(typeof (route.params));
+    //     console.log("ID: " + cowId);
+    //     loadCow();
+    // }, []);
+
     useEffect(() => {
-        //setCowId(route.params);
-        console.log(typeof (route.params));
-        console.log("ID: " + cowId);
-        loadCow();
-    }, []);
+        const refresh = navigation.addListener('focus', () => {
+            loadCow();
+            loadProducciones();
+            getProduccion();
+            loadEnfermedades();
+            loadVacunas();
+        });
+        return refresh;
+    }, [navigation]);
+
+    // const deletProduccion = async () => {
+    //     await deleteVaca(4);
+    // }
+
 
     //loadCow();
-    console.log(cowId);
-    //console.log(cow.QR);
+    // console.log(cowId);
+    // console.log(cow);
+    // console.log(producciones);
+    console.log("*************************************")
 
+    // console.log(produccion);
 
 
     return (
@@ -113,7 +250,7 @@ export default function CowInfo({ navigation, route }) {
                             borderRadius={35}
                             margin={5}
                             height={90}
-                            onPress={() => { changeScreen(1) }}
+                            onPress={() => { changeScreen(1); getProduccion(); loadProducciones() }}
                         ><Text style={{ fontSize: 30, color: "#fff", fontFamily: "sans-serif-condensed" }}>Añadir Litros</Text>
                         </MaterialCommunityIcons.Button>
                     </View>
@@ -148,11 +285,10 @@ export default function CowInfo({ navigation, route }) {
                 return (
                     <FlatList
                         data={[
-                            { key: 'Peso: ' + DATA.vaca.peso + ' kg' },
-                            { key: 'Edad: ' + DATA.vaca.edad + ' años' },
-                            { key: 'Cantidad de partos: ' + DATA.vaca.cantidadPartos },
-                            { key: 'Produciendo: ' + DATA.vaca.cantidadPartos ? "Si" : "No" },
-                            { key: 'Ubicación: ' + DATA.vaca.ubicacion },
+                            { key: 'Peso: ' + cow.Peso + ' kg' },
+                            { key: 'Cantidad de partos: ' + cow.NumeroPartos },
+                            { key: 'Produciendo: ' + cow.AptaParaProduccion },
+                            { key: 'Ubicación: ' + cow.ParcelaUbicacion },
 
                         ]}
                         renderItem={({ item }) => <Text style={{
@@ -164,7 +300,8 @@ export default function CowInfo({ navigation, route }) {
             /**Formulario para agregar leche */
             case 1:
                 return (
-                    <Produccion />
+                    <Produccion produccionHoy={produccion} />
+                    // <Text>Te la creiste we</Text>
                 )
             case 2:
                 /**Formulario para ficha medica */
@@ -188,15 +325,19 @@ export default function CowInfo({ navigation, route }) {
                     <View>
                         <View style={styles.inputContainer}>
                             <Text style={{ fontFamily: "sans-serif-condensed", fontSize: 20 }}>Nombre de la Enfermedad</Text>
-                            <TextInput placeholder="Nombre" keyboardType="ascii-capable" style={[styles.input]} />
+                            <TextInput placeholder="Nombre" keyboardType="ascii-capable" style={[styles.input]} onChangeText={(value) => { setEnfermedad(value) }} />
                         </View>
-
-
 
                         <View style={styles.inputContainer}>
                             <Text style={{ fontFamily: "sans-serif-condensed", fontSize: 20 }}>Descripción</Text>
-                            <TextInput placeholder="Descripcion" keyboardType="ascii-capable" style={[styles.input]} />
+                            <TextInput placeholder="Descripcion" keyboardType="ascii-capable" style={[styles.input]} onChangeText={(value) => { setDescripcion(value) }} />
                         </View>
+
+                        {/* Boton para agregar la vaca */}
+                        <Pressable style={styles.buttonContainer} backgroundColor={colors.PRIMARY_COLOR}>
+                            <Icon name="plus-box" style={{ paddingRight: 10 }} color={colors.SECONDARY_COLOR} size={25} />
+                            <Text style={{ fontSize: 18, color: colors.SECONDARY_COLOR, fontWeight: "bold" }}>Agregar</Text>
+                        </Pressable>
                     </View>
                 )
             case 5:
@@ -207,6 +348,62 @@ export default function CowInfo({ navigation, route }) {
                             <Text style={{ fontFamily: "sans-serif-condensed", fontSize: 20 }}>Nombre de la vacuna</Text>
                             <TextInput placeholder="Vacuna" keyboardType="ascii-capable" style={[styles.input]} />
                         </View>
+                        <Pressable style={styles.buttonContainer}>
+                            <Icon name="plus" color={colors.SECONDARY_COLOR} size={25} />
+                        </Pressable>
+                    </View>
+                )
+
+            case 6:
+                /**Lista de enfermedades */
+                return (
+                    <View style={{ paddingBottom: "40%" }}>
+                        <FlatList
+                            data={enfermedades}
+                            keyExtractor={item => item.id}
+                            renderItem={({ item }) => {
+                                return (
+                                    <View style={styles.cowElement}>
+                                        <Text style={{ fontSize: 18 }}>Nombre: {item.Nombre}</Text>
+                                        <Text style={{ fontSize: 18 }}>Descripcion: {item.Descripcion}</Text>
+                                        <Text style={{ fontSize: 18 }}>Fecha de detección: {item.FechaDeteccion}</Text>
+                                        <Text style={{ fontSize: 18 }}>Fecha de curación: {item.FechaCuracion}</Text>
+                                    </View>
+                                )
+                            }
+                            }
+                        />
+
+                        <Pressable style={styles.buttonAddContainer} >
+                            <Icon name="plus" color={colors.SECONDARY_COLOR} size={25} onPress={() => setCowScreen(4)} />
+                        </Pressable>
+
+
+                    </View>
+                )
+
+            case 7:
+                /**Lista de vacunas */
+                return (
+                    <View style={{ paddingBottom: "40%" }}>
+                        <FlatList
+                            data={vacunas}
+                            keyExtractor={item => item.id}
+                            renderItem={({ item }) => {
+                                return (
+                                    <View style={styles.cowElement}>
+                                        <Text style={{ fontSize: 18 }}>Nombre vacuna: {item.Nombre}</Text>
+                                        <Text style={{ fontSize: 18 }}>Descripcion: {item.Descripcion}</Text>
+                                        <Text style={{ fontSize: 18 }}>Fecha de detección: {item.FechaDeteccion}</Text>
+                                        <Text style={{ fontSize: 18 }}>Fecha de curación: {item.FechaCuracion}</Text>
+                                    </View>
+                                )
+                            }
+                            }
+                        />
+                        <Pressable style={styles.buttonAddContainer} >
+                            <Icon name="plus" color={colors.SECONDARY_COLOR} size={25} onPress={() => setCowScreen(5)} />
+                        </Pressable>
                     </View>
                 )
 
@@ -218,7 +415,7 @@ export default function CowInfo({ navigation, route }) {
 const styles = StyleSheet.create({
 
     content: {
-        backgroundColor: Colors.QUATERNARY_COLOR,
+        backgroundColor: colors.QUATERNARY_COLOR,
         height: "100%",
         width: "100%",
         display: "flex"
@@ -252,7 +449,7 @@ const styles = StyleSheet.create({
     },
 
     titleContainer: {
-        backgroundColor: Colors.QUATERNARY_COLOR,
+        backgroundColor: colors.QUATERNARY_COLOR,
         borderRadius: 5,
         margin: "5%",
         height: "20%",
@@ -275,7 +472,7 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        backgroundColor: Colors.PRIMARY_COLOR,
+        backgroundColor: colors.PRIMARY_COLOR,
         color: "#271d14",
         size: 22,
         borderRadius: 20,
@@ -303,9 +500,39 @@ const styles = StyleSheet.create({
         height: 50,
         backgroundColor: "#fff",
         borderBottomWidth: 1,
-        borderBottomColor: Colors.QUATERNARY_COLOR,
+        borderBottomColor: colors.QUATERNARY_COLOR,
         marginTop: 5,
 
-    }
+    },
+
+    buttonContainer: {
+        flexDirection: "row",
+        marginTop: "10%",
+        paddingHorizontal: "10%",
+        paddingVertical: "3%",
+        alignItems: "center",
+        alignSelf: "center",
+        backgroundColor: colors.PRIMARY_COLOR,
+        borderRadius: 15
+    },
+    cowElement: {
+
+        padding: "4%",
+        marginBottom: "5%",
+        backgroundColor: colors.PRIMARY_COLOR,
+        borderRadius: 25
+    },
+
+    buttonAddContainer: {
+        flexDirection: "row",
+        paddingHorizontal: "3%",
+        paddingVertical: "3%",
+        alignItems: "center",
+        alignSelf: "flex-end",
+        backgroundColor: colors.QUATERNARY_COLOR,
+        borderRadius: 15,
+        marginTop: "10%"
+    },
+
 
 })

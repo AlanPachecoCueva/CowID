@@ -49,7 +49,29 @@ let DATA = [
 
 const CowScreen = ({ navigation, route }) => {
     const [upList, setUpList] = useState(false);
-    const [cowList, setCowList] = useState();
+    const [cowList, setCowList] = useState([{
+        peso: 51.0,
+        fechaNacimiento: '2022/07/16',
+        numeroPartos: 3,
+        qr: '',
+        parcelaUbicacion: '',
+        edadDestete: 7,
+        aptaParaProduccion: 0,
+        id: 1
+    },
+    {
+        peso: 51.0,
+        fechaNacimiento: '2022/07/16',
+        numeroPartos: 3,
+        qr: '',
+        parcelaUbicacion: '',
+        edadDestete: 7,
+        aptaParaProduccion: 1,
+        id: 2
+    }
+    ]
+
+    );
     const [cowId, setCowId] = useState(8);
     const [cow, setCow] = useState();
 
@@ -62,18 +84,21 @@ const CowScreen = ({ navigation, route }) => {
 
     const loadCow = async () => {
         let cowI = await getVaca(cowId);
-        ()=>setCow(cowI);
+        () => setCow(cowI);
     }
 
-    useEffect( () => {
+    useEffect(() => {
 
         //loadCows();
 
-         const refresh = navigation.addListener('focus', () => {
-               loadCows();
-             });
-             return refresh;
-           }, [navigation]);
+        const refresh = navigation.addListener('focus', () => {
+            loadCows();
+        });
+        return refresh;
+    }, [navigation]);
+
+    console.log(cowList);
+    console.log("************************************")
 
     { /*console.warn(DATA)*/ }
     return (
@@ -97,15 +122,15 @@ const CowScreen = ({ navigation, route }) => {
                                 </View>
 
                                 <View style={{ width: "65%", flexWrap: "nowrap", }}>
-                                    <Text style={{ fontSize: 30 }}>id: {item.id}</Text>
+                                    <Text style={{ fontSize: 20 }}>id: {item.id}</Text>
 
-                                    <Text style={{ fontSize: 30 }}>Ubicación: {item.ParcelaUbicacion}</Text>
+                                    <Text style={{ fontSize: 20 }}>Ubicación: {item.ParcelaUbicacion}</Text>
 
                                 </View>
 
                                 <View style={{ width: "15%" }}>
                                     <Pressable style={[styles.buttonContainer, { marginRight: "15%" }]} onPress={() => { navigation.navigate("CowInfo", item.id) }}>
-                                        
+
                                         <Icon name="pencil" color={colors.SECONDARY_COLOR} size={25} />
                                     </Pressable>
                                 </View>
@@ -210,7 +235,7 @@ const styles = StyleSheet.create({
     cowElement: {
         flexDirection: 'row',
         paddingVertical: "3%",
-        marginBottom: "10%",
+        marginBottom: "5%",
         backgroundColor: colors.PRIMARY_COLOR,
         borderRadius: 25
     },
@@ -224,4 +249,3 @@ const styles = StyleSheet.create({
 
     }
 });
-

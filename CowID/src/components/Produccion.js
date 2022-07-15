@@ -3,20 +3,44 @@ import { SafeAreaView, StyleSheet, Text, View, Button, TextInput } from "react-n
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import colors from "../utils/colors";
-
+import { updateProduccion } from "../apiRoutes/apiProduccion.js";
 
 //dos inputs para la manana y la tarde
 //una vez ingresado el input se bloquea la opcion
 //boton para editar
 //anadir la metrica de litros junto al input mas pequeno
-export default function Produccion() {
+export default function Produccion(props) {
 
-    const [editables, setEditable] = useState(true);
+    const [editableManana, setEditableManana] = useState(true);
+    const [editableTarde, setEditableTarde] = useState(true);
 
-    const handleEditable = () => {
-        setEditable(!editables);
+    const [manana, setManana] = useState(props.produccionHoy.CantidadManana);
+    const [tarde, setTarde] = useState(props.produccionHoy.CantidadTarde);
+
+    const handleEditableManana = () => {
+        setEditableManana(!editableManana);
     }
 
+    const handleEditableTarde = () => {
+        setEditableTarde(!editableTarde);
+    }
+    console.log("Se imprime: "+ props.produccionHoy.CantidadManana)
+    let produccionActual = props.produccionHoy;
+
+    // ()=>setManana(produccionActual.CantidadManana);
+    // ()=>setTarde(produccionActual.CantidadTarde);
+
+    const actualizaProduccion = async () => {
+        produccionActual.CantidadManana = manana;
+        produccionActual.CantidadTarde = tarde;
+        console.log(produccionActual);
+        let id = produccionActual.id;
+        await updateProduccion(id, produccionActual);
+
+        //console.log(typeof (producciones));
+    }
+    console.log(manana);
+    console.log(tarde);
 
     return (
         <View style={styles.content}>
@@ -30,7 +54,7 @@ export default function Produccion() {
             <Text style={[styles.textStyle, {marginTop:30}]}>Leche recogida en la mañana</Text>
             <View style={styles.inputContainer}>
                 <View>
-                    <TextInput editable={editables} placeholder="Litros" keyboardType="decimal-pad" b style={[styles.input, styles.textStyle]} />
+                    <TextInput editable={editableManana} placeholder={produccionActual.CantidadManana.toString()} keyboardType="decimal-pad" b style={[styles.input, styles.textStyle]} onChangeText={(value)=>setManana(value)}/>
                 </View>
                 <View>
                     <Text style={[styles.textStyle, { marginLeft: 12, marginRight: 12 }]}>Ltr</Text>
@@ -43,7 +67,7 @@ export default function Produccion() {
                         color={"#271d14"}
                         size={30}
                         borderRadius={30}
-                        onPress={() => { handleEditable() }}
+                        onPress={() => { handleEditableManana(); actualizaProduccion() }}
                     >{/** <Text style={{ fontSize: 18 }}>Guardar</Text>*/}
                     </MaterialCommunityIcons.Button>
                 </View>
@@ -55,7 +79,7 @@ export default function Produccion() {
                         color={"#271d14"}
                         size={30}
                         borderRadius={30}
-                        onPress={() => { handleEditable() }}
+                        onPress={() => { handleEditableManana();}}
                     >{/** <Text style={{ fontSize: 18 }}>Guardar</Text>*/}
                     </MaterialCommunityIcons.Button>
                 </View>
@@ -64,7 +88,7 @@ export default function Produccion() {
             <Text style={[styles.textStyle, {marginTop:30}]}>Leche recogida en la tarde</Text>
             <View style={styles.inputContainer}>
                 <View>
-                    <TextInput editable={editables} placeholder="Litros" keyboardType="decimal-pad" b style={[styles.input, styles.textStyle]} />
+                    <TextInput editable={editableTarde} placeholder={produccionActual.CantidadTarde.toString()} keyboardType="decimal-pad" b style={[styles.input, styles.textStyle] } onChangeText={(value)=>setTarde(value)}/>
                 </View>
                 <View>
                     <Text style={[styles.textStyle, { marginLeft: 12, marginRight: 12 }]}>Ltr</Text>
@@ -77,7 +101,7 @@ export default function Produccion() {
                         color={"#271d14"}
                         size={30}
                         borderRadius={30}
-                        onPress={() => { handleEditable() }}
+                        onPress={() => { handleEditableTarde(); actualizaProduccion() }}
                     >{/** <Text style={{ fontSize: 18 }}>Guardar</Text>*/}
                     </MaterialCommunityIcons.Button>
                 </View>
@@ -89,7 +113,7 @@ export default function Produccion() {
                         color={"#271d14"}
                         size={30}
                         borderRadius={30}
-                        onPress={() => { handleEditable() }}
+                        onPress={() => { handleEditableTarde() }}
                     >{/** <Text style={{ fontSize: 18 }}>Guardar</Text>*/}
                     </MaterialCommunityIcons.Button>
                 </View>
