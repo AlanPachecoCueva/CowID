@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet,
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import colors from "../utils/colors";
-
+import QRCode from 'react-native-qrcode-svg';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 
@@ -60,6 +60,9 @@ export default function AddCow({ navigation, route }) {
 
     
 
+    const [existCow, setExistCow] = useState(false);
+    const [idCow, setIdCow] = useState();
+
     const saveCow = async (vaca) => {
         //Guarda la vaca
         //const res = await saveVaca(cow);
@@ -69,6 +72,10 @@ export default function AddCow({ navigation, route }) {
         var s = lastVaca.split(",");
         var s2 = s[0].split(":");
         console.log("LastVaca: "+s2[1]);
+
+        setIdCow(s2[1]);
+        //console.log("Cow: "+idCow);
+        setExistCow(true);
         
         //navigation.goBack();
     }
@@ -144,6 +151,9 @@ export default function AddCow({ navigation, route }) {
                             <Text style={{ fontSize: 18 ,color:colors.SECONDARY_COLOR,fontWeight:"bold"}}>Agregar</Text>
                     </Pressable>
 
+                    
+                    {/* QR CODE */}
+                    {existCow ? <QRCode value={idCow}codeStyle="square"/>: <></>}
                     
                     
                 </View>
