@@ -18,6 +18,12 @@ export const getTratamientos = async () =>{
 
 };
 
+//obtiene el último tratamiento
+export const getLastTratamiento = async (id) =>{
+    const res = await fetch(`${URI}tratamientos/ultimo`);
+    return await res.json();
+};
+
 //Devuelve un tratamiento
 export const getTratamiento = async (id) =>{
     const res = await fetch(`${URI}tratamientos/${id}`);
