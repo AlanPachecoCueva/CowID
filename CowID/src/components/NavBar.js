@@ -26,7 +26,7 @@ const QR = {
   name: "QRScreen", title: "QR"
 };
 const Cows = {
-  name: "CowScreen", title: "Lista"
+  name: "CowScreen", title: "Lista de vacas"
 };
 const Profile = {
   name: "Profilecreen", title: "Perfil"
@@ -35,15 +35,15 @@ const CowCreation = {
   name: "AddCow", title: "Nueva vaca"
 };
 const CowInfoScreen = {
-  name: "CowInfo", title: "Info"
+  name: "CowInfo", title: "Información"
 };
 
 function CowHandler() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name={Cows.name} component={CowScreen} />
+      <Stack.Screen name={Cows.name} component={CowScreen} options={{title:Cows.title}}/>
       <Stack.Screen name={CowCreation.name} component={AddCow} options={{title:"Agregar vaca"}}/>
-      <Stack.Screen name={CowInfoScreen.name} component={CowInfo}/>
+      <Stack.Screen name={CowInfoScreen.name} component={CowInfo} options={{title:CowInfoScreen.title}}/>
     </Stack.Navigator>
   )
 }

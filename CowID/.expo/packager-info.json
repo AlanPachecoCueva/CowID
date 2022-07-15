@@ -1,10 +1,8 @@
 {
-  "expoServerPort": null,
+  "expoServerNgrokUrl": "https://k6-75e.anonymous.cowid.exp.direct",
+  "packagerNgrokUrl": "https://k6-75e.anonymous.cowid.exp.direct",
+  "ngrokPid": 14708,
   "devToolsPort": 19002,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
-  "webpackServerPort": null
+  "expoServerPort": 19000,
+  "packagerPort": 19000
 }

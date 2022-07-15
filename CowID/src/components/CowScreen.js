@@ -56,7 +56,7 @@ const CowScreen = ({ navigation, route }) => {
     const loadCows = async () => {
         // console.log(await getVacas());
         let cowL = await getVacas();
-        console.log(cowL[0])
+        //console.log(cowL[0])
         setCowList(cowL[0]);
 
     }
@@ -98,9 +98,9 @@ const CowScreen = ({ navigation, route }) => {
                                 </View>
 
                                 <View style={{ width: "65%", flexWrap: "nowrap", }}>
-                                    <Text style={{ fontSize: 30 }}>id: {item.id}</Text>
+                                    <Text style={{ fontSize: 20 }}>id: {item.id}</Text>
 
-                                    <Text style={{ fontSize: 30 }}>Ubicación: {item.ParcelaUbicacion}</Text>
+                                    <Text style={{ fontSize: 20 }}>Ubicación: {item.ParcelaUbicacion}</Text>
                                 
                                 </View>
 
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     cowElement: {
         flexDirection: 'row',
         paddingVertical: "3%",
-        marginBottom: "10%",
+        marginBottom: "5%",
         backgroundColor: colors.PRIMARY_COLOR,
         borderRadius: 25
     },
