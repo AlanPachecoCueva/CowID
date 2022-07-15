@@ -18,6 +18,13 @@ export const getTratamiento = async (req, res) => {
     res.json(rows[0]);
 }
 
+export const getLastTratamiento = async (req, res) => {
+    const db = await connect();
+    const [rows] = await db.query("SELECT * FROM Tratamiento ORDER BY id DESC limit 1");
+
+    res.json(rows[0]);
+}
+
 export const getTratamientosCount = async (req, res) => {
     const db = await connect();
     const [rows] = await db.query("SELECT COUNT(*) FROM Tratamiento");

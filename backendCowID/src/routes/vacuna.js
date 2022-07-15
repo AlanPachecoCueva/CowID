@@ -2,7 +2,7 @@
 import { Router } from 'express';
 
 //Importa el método programado en vacunas.js de controllers
-import { createVacuna, deleteVacuna, getVacuna, getVacunas, getVacunasCount, updateVacuna } from '../controllers/vacuna';
+import { createVacuna, getLastVacuna, deleteVacuna, getVacuna, getVacunas, getVacunasCount, updateVacuna } from '../controllers/vacuna';
 
 const router = Router();
 
@@ -35,6 +35,16 @@ router.get('/vacunas', getVacunas);
  *    tags: [Vacunas]
  */
 router.get('/vacunas/count', getVacunasCount);
+
+//Devuelve la última vacuna
+/**
+ * @swagger
+ * /vacunas/ultima:
+ *  get:
+ *    summary: Devuelve la última vacuna ingresada
+ *    tags: [Vacunas]
+ */
+ router.get('/vacunas/ultima', getLastVacuna);
 
 //Obtiene una vacunas por id
 /**

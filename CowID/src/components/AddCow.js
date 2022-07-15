@@ -59,7 +59,9 @@ export default function AddCow({ navigation, route }) {
 
 
     const saveCow = async (vaca) => {
-        await saveVaca(cow);
+        const res = await saveVaca(cow);
+
+        console.log("res: "+res[0]+" eeee");
         navigation.goBack();
     }
 

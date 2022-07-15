@@ -2,7 +2,7 @@
 import { Router } from 'express';
 
 //Importa el método programado en vacas.js de controllers
-import { createVaca, deleteVaca, getVaca, getVacas, getVacasCount, updateVaca } from '../controllers/vaca';
+import { createVaca, deleteVaca, getLastVaca, getVaca, getVacas, getVacasCount, updateVaca } from '../controllers/vaca';
 
 const router = Router();
 
@@ -35,6 +35,16 @@ router.get('/vacas', getVacas);
  *    tags: [Vacas]
  */
 router.get('/vacas/count', getVacasCount);
+
+//Devuelve la última vaca
+/**
+ * @swagger
+ * /vacas/ultima:
+ *  get:
+ *    summary: Devuelve la última vaca ingresada
+ *    tags: [Vacas]
+ */
+ router.get('/vacas/ultima', getLastVaca);
 
 //Obtiene una vacas por id
 /**

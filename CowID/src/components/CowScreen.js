@@ -54,9 +54,8 @@ const CowScreen = ({ navigation, route }) => {
     const [cow, setCow] = useState();
 
     const loadCows = async () => {
-        // console.log(await getVacas());
+
         let cowL = await getVacas();
-        console.log(cowL[0])
         setCowList(cowL[0]);
 
     }
@@ -66,15 +65,15 @@ const CowScreen = ({ navigation, route }) => {
         ()=>setCow(cowI);
     }
 
-    useEffect(() => {
-        const refresh = navigation.addListener('focus', () => {
-            loadCows();
-          });
-          return refresh;
-        }, [navigation]);
+    useEffect( () => {
 
-    /*console.log(cowList)
-    console.log(cow);*/
+        //loadCows();
+
+         const refresh = navigation.addListener('focus', () => {
+               loadCows();
+             });
+             return refresh;
+           }, [navigation]);
 
     { /*console.warn(DATA)*/ }
     return (
@@ -101,11 +100,12 @@ const CowScreen = ({ navigation, route }) => {
                                     <Text style={{ fontSize: 30 }}>id: {item.id}</Text>
 
                                     <Text style={{ fontSize: 30 }}>Ubicación: {item.ParcelaUbicacion}</Text>
-                                
+
                                 </View>
 
                                 <View style={{ width: "15%" }}>
                                     <Pressable style={[styles.buttonContainer, { marginRight: "15%" }]} onPress={() => { navigation.navigate("CowInfo", item.id) }}>
+                                        
                                         <Icon name="pencil" color={colors.SECONDARY_COLOR} size={25} />
                                     </Pressable>
                                 </View>

@@ -2,7 +2,7 @@
 import { Router } from 'express';
 
 //Importa el método programado en embarazo.js de controllers
-import { createEmbarazo, deleteEmbarazo, getEmbarazo, getEmbarazos, getEmbarazosCount, updateEmbarazo } from '../controllers/embarazo';
+import { createEmbarazo, deleteEmbarazo, getEmbarazo, getEmbarazos, getEmbarazosCount, getLastEmbarazo, updateEmbarazo } from '../controllers/embarazo';
 
 const router = Router();
 
@@ -35,6 +35,18 @@ router.get('/embarazos', getEmbarazos);
  *    tags: [Embarazos]
  */
 router.get('/embarazos/count', getEmbarazosCount);
+
+
+//Devuelve la última vaca
+/**
+ * @swagger
+ * /embarazos/ultimo:
+ *  get:
+ *    summary: Devuelve el último embarazo ingresada
+ *    tags: [Embarazos]
+ */
+ router.get('/embarazos/ultimo', getLastEmbarazo);
+
 
 //Obtiene un embarazos por id
 /**

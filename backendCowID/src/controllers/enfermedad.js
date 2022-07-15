@@ -18,6 +18,13 @@ export const getEnfermedad = async (req, res) => {
     res.json(rows[0]);
 }
 
+export const getLastEnfermedad = async (req, res) => {
+    const db = await connect();
+    const [rows] = await db.query("SELECT * FROM Enfermedad ORDER BY id DESC limit 1");
+
+    res.json(rows[0]);
+}
+
 export const getEnfermedadesCount = async (req, res) => {
     const db = await connect();
     const [rows] = await db.query("SELECT COUNT(*) FROM Enfermedad");
