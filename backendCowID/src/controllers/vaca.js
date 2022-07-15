@@ -27,6 +27,14 @@ export const getVacasCount = async (req, res) => {
     res.json(rows[0]["COUNT(*)"]);
 }
 
+export const getLastVaca = async (req, res) => {
+    const db = await connect();
+    const [rows] = await db.query("SELECT * FROM Vaca ORDER BY id DESC limit 1");
+    
+    console.log(rows);
+    res.json(rows[0]);
+}
+
 export const createVaca = async (req, res) => {
     const db = await connect();
     const [results] = await db.query("INSERT INTO Vaca(Peso, FechaNacimiento, NumeroPartos, QR,"+ 
@@ -40,6 +48,8 @@ export const createVaca = async (req, res) => {
         });
 
         /*El "..." selecciona todo lo del req.body */
+        console.log({results});
+
 
     res.json({
         id : results.insertId,

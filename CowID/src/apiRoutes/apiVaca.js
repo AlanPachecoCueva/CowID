@@ -18,6 +18,11 @@ export const getVacas = async () =>{
 
 };
 
+export const getVacasCount = async () => {
+    const res = await fetch(`${URI}vacas/count`);
+    return await res.json();
+}
+
 //Devuelve una Vaca
 export const getVaca = async (id) =>{
     const res = await fetch(`${URI}vacas/${id}`);
@@ -34,6 +39,13 @@ export const saveVaca = async (newVaca) =>{
     });
 
     return await res.json();
+};
+
+//obtiene la última vaca
+export const getLastVaca = async (id) =>{
+    const res = await fetch(`${URI}vacas/ultima`);
+    var t = await res.text();
+    return t;
 };
 
 //Elimina una vaca

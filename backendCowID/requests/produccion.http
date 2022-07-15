@@ -4,6 +4,9 @@
 GET http://localhost:3000/producciones
 
 ###
+#LastProduccion
+GET http://localhost:3000/producciones/ultima
+###
 
 #Get Produccion por id
 GET http://localhost:3000/producciones/1

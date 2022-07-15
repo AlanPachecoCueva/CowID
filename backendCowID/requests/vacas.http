@@ -2,7 +2,9 @@
 
 #GET todas las vacas
 GET http://localhost:3000/vacas
-
+###
+#LastVaca
+GET http://localhost:3000/vacas/ultima
 ###
 
 #Get Vaca por id

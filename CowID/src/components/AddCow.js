@@ -7,8 +7,9 @@ import colors from "../utils/colors";
 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
+
 /* Metodos de la api*/
-import {saveVaca} from '../apiRoutes/apiVaca'
+import {getLastVaca, saveVaca} from '../apiRoutes/apiVaca'
 
 export default function AddCow({ navigation, route }) {
 
@@ -27,7 +28,7 @@ export default function AddCow({ navigation, route }) {
         setBirthDateAux(cow.fechaNacimiento);
         }, []);
 
-    const textChange = (type,value) =>{
+        const textChange = (type,value) =>{
         setCow({
             ...cow,
             [type]:value,
@@ -57,10 +58,19 @@ export default function AddCow({ navigation, route }) {
         setBirthDateAux(formatDate(date));
     };
 
+    
 
     const saveCow = async (vaca) => {
-        await saveVaca(cow);
-        navigation.goBack();
+        //Guarda la vaca
+        //const res = await saveVaca(cow);
+        
+        //Recupera el id de la vaca generada
+        const lastVaca = await getLastVaca();
+        var s = lastVaca.split(",");
+        var s2 = s[0].split(":");
+        console.log("LastVaca: "+s2[1]);
+        
+        //navigation.goBack();
     }
 
     function resetCow() {
@@ -133,6 +143,7 @@ export default function AddCow({ navigation, route }) {
                             <Icon name="plus-box" style={{paddingRight:10}} color={colors.SECONDARY_COLOR} size={25}/>
                             <Text style={{ fontSize: 18 ,color:colors.SECONDARY_COLOR,fontWeight:"bold"}}>Agregar</Text>
                     </Pressable>
+
                     
                     
                 </View>

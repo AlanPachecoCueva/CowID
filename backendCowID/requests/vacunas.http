@@ -1,6 +1,9 @@
 # Para VACUNAS
 
 GET http://localhost:3000/vacunas
+###
+#LastVacuna
+GET http://localhost:3000/vacunas/ultima
 
 ###
 GET http://localhost:3000/vacunas/8

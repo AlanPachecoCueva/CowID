@@ -18,6 +18,13 @@ export const getProducciones = async () =>{
 
 };
 
+//obtiene la última producción
+export const getLastProduccion = async (id) =>{
+    const res = await fetch(`${URI}producciones/ultima`);
+    var t = await res.text();
+    return t;
+};
+
 //Devuelve una producción
 export const getProduccion = async (id) =>{
     const res = await fetch(`${URI}producciones/${id}`);

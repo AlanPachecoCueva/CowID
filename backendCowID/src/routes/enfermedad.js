@@ -2,7 +2,7 @@
 import { Router } from 'express';
 
 //Importa el método programado en enfermedad.js de controllers
-import { createEnfermedad, deleteEnfermedad, getEnfermedad, getEnfermedades, getEnfermedadesCount, updateEnfermedad } from '../controllers/Enfermedad';
+import { createEnfermedad, deleteEnfermedad, getEnfermedad, getEnfermedades, getEnfermedadesCount, getLastEnfermedad, updateEnfermedad } from '../controllers/Enfermedad';
 
 const router = Router();
 
@@ -36,6 +36,18 @@ router.get('/enfermedades', getEnfermedades);
  */
 router.get('/enfermedades/count', getEnfermedadesCount);
 
+
+//Devuelve la última enfermedad
+/**
+ * @swagger
+ * /enfermedades/ultima:
+ *  get:
+ *    summary: Devuelve la última vaca ingresada
+ *    tags: [Enfermedades]
+ */
+ router.get('/enfermedades/ultima', getLastEnfermedad);
+
+ 
 //Obtiene una enfermedades por id
 /**
  * @swagger

@@ -2,7 +2,7 @@
 import { Router } from 'express';
 
 //Importa el método programado en tratamiento.js de controllers
-import { createTratamiento, deleteTratamiento, getTratamiento, getTratamientos, getTratamientosCount, updateTratamiento } from '../controllers/tratamiento';
+import { createTratamiento, deleteTratamiento, getLastTratamiento, getTratamiento, getTratamientos, getTratamientosCount, updateTratamiento } from '../controllers/tratamiento';
 
 const router = Router();
 
@@ -25,6 +25,16 @@ const router = Router();
  *    tags: [Tratamientos]
  */
 router.get('/tratamientos', getTratamientos);
+
+//Devuelve la última vaca
+/**
+ * @swagger
+ * //tratamientos/ultimo:
+ *  get:
+ *    summary: Devuelve el último tratamiento ingresada
+ *    tags: [Tratamientos]
+ */
+ router.get('/tratamientos/ultimo', getLastTratamiento);
 
 //Cuenta la cantidad de tratamientos
 /**

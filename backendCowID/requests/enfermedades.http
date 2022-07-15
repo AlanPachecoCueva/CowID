@@ -3,6 +3,9 @@
 GET http://localhost:3000/enfermedades
 
 ###
+#Lastenfermedad
+GET http://localhost:3000/enfermedades/ultima
+###
 GET http://localhost:3000/enfermedades/1
 
 ###

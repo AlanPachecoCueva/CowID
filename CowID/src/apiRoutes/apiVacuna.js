@@ -18,6 +18,13 @@ export const getVacunas = async () =>{
 
 };
 
+//obtiene la última vacuna
+export const getLastVacuna = async (id) =>{
+    const res = await fetch(`${URI}vacunas/ultima`);
+    var t = await res.text();
+    return t;
+};
+
 //Devuelve una Vacuna
 export const getVacuna = async (id) =>{
     const res = await fetch(`${URI}vacunas/${id}`);

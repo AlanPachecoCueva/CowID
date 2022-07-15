@@ -2,7 +2,7 @@
 import { Router } from 'express';
 
 //Importa el método programado en produccion.js de controllers
-import { createProduccion, deleteProduccion, getProduccion, getProducciones, getProduccionesCount, updateProduccion } from '../controllers/produccion';
+import { createProduccion, deleteProduccion, getLastProduccion, getProduccion, getProducciones, getProduccionesCount, updateProduccion } from '../controllers/produccion';
 
 const router = Router();
 
@@ -35,6 +35,15 @@ router.get('/producciones', getProducciones);
  *    tags: [Producciones]
  */
 router.get('/producciones/count', getProduccionesCount);
+produccion
+/**
+ * @swagger
+ * /producciones/ultima:
+ *  get:
+ *    summary: Devuelve la última producción diaria ingresada
+ *    tags: [Producciones]
+ */
+ router.get('/producciones/ultima', getLastProduccion);
 
 //Obtiene una produccion por id
 /**

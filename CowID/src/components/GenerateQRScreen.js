@@ -13,12 +13,7 @@ export default function GenerateQrScreen(){
             </Image>
             <Text>Hi</Text>
         </View>
-        
-            
-
     );
-    
-
 }
 
 

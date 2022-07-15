@@ -3,6 +3,9 @@
 GET http://localhost:3000/embarazos
 
 ###
+#Last embarazos
+GET http://localhost:3000/embarazos/ultimo
+###
 GET http://localhost:3000/embarazos/1
 
 ###

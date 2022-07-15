@@ -54,9 +54,8 @@ const CowScreen = ({ navigation, route }) => {
     const [cow, setCow] = useState();
 
     const loadCows = async () => {
-        // console.log(await getVacas());
+
         let cowL = await getVacas();
-        //console.log(cowL[0])
         setCowList(cowL[0]);
 
     }
@@ -66,15 +65,15 @@ const CowScreen = ({ navigation, route }) => {
         ()=>setCow(cowI);
     }
 
-    useEffect(() => {
-        const refresh = navigation.addListener('focus', () => {
-            loadCows();
-          });
-          return refresh;
-        }, [navigation]);
+    useEffect( () => {
 
-    /*console.log(cowList)
-    console.log(cow);*/
+        //loadCows();
+
+         const refresh = navigation.addListener('focus', () => {
+               loadCows();
+             });
+             return refresh;
+           }, [navigation]);
 
     { /*console.warn(DATA)*/ }
     return (
@@ -98,14 +97,15 @@ const CowScreen = ({ navigation, route }) => {
                                 </View>
 
                                 <View style={{ width: "65%", flexWrap: "nowrap", }}>
-                                    <Text style={{ fontSize: 20 }}>id: {item.id}</Text>
+                                    <Text style={{ fontSize: 30 }}>id: {item.id}</Text>
 
-                                    <Text style={{ fontSize: 20 }}>Ubicación: {item.ParcelaUbicacion}</Text>
-                                
+                                    <Text style={{ fontSize: 30 }}>Ubicación: {item.ParcelaUbicacion}</Text>
+
                                 </View>
 
                                 <View style={{ width: "15%" }}>
                                     <Pressable style={[styles.buttonContainer, { marginRight: "15%" }]} onPress={() => { navigation.navigate("CowInfo", item.id) }}>
+                                        
                                         <Icon name="pencil" color={colors.SECONDARY_COLOR} size={25} />
                                     </Pressable>
                                 </View>
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     cowElement: {
         flexDirection: 'row',
         paddingVertical: "3%",
-        marginBottom: "5%",
+        marginBottom: "10%",
         backgroundColor: colors.PRIMARY_COLOR,
         borderRadius: 25
     },
@@ -224,4 +224,3 @@ const styles = StyleSheet.create({
 
     }
 });
-

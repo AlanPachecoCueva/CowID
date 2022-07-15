@@ -18,6 +18,13 @@ export const getEnfermedades = async () =>{
 
 };
 
+//obtiene la última enfermedad
+export const getLastEnfermedades = async (id) =>{
+    const res = await fetch(`${URI}enfermedades/ultima`);
+    var t = await res.text();
+    return t;
+};
+
 //Devuelve una enfermedad
 export const getEnfermedad = async (id) =>{
     const res = await fetch(`${URI}enfermedades/${id}`);
