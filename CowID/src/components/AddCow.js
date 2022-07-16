@@ -139,7 +139,7 @@ export default function AddCow({ navigation, route }) {
         var s = lastVaca.split(",");
         var s2 = s[0].split(":");
 
-        console.log("LastVaca: "+s2[1]);
+        //console.log("LastVaca: "+s2[1]);
         setQr(true);
         setIdCow(s2[1]);
         setExistCow(true);
@@ -288,7 +288,7 @@ export default function AddCow({ navigation, route }) {
                </View>
 
                <TouchableOpacity style={styles.buttonContainer} onPress={downloadImage}>
-                  <Text style={{fontSize: 18, color:colors.SECONDARY_COLOR, fontWeight:"bold"}}>Guardar</Text>
+                  <Text style={{fontSize: 18, color:colors.SECONDARY_COLOR, fontWeight:"bold"}}>Descargar</Text>
                 </TouchableOpacity>
                </View>
              : 
