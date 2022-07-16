@@ -14,9 +14,6 @@ export default function Produccion(props) {
     const [editableManana, setEditableManana] = useState(true);
     const [editableTarde, setEditableTarde] = useState(true);
 
-    const [manana, setManana] = useState(props.produccionHoy.CantidadManana);
-    const [tarde, setTarde] = useState(props.produccionHoy.CantidadTarde);
-
     const handleEditableManana = () => {
         setEditableManana(!editableManana);
     }
@@ -24,37 +21,43 @@ export default function Produccion(props) {
     const handleEditableTarde = () => {
         setEditableTarde(!editableTarde);
     }
-    console.log("Se imprime: "+ props.produccionHoy.CantidadManana)
+
+
+    const [manana, setManana] = useState(props.produccionHoy.CantidadManana);
+    const [tarde, setTarde] = useState(props.produccionHoy.CantidadTarde);
+
+    console.log("Se imprime: " + props.produccionHoy.CantidadManana);
+
+
     let produccionActual = props.produccionHoy;
-
-    // ()=>setManana(produccionActual.CantidadManana);
-    // ()=>setTarde(produccionActual.CantidadTarde);
-
     const actualizaProduccion = async () => {
+        console.log("******************");
         produccionActual.CantidadManana = manana;
         produccionActual.CantidadTarde = tarde;
         console.log(produccionActual);
+        ()=>setProduccion({
+            CantidadManana:manana,
+            CantidadTarde:tarde,
+            Fecha:props.Fecha,
+            VacaID:props.VacaID
+        })
         let id = produccionActual.id;
+        console.log(id);
+        console.log(produccionActual);
         await updateProduccion(id, produccionActual);
 
-        //console.log(typeof (producciones));
     }
-    console.log(manana);
-    console.log(tarde);
-
+ 
     return (
         <View style={styles.content}>
             <View>
-
                 <Text style={styles.textStyle}>Ingrese la cantidad de leche en litros</Text>
 
-
-
             </View>
-            <Text style={[styles.textStyle, {marginTop:30}]}>Leche recogida en la mañana</Text>
+            <Text style={[styles.textStyle, { marginTop: 30 }]}>Leche recogida en la mañana</Text>
             <View style={styles.inputContainer}>
                 <View>
-                    <TextInput editable={editableManana} placeholder={produccionActual.CantidadManana.toString()} keyboardType="decimal-pad" b style={[styles.input, styles.textStyle]} onChangeText={(value)=>setManana(value)}/>
+                    <TextInput editable={editableManana} placeholder={produccionActual.CantidadManana.toString()} keyboardType="decimal-pad" b style={[styles.input, styles.textStyle]} onChangeText={(value) => setManana(value)} />
                 </View>
                 <View>
                     <Text style={[styles.textStyle, { marginLeft: 12, marginRight: 12 }]}>Ltr</Text>
@@ -79,16 +82,16 @@ export default function Produccion(props) {
                         color={"#271d14"}
                         size={30}
                         borderRadius={30}
-                        onPress={() => { handleEditableManana();}}
+                        onPress={() => { handleEditableManana(); }}
                     >{/** <Text style={{ fontSize: 18 }}>Guardar</Text>*/}
                     </MaterialCommunityIcons.Button>
                 </View>
             </View>
 
-            <Text style={[styles.textStyle, {marginTop:30}]}>Leche recogida en la tarde</Text>
+            <Text style={[styles.textStyle, { marginTop: 30 }]}>Leche recogida en la tarde</Text>
             <View style={styles.inputContainer}>
                 <View>
-                    <TextInput editable={editableTarde} placeholder={produccionActual.CantidadTarde.toString()} keyboardType="decimal-pad" b style={[styles.input, styles.textStyle] } onChangeText={(value)=>setTarde(value)}/>
+                    <TextInput editable={editableTarde} placeholder={produccionActual.CantidadTarde.toString()} keyboardType="decimal-pad" b style={[styles.input, styles.textStyle]} onChangeText={(value) => setTarde(value)} />
                 </View>
                 <View>
                     <Text style={[styles.textStyle, { marginLeft: 12, marginRight: 12 }]}>Ltr</Text>
