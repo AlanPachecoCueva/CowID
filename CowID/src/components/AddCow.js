@@ -10,9 +10,7 @@ import QRCode from 'react-native-qrcode-svg';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import {captureRef} from 'react-native-view-shot';
 
-import * as Permissions from 'expo-permissions';
 import * as MediaLibrary from 'expo-media-library'
-import CameraRoll from "@react-native-community/cameraroll"
 /* Metodos de la api*/
 import {getLastVaca, saveVaca} from '../apiRoutes/apiVaca';
 
@@ -21,6 +19,7 @@ export default function AddCow({ navigation, route }) {
 
 
     const componentRef = useRef();
+
     const [birthDateAux,setBirthDateAux] = useState('2022/07/16');
     const[cow,setCow] = useState({
         peso: 51.0, 
@@ -103,9 +102,7 @@ export default function AddCow({ navigation, route }) {
     
     // download image
   const downloadImage = async () => {
-    console.log("ENTRAAA");
     try {
-      // react-native-view-shot caputures component
       const uri = await captureRef(componentRef, {
         format: 'png',
         quality: 1,
@@ -135,17 +132,16 @@ export default function AddCow({ navigation, route }) {
   };
     const saveCow = async (vaca) => {
         //Guarda la vaca
-        //console.log("Entra");
-        //const res = await saveVaca(vaca);
+        const res = await saveVaca(vaca);
         
         //Recupera el id de la vaca generada
         const lastVaca = await getLastVaca();
         var s = lastVaca.split(",");
         var s2 = s[0].split(":");
+
         console.log("LastVaca: "+s2[1]);
         setQr(true);
         setIdCow(s2[1]);
-        //console.log("Cow: "+idCow);
         setExistCow(true);
         
         //navigation.goBack();
@@ -276,20 +272,27 @@ export default function AddCow({ navigation, route }) {
             </Pressable>
 
             {/* QR CODE */}
-            {/* {existCow ? 
-              <> */}
-              <View collapsable={false} style={styles.qrStyle} ref={componentRef} >
-              <QRCode size="1500" value={idCow} style={styles.qrStqryle} codeStyle="square" /> 
-                
-                </View>                  
+            {existCow ? 
+              <>
+              <View style={styles.qrStyle}>
+                <Text style={styles.textQr}>Descarga tu código QR!</Text>
+                <View collapsable={false} style={styles.viewQr} ref={componentRef} >
+
+                  <QRCode style={styles.qr} value={idCow} codeStyle="square" /> 
+
+                </View>   
+
+              </View>
+                               
                 
                 <TouchableOpacity onPress={downloadImage}>
                   <Text>Save</Text>
                 </TouchableOpacity>
-              {/* </>
+
+               </>
              : 
               <></>
-            } */}
+            }
           </View>
         </ScrollView>
       </>
@@ -300,12 +303,23 @@ export default function AddCow({ navigation, route }) {
 /**pendiente mejorar el manejo de height y width */
 const styles = StyleSheet.create({
     qrStyle:{
-        backgroundColor:"red",
-        height:300,
-        alignContent:"center"
+        marginTop:"20%",
+        justifyContent:"space-between",
+        //marginLeft:"35%",
+        padding:0
+    },
+    viewQr:{
+      padding:0,
+      margin:0
     },
     qr:{
-        
+      padding:0,
+      backgroundColor:"#fff",
+    },
+    textQr:{
+        fontWeight:"bold",
+        marginLeft:"-10%",
+        marginBottom:"10%"
     },
     formContainer: {
         paddingHorizontal:25,
