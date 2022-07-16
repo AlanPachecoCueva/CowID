@@ -28,7 +28,7 @@ export default function (props) {
     return (
         <View style = {styles.viewForm}>
             <Text style={[styles.slogan, styles.titulo]}>COWID</Text>
-            <Text style={styles.slogan}>el lugar perfecto para dejar tu leche</Text>
+            {/* <Text style={styles.slogan}>el lugar perfecto para dejar tu leche</Text> */}
 
             <View style={styles.viewInputs}>
                 

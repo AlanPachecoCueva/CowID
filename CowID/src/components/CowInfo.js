@@ -9,7 +9,7 @@ import DatePicker from 'react-native-date-picker'
 
 import { getVacas, getVaca } from '../apiRoutes/apiVaca';
 import { getProducciones, getProduccion, saveProduccion, updateProduccion, deleteVaca } from "../apiRoutes/apiProduccion.js";
-import { getEnfermedad, getEnfermedades, saveVaca, updateEnfermedad } from "../apiRoutes/apiEnfermedad.js";
+import { getEnfermedad, getEnfermedades, saveVaca, updateEnfermedad, getLastEnfermedades } from "../apiRoutes/apiEnfermedad.js";
 import { getVacuna, deleteVacuna, updateVacuna, getVacunas } from "../apiRoutes/apiVacuna";
 
 /**Se importan las pantallas para agregar los litros diarios y los chequeos medicos */
@@ -141,8 +141,8 @@ export default function CowInfo({ navigation, route }) {
         if (produccion === undefined) {
 
             const newProd = {
-                CantidadManana: 0,
-                CantidadTarde: 0,
+                CantidadManana: 15,
+                CantidadTarde: 15,
                 Fecha: '2022/07/15',
                 VacaID: cowId,
             }
@@ -151,7 +151,24 @@ export default function CowInfo({ navigation, route }) {
         }
     }
 
+    const nuevaEnfermedad = async () => {
+        // const lastEnfermedad = await getLastEnfermedades();
+        // var s = lastEnfermedad.split(",");
+        // var s2 = s[0].split(":");
+        // console.log("LastEnfermedad: "+s2[1]);
 
+        const newEnfermedad = {
+            Descripcion: descripcion,
+            FechaCuracion: '2022/07/15',
+            FechaDeteccion: '2022/07/10',
+            Nombre: enfermedad,
+            VacaID: cowId,
+        }
+        console.log(newEnfermedad);
+        await saveVaca(newEnfermedad);
+        setScreen(6);
+        loadEnfermedades();
+    }
 
 
     const loadEnfermedades = async () => {
@@ -161,9 +178,10 @@ export default function CowInfo({ navigation, route }) {
     }
 
     const loadVacunas = async () => {
-        const vacunasTmp = await getEnfermedades();
-        setVacunas(vacunasTmp[0]);
-        console.log(enfermedades);
+        const vacunasTmp = await getVacunas();
+        console.log(vacunasTmp);
+        //setVacunas(vacunasTmp[0]);
+        //console.log(vacunas);
     }
 
     const loadEnfermedad = async () => {
@@ -185,7 +203,7 @@ export default function CowInfo({ navigation, route }) {
             loadCow();
             loadProducciones();
             getProduccion();
-            loadEnfermedades();
+           // loadEnfermedades();
             loadVacunas();
         });
         return refresh;
@@ -233,9 +251,9 @@ export default function CowInfo({ navigation, route }) {
                 </View>
                 <View style={styles.body}>
                     {/* La funcion screen contiene el switch que evalua la pagina a mostrar (litros diarios, chequeo medico , informacion) */}
-                    <View>
-                        {screen()}
-                    </View>
+
+                    {screen()}
+
                 </View>
                 {/* Botones con posicion abssoluta para ingresar leche o ingresar ficha medica */}
                 <View style={styles.buttonsContainer}>
@@ -267,7 +285,7 @@ export default function CowInfo({ navigation, route }) {
                             margin={5}
 
                             height={90}
-                            onPress={() => { changeScreen(2) }}
+                            onPress={() => { changeScreen(2); loadEnfermedades(); nuevaProduccion() }}
                         ><Text style={{ fontSize: 30, color: "#fff", fontFamily: "sans-serif-condensed" }}>Ficha médica</Text>
                         </MaterialCommunityIcons.Button>
                     </View>
@@ -334,7 +352,7 @@ export default function CowInfo({ navigation, route }) {
                         </View>
 
                         {/* Boton para agregar la vaca */}
-                        <Pressable style={styles.buttonContainer} backgroundColor={colors.PRIMARY_COLOR}>
+                        <Pressable style={styles.buttonContainer} backgroundColor={colors.PRIMARY_COLOR} onPress={() => { nuevaEnfermedad() }} >
                             <Icon name="plus-box" style={{ paddingRight: 10 }} color={colors.SECONDARY_COLOR} size={25} />
                             <Text style={{ fontSize: 18, color: colors.SECONDARY_COLOR, fontWeight: "bold" }}>Agregar</Text>
                         </Pressable>
@@ -357,19 +375,24 @@ export default function CowInfo({ navigation, route }) {
             case 6:
                 /**Lista de enfermedades */
                 return (
-                    <View style={{ paddingBottom: "40%" }}>
+                    <View style={{ paddingBottom: "20%" }}>
                         <FlatList
                             data={enfermedades}
                             keyExtractor={item => item.id}
+                            extraData={enfermedades}
                             renderItem={({ item }) => {
-                                return (
-                                    <View style={styles.cowElement}>
-                                        <Text style={{ fontSize: 18 }}>Nombre: {item.Nombre}</Text>
-                                        <Text style={{ fontSize: 18 }}>Descripcion: {item.Descripcion}</Text>
-                                        <Text style={{ fontSize: 18 }}>Fecha de detección: {item.FechaDeteccion}</Text>
-                                        <Text style={{ fontSize: 18 }}>Fecha de curación: {item.FechaCuracion}</Text>
-                                    </View>
-                                )
+                                
+                                if (item.VacaID === cowId) {
+                                    return (
+                                        <View style={styles.cowElement}>
+                                            <Text style={{ fontSize: 18 }}>Nombre: {item.Nombre}</Text>
+                                            <Text style={{ fontSize: 18 }}>Descripcion: {item.Descripcion}</Text>
+                                            <Text style={{ fontSize: 18 }}>Fecha de detección: {item.FechaDeteccion}</Text>
+                                            <Text style={{ fontSize: 18 }}>Fecha de curación: {item.FechaCuracion}</Text>
+                                        </View>
+                                    )
+                                }
+
                             }
                             }
                         />
