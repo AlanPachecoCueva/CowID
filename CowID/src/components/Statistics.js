@@ -1,7 +1,7 @@
 import react, {useEffect, useState } from "react";
 import { ScrollView, SafeAreaView, StyleSheet, Text, View, Button, Dimensions } from "react-native";
 import Colors from '../utils/colors.js';
-import { getVacas } from '../apiRoutes/apiVaca';
+import { getProducciones } from '../apiRoutes/apiProduccion';
 /**Estos comandos permiten instalar las herramientas para el grafico de barras
  * yarn add react-native-chart-kit */
 /**yarn add react-native-svg */
@@ -34,8 +34,50 @@ const granja = {
 //cantidad en gestacion
 //cantidad de vacas 
 //pagina de anadir vaca
-export default function Statistics() {
+export default function Statistics(navigation) {
 
+    const[datosProduccion,setDatosProduccion] = useState({
+        Lunes: 0,
+        Martes: 0,
+        Miercoles: 0,
+        Jueves: 0,
+        Viernes: 0,
+        Sabado: 0,
+        Domingo: 0
+    });
+
+    const[totalDiario,seTotalDiario] = useState(0);
+    const[vacasOrdenadas,setVacasOrdenadas] = useState(0);
+    const cargarDatos = async () => {
+        let produccion = await getProducciones();
+        produccion = produccion[0];
+        //console.log(cowL.Fecha);
+        var hoy = new Date();
+        hoy.setHours(0,0,0,0)
+        //console.log("hoy: "+hoy.toISOString());
+        setVacasOrdenadas(0);
+        produccion.forEach(dato => {
+            var date = new Date(dato.Fecha);
+            date.setHours(0,0,0,0);
+            //console.log("dato: "+date.toISOString());
+            console.log(date.toISOString()===hoy.toISOString());
+            if(date.toISOString()===hoy.toISOString()){
+                seTotalDiario(totalDiario+dato.CantidadManana + dato.CantidadTarde);
+                setVacasOrdenadas(vacasOrdenadas+1);
+            }
+        });
+        console.log(totalDiario);
+    }
+
+    useEffect(() => {
+
+        //loadCows();
+        cargarDatos()
+        /*const refresh = navigation.addListener('focus', () => {
+            cargarDatos();
+        });
+        return refresh;*/
+    }, []);
     // const[cowList, setCowList] = useState();
     // const loadCows = async () => {
     //     //console.log(await getVacas());
@@ -60,8 +102,8 @@ export default function Statistics() {
 
                     {/* Tarjetas para mostrar informacion importante */}
                     <View style={styles.infoCards}>
-                        <View style={styles.card}><Text style={styles.textStyle}>Litros producidos este día: 100</Text></View>
-                        <View style={styles.card}><Text style={styles.textStyle}>Cantidad de vacas ordeñadas: 20</Text></View>
+                        <View style={styles.card}><Text style={styles.textStyle}>Litros producidos este día: {totalDiario}</Text></View>
+                        <View style={styles.card}><Text style={styles.textStyle}>Cantidad de vacas ordeñadas:{vacasOrdenadas}</Text></View>
                     </View>
                 </View>
                 {/* Contenedor del grafico de barras y las tarjetas con informacion importante */}
@@ -76,13 +118,12 @@ export default function Statistics() {
                                         labels: ["LUN", "MAR", "MIE", "JUE", "VIE", "SAB", "DOM"],
                                         datasets: [
                                             {
-                                                data: [granja.datos.produccionLunes,
-                                                granja.datos.produccionMartes,
-                                                granja.datos.produccionMiercoles,
-                                                granja.datos.produccionJueves,
-                                                granja.datos.produccionViernes,
-                                                granja.datos.produccionSabado,
-                                                granja.datos.produccionDomingo]
+                                                data: [
+                                                datosProduccion.Lunes,
+                                                datosProduccion.Martes,
+                                                datosProduccion.Miercoles,
+                                                datosProduccion.Jueves,
+                                                datosProduccion.Viernes]
                                             }
                                         ]
                                     }}
