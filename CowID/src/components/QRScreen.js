@@ -2,7 +2,7 @@ import {View, Text, Button,StyleSheet} from 'react-native';
 import React ,{useState, useEffect}from 'react';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
-export default function QRScan() {
+export default function QRScan({navigation}) {
 
     const [hasPermission, setHasPermission] = useState(null) 
     const [scanned,setScanned]  = useState(false)
@@ -31,12 +31,14 @@ export default function QRScan() {
     const handleQrScanned = ({type, data}) =>{
         setScanned(true);
         setCowID(data);
-        alert(`Bar code with type ${type} and data ${data}  has been scanned!`);
-    }
+        alert('Vaca encontrada',`Vaca #${data}`);
+        navigation.navigate("CowInfo", data);
+    };
 
-    const hola = () =>{
-        'hola'
-    }
+    const resetQR = () =>{
+        setScanned(false);
+        alert('Escanear de nuevo','Ahora puedes volver a escanear un código');
+    };
     
     
 
@@ -63,12 +65,11 @@ export default function QRScan() {
 
             <View style={styles.barcodebox}>
                 <BarCodeScanner
-                    onBarCodeScanned={scanned ? hola : handleQrScanned}
+                    onBarCodeScanned={scanned ? undefined : handleQrScanned}
                     style={{height:400, width:400}}
                 />
             </View>
-            <Button title={'Escanear de nuevo'}
-            onPress={() => setScanned(false)} color='black'/>
+            <Button title={'Escanear de nuevo'} onPress={() => resetQR()} color='black'/>
         </View>
     );
 

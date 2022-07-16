@@ -49,6 +49,15 @@ function CowHandler() {
 }
 
 
+function QRHandler() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name={QR.name} component={QRScan} options={{title:QR.title}}/>
+      <Stack.Screen name={CowInfoScreen.name} component={CowInfo} options={{title:CowInfoScreen.title}}/>
+    </Stack.Navigator>
+  )
+}
+
 export default function NavBar() {
   return (
     <Tab.Navigator
@@ -73,8 +82,8 @@ export default function NavBar() {
         }}
       />
       <Tab.Screen
-        name={QR.name}
-        component={QRScan}
+        name={"QR"}
+        component={QRHandler}
         options={{
           tabBarLabel: QR.title,
           tabBarIcon: ({ color }) => (
