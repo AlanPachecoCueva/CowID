@@ -1,6 +1,7 @@
-import {View, Text, Button,StyleSheet} from 'react-native';
+import {View, Text, Button,StyleSheet,Pressable} from 'react-native';
 import React ,{useState, useEffect}from 'react';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import colors from "../utils/colors";
 
 export default function QRScan({navigation}) {
 
@@ -69,7 +70,17 @@ export default function QRScan({navigation}) {
                     style={{height:400, width:400}}
                 />
             </View>
-            <Button title={'Escanear de nuevo'} onPress={() => resetQR()} color='black'/>
+            <Pressable
+              style={styles.buttonContainer}
+              backgroundColor={colors.PRIMARY_COLOR}
+              onPress={() => resetQR()}
+            >
+                <Text style={{
+                  fontSize: 18,
+                  color: colors.SECONDARY_COLOR,
+                  fontWeight: "bold",
+                }}>Escanear de nuevo</Text>
+            </Pressable>
         </View>
     );
 
@@ -84,6 +95,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
       },
+      buttonContainer: {
+        flexDirection: "row",
+        marginTop: "10%",
+        paddingHorizontal: "10%",
+        paddingVertical: "3%",
+        alignItems: "center",
+        alignSelf: "center",
+        backgroundColor: colors.PRIMARY_COLOR,
+        borderRadius: 15
+    },
     maintext: {
         fontSize: 16,
         margin: 20,
@@ -96,7 +117,8 @@ const styles = StyleSheet.create({
         width: 300,
         overflow: 'hidden',
         borderRadius: 30,
-        backgroundColor: 'tomato'
+        backgroundColor: 'tomato',
+        marginBottom:30
     }
     
 });
