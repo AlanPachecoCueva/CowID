@@ -273,23 +273,24 @@ export default function AddCow({ navigation, route }) {
 
             {/* QR CODE */}
             {existCow ? 
-              <>
+            <View style={styles.contenedorMayor}>
+              <View style={styles.qrContenedor}>
+              <Text style={styles.textQr}>Descarga tu código QR!</Text>
               <View style={styles.qrStyle}>
-                <Text style={styles.textQr}>Descarga tu código QR!</Text>
-                <View collapsable={false} style={styles.viewQr} ref={componentRef} >
+                
+                <View collapsable={false}  style={{backgroundColor:"white"}} ref={componentRef} >
 
                   <QRCode style={styles.qr} value={idCow} codeStyle="square" /> 
 
                 </View>   
 
               </View>
-                               
-                
-                <TouchableOpacity onPress={downloadImage}>
-                  <Text>Save</Text>
-                </TouchableOpacity>
+               </View>
 
-               </>
+               <TouchableOpacity style={styles.buttonContainer} onPress={downloadImage}>
+                  <Text style={{fontSize: 18, color:colors.SECONDARY_COLOR, fontWeight:"bold"}}>Guardar</Text>
+                </TouchableOpacity>
+               </View>
              : 
               <></>
             }
@@ -302,23 +303,27 @@ export default function AddCow({ navigation, route }) {
 /**Los colores son : cafe oscuro: #271d14 para el fondo y blanco para los cuadros de texto */
 /**pendiente mejorar el manejo de height y width */
 const styles = StyleSheet.create({
+  contenedorMayor:{
+    backgroundColor:"#FFF5ED",
+    paddingTop:"10%"
+  },
+    qrContenedor:{
+      height:150,
+      alignItems:"center",
+    },  
     qrStyle:{
-        marginTop:"20%",
-        justifyContent:"space-between",
-        //marginLeft:"35%",
-        padding:0
-    },
-    viewQr:{
-      padding:0,
-      margin:0
+        width:100,
+        height:100,
+        backgroundColor:"yellow"
     },
     qr:{
       padding:0,
       backgroundColor:"#fff",
     },
     textQr:{
+
         fontWeight:"bold",
-        marginLeft:"-10%",
+
         marginBottom:"10%"
     },
     formContainer: {
@@ -361,6 +366,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: "row",
         marginTop: "10%",
+        marginBottom:"10%",
         paddingHorizontal: "10%",
         paddingVertical: "3%",
         alignItems: "center",
