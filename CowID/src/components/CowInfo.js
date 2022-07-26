@@ -231,7 +231,7 @@ export default function CowInfo({ navigation, route }) {
                 <View style={styles.content}>
                     {/* Contenedor de la image */}
                     <View >
-                        <Image style={{ position: "absolute", width: "100%", height: 270 }} source={require("../utils/images/lolaImg.png")}></Image>
+                        <Image style={{ position: "absolute", width: "100%", height: 270 }} source={require("../utils/images/VacaSacandoLengua.jpg")}></Image>
                     </View>
                     <View style={styles.header}>
                         {/* Boton para regresar a la pantalla de informacion de la vaca */}
@@ -239,7 +239,7 @@ export default function CowInfo({ navigation, route }) {
                             <MaterialCommunityIcons.Button
                                 name="arrow-left"
                                 backgroundColor={"#b47f59"}
-                                color={"#271d14"}
+                                color={"#fff"}
                                 size={35}
                                 borderRadius={50}
                                 onPress={() => { changeScreen(0) }}
@@ -247,10 +247,10 @@ export default function CowInfo({ navigation, route }) {
                         </View>
 
                         {/*       Aqui va el nombre e identificador de la vaca       */}
-                        <View style={styles.titleContainer}>
-                            {/* <Text style={styles.title}>{DATA.vaca.nombre} {DATA.vaca.id}</Text> */}
+                        {/* <View style={styles.titleContainer}>
+                            {/* <Text style={styles.title}>{DATA.vaca.nombre} {DATA.vaca.id}</Text> *
                             <Text style={styles.title}>Vaca id:{cow.id}</Text>
-                        </View>
+                        </View> */}
                     </View>
                     <View style={styles.body}>
                         {/* La funcion screen contiene el switch que evalua la pagina a mostrar (litros diarios, chequeo medico , informacion) */}
@@ -267,12 +267,12 @@ export default function CowInfo({ navigation, route }) {
                                 name="plus-circle-outline"
                                 backgroundColor={"#b47f59"}
                                 color={"#fff"}
-                                size={30}
+                                size={25}
                                 borderRadius={35}
                                 margin={5}
-                                height={90}
+                                height={50}
                                 onPress={() => { changeScreen(1); getProduccion() }}
-                            ><Text style={{ fontSize: 30, color: "#fff", fontFamily: "sans-serif-condensed" }}>Añadir Litros</Text>
+                            ><Text style={{ fontSize: 25, color: "#fff", fontFamily: "sans-serif-condensed" }}>Litros</Text>
                             </MaterialCommunityIcons.Button>
                         </View>
 
@@ -281,18 +281,22 @@ export default function CowInfo({ navigation, route }) {
                             {/* Ingresar ficha medica */}
                             <MaterialCommunityIcons.Button
                                 name="plus-circle-outline"
-                                backgroundColor={"#8c6345"}
+                                backgroundColor={"#b47f59"}
                                 color={"#fff"}
                                 size={30}
                                 borderRadius={35}
                                 margin={5}
 
-                                height={90}
+                                height={50}
                                 onPress={() => { changeScreen(2); loadEnfermedades(); loadVacunas() }}
-                            ><Text style={{ fontSize: 30, color: "#fff", fontFamily: "sans-serif-condensed" }}>Ficha médica</Text>
+                            ><Text style={{ fontSize: 25, color: "#fff", fontFamily: "sans-serif-condensed" }}>Ficha médica</Text>
                             </MaterialCommunityIcons.Button>
                         </View>
                     </View>
+                    <View style={styles.titleContainer}>
+                            {/* <Text style={styles.title}>{DATA.vaca.nombre} {DATA.vaca.id}</Text> */}
+                            <Text style={styles.title}>ID:{cow.id}</Text>
+                    </View> 
                 </View>
             </SafeAreaView>
         )
@@ -303,21 +307,35 @@ export default function CowInfo({ navigation, route }) {
 
                 /**Editar aqui la informacion de la vaca  */
                 case 0:
+                    var aP = "No";
+                    if(cow.aptaParaProduccion == 1){
+                        aP = "Sí";
+                    }
                     return (
-                        <FlatList
-                            data={[
-                                { key: 'Peso: ' + cow.Peso + ' kg' },
-                                { key: 'Cantidad de partos: ' + cow.NumeroPartos },
-                                { key: 'Produciendo: ' + cow.AptaParaProduccion },
-                                { key: 'Ubicación: ' + cow.ParcelaUbicacion },
+                        <View style={styles.dataInformationContainer}>
+                            <View style={styles.dataInformation1}>
+                                <Text style={styles.textDataInformation}>Peso: {cow.Peso} kg</Text> 
+                            </View>
 
-                            ]}
-                            renderItem={({ item }) => <Text style={{
+                            <View style={styles.dataInformation2}>
+                                <Text style={styles.textDataInformation}>Cantidad de partos: {cow.NumeroPartos}</Text>
+                            </View>
+
+                            <View style={styles.dataInformation1}>
+                                <Text style={styles.textDataInformation}>Produciendo: {aP}</Text>
+                            </View>
+
+                            <View style={styles.dataInformation2}>
+                                <Text style={styles.textDataInformation}>Ubicación: {cow.ParcelaUbicacion}</Text>
+                            </View>
+                        </View>
+                        
+                    )
+                /* data={[ <FlatList
+                renderItem={({ item }) => <Text style={{
                                 fontSize: 25, marginTop: "2%", fontFamily: "sans-serif-condensed"
                             }}>{item.key}</Text>}
-                        />
-                    )
-
+                        />*/
                 /**Formulario para agregar leche */
                 case 1:
                     return (
@@ -446,9 +464,30 @@ export default function CowInfo({ navigation, route }) {
     }
 
     const styles = StyleSheet.create({
-
+        dataInformationContainer:{
+            width:"126%",
+            marginLeft:-40,
+            alignItems:"center",
+            marginTop:"-10%"
+        },
+        dataInformation2:{
+            alignItems:"center",
+            width:"100%",
+            backgroundColor:"#F5DDCB",
+            
+        },
+        dataInformation1:{
+        },
+        textDataInformation:{
+            fontSize: 25, 
+            fontFamily: "sans-serif-condensed",
+            fontWeight:"600",
+            color:"#441C00",
+            marginTop: "5%",  
+            marginBottom: "5%", 
+        },
         content: {
-            backgroundColor: colors.QUATERNARY_COLOR,
+            backgroundColor: "colors.QUATERNARY_COLOR",
             height: "100%",
             width: "100%",
             display: "flex"
@@ -460,11 +499,12 @@ export default function CowInfo({ navigation, route }) {
             display: "flex",
             flexDirection: "row",
             width: "100%",
-            justifyContent: "space-between"
+            justifyContent: "space-between",
+            
         },
 
         body: {
-            backgroundColor: "#fff",
+            backgroundColor: "#FFF6EF",
             height: "65%",
             borderTopLeftRadius: 30,
             borderTopRightRadius: 30,
@@ -474,20 +514,20 @@ export default function CowInfo({ navigation, route }) {
         },
 
         title: {
-            margin: "5%",
-            fontSize: 25,
+            fontSize: 20,
             color: "#fff",
-            fontFamily: "sans-serif-condensed"
-
+            fontFamily: "sans-serif-condensed",
+            fontWeight:"bold"
         },
 
         titleContainer: {
-            backgroundColor: colors.QUATERNARY_COLOR,
-            borderRadius: 5,
-            margin: "5%",
-            height: "20%",
-            paddingLeft: "4%"
-
+            justifyContent:"center",
+            alignItems:"center",
+            backgroundColor: "#000",
+            borderRadius:10,
+            height: "6%",
+            marginHorizontal:155,
+            marginTop:"-160%"
         },
 
         buttonsContainer: {
@@ -497,11 +537,9 @@ export default function CowInfo({ navigation, route }) {
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            marginLeft: "8%",
+            marginLeft: "9%",
             justifyContent: "space-between",
-
-
-
+            marginTop:"-140%"
         },
 
         button: {

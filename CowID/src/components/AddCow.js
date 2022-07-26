@@ -279,7 +279,7 @@ export default function AddCow({ navigation, route }) {
               <View style={styles.qrStyle}>
                 
                 <View collapsable={false}  style={{backgroundColor:"white"}} ref={componentRef} >
-
+                
                   <QRCode style={styles.qr} value={idCow} codeStyle="square" /> 
 
                 </View>   
