@@ -1,7 +1,7 @@
 import {getDownloadURL, getStorage,ref, uploadBytes} from 'firebase/storage';
 import firebase from 'firebase/compat/app';
 import { updateProfile } from 'firebase/auth';
-const storage = getStorage();
+export const Storage = getStorage();
 
 export async function upload(image,currentUser){
     const filename = currentUser.uid + '.png';
