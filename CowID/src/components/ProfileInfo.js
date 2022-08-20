@@ -6,6 +6,8 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { SafeAreaView, StyleSheet, Text, View, Image ,Pressable} from "react-native";
 import colors from "../utils/colors";
 import {getAuth} from 'firebase/auth';
+import {getFirestore} from 'firebase/firestore'
+import { collection, doc, getDocs,addDoc  } from "firebase/firestore";
 import {firebase} from '../utils/firebase';
 
 /****Firebase*/
@@ -32,6 +34,8 @@ export default function ProfileInfo({ navigation }) {
     const currentUser = auth.currentUser;
 
     useEffect(()=>{
+        firebaseTest()
+        //firebaseTest()
         /*if(currentUser?.photoURL){
             console.log(currentUser.photoURL);
             setProfilePic(currentUser.photoURL);
@@ -41,6 +45,15 @@ export default function ProfileInfo({ navigation }) {
     function cerrarSesion(){
         auth.signOut().catch(error=>alert(error.message));
     }
+
+    async function firebaseTest(){
+        const db = getFirestore(firebase);
+        const querySnapshot = await getDocs(collection(db, "Vacas"));
+        querySnapshot.forEach((doc) => {
+        console.log(`${doc.id} => ${doc.data()}`);
+        });
+
+    }    
 
     return (
 

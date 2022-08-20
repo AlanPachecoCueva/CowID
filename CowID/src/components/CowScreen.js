@@ -159,7 +159,6 @@ export default CowScreen;
 /**pendiente mejorar el manejo de height y width */
 const styles = StyleSheet.create({
 
-
     infoContainer: {
         width: "100%",
         height: "100%",
