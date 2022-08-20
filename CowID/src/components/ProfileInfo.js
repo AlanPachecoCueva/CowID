@@ -6,9 +6,44 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { SafeAreaView, StyleSheet, Text, View, Image ,Pressable} from "react-native";
 import colors from "../utils/colors";
 import {getAuth} from 'firebase/auth';
-import {firebase} from '../utils/firebase';
 
+import {firebase, Store} from '../utils/firebase';
+import { collection, getDocs } from "firebase/firestore";
 /****Firebase*/
+//function firebaseTest(){
+    //const db = getFirestore(firebase);
+
+    async function firebaseTest(){
+
+        const db = Store;
+        const querySnapshot = await getDocs(collection(db, "Vacas"));
+        querySnapshot.forEach((doc) => {
+        console.log(`${doc.id} => ${doc.data()}`);
+        });
+
+    }
+
+
+//     db.collection("Vacas").get().then((querySnapshot) => {
+//       querySnapshot.forEach((doc) => {
+//           console.log(`${doc.id} => ${doc.data()}`);
+//       });
+//   });
+  
+    // var docRef = db.collection("Vacas").doc("YxsxjfdtSQ46YchXHOqN");
+  
+    // docRef.get().then((doc) => {
+    //     if (doc.exists) {
+    //         console.log("Document data:", doc.data());
+    //     } else {
+    //         // doc.data() will be undefined in this case
+    //         console.log("No such document!");
+    //     }
+    // }).catch((error) => {
+    //     console.log("Error getting document:", error);
+    // });
+  //}
+
 
 /*Constantes de prueba para borrar*/
 const DATA = {
@@ -41,6 +76,8 @@ export default function ProfileInfo({ navigation }) {
     function cerrarSesion(){
         auth.signOut().catch(error=>alert(error.message));
     }
+
+    firebaseTest();
 
     return (
 
