@@ -15,6 +15,10 @@ export default function App(){
     })
   },[]);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> ad087f5a03cd006d606a94ab3a2bd562cb950136
   if (user === undefined) return null;
   return(
     <NavigationContainer>
