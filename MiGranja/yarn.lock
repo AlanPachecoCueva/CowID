@@ -4656,6 +4656,13 @@
     "path-browserify" "^1.0.0"
     "url-parse" "^1.5.9"
 
+"expo-av@~12.0.4":
+  "integrity" "sha512-wq3wx6J1aacZEPZce9TK1+o4YTAOWyb5cJ4CqfsgHcXeUdHyO3qbva/5uecigpEYlCxOlWYFhAz2T0dQ7nWSpQ=="
+  "resolved" "https://registry.npmjs.org/expo-av/-/expo-av-12.0.4.tgz"
+  "version" "12.0.4"
+  dependencies:
+    "@expo/config-plugins" "~5.0.0"
+
 "expo-barcode-scanner@^11.4.0":
   "integrity" "sha512-Q4BreQHY5U1aGF+rfqeGSzcdlayTKnSe/qTIfkXTmXFsL7bu3hMqdh5J/DL00Dfmc7C0IR8EiV75rqRrY4t0nA=="
   "resolved" "https://registry.npmjs.org/expo-barcode-scanner/-/expo-barcode-scanner-11.4.0.tgz"
@@ -4737,7 +4744,7 @@
     "compare-versions" "^3.4.0"
     "invariant" "^2.2.4"
 
-"expo@*":
+"expo@*", "expo@^46.0.0":
   "integrity" "sha512-emhBCx+eE/9pJt9VX3QMj1tSwF/xstzQzNhjp4hPs0HYY7m1IQZElgN7DLnCQlBEM6xwtADSPVaqZBmSRzhaMQ=="
   "resolved" "https://registry.npmjs.org/expo/-/expo-46.0.8.tgz"
   "version" "46.0.8"
@@ -8332,7 +8339,7 @@
     "prop-types" "^15.7.2"
     "qrcode" "^1.5.0"
 
-"react-native-safe-area-context@>= 3.0.0":
+"react-native-safe-area-context@^4.3.3", "react-native-safe-area-context@>= 3.0.0":
   "integrity" "sha512-xwsloGLDUzeTN40TIh4Te/zRePSnBAuWlLIiEW3RYE9gHHYslqQWpfK7N24SdAQEH3tHZ+huoYNjo2GQJO/vnQ=="
   "resolved" "https://registry.npmjs.org/react-native-safe-area-context/-/react-native-safe-area-context-4.3.3.tgz"
   "version" "4.3.3"
