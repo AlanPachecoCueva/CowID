@@ -1,4 +1,3 @@
-import react from "react";
 import React, { useState, useEffect } from 'react';
 
 import colors from "../utils/colors";

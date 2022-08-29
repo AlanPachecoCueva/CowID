@@ -1,15 +1,15 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 // To generate te QR Code
-import QRCode from 'react-native-qrcode-svg';
+// import QRCode from 'react-native-qrcode-svg';
 
 export default function GenerateQrScreen(){
     return(
         <View>
             <Image>
-                <QRCode 
+                {/* <QRCode 
                 value={"string"}
-                codeStyle="circle"/>
+                codeStyle="circle"/> */}
             </Image>
             <Text>Hi</Text>
         </View>

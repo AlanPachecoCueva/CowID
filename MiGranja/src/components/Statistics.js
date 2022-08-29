@@ -1,4 +1,4 @@
-import react, {useEffect, useState } from "react";
+import React, {useEffect, useState } from "react";
 import { ScrollView, SafeAreaView, StyleSheet, Text, View, Button, Dimensions } from "react-native";
 import Colors from '../utils/colors.js';
 import { getProducciones } from '../apiRoutes/apiProduccion';

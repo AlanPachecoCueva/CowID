@@ -6,11 +6,11 @@ import { ScrollView, StyleSheet, PermissionsAndroid,Platform, Image,
     
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import colors from "../utils/colors";
-import QRCode from 'react-native-qrcode-svg';
+// import QRCode from 'react-native-qrcode-svg';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import {captureRef} from 'react-native-view-shot';
 
-import * as MediaLibrary from 'expo-media-library'
+// import * as MediaLibrary from 'expo-media-library'
 /* Metodos de la api*/
 import {getLastVaca, saveVaca} from '../apiRoutes/apiVaca';
 
@@ -67,29 +67,29 @@ export default function AddCow({ navigation, route }) {
 
     // get permission on android
   const getPermissionAndroid = async () => {
-     try {
-       const granted = await PermissionsAndroid.request(
-         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-         {
-           title: 'Image Download Permission',
-           message: 'Your permission is required to save images to your device',
-           buttonNegative: 'Cancel',
-           buttonPositive: 'OK',
-         },
-       );
-       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-         return true;
-       }
-       Alert.alert(
-         '',
-         'Your permission is required to save images to your device',
-         [{text: 'OK', onPress: () => {}}],
-         {cancelable: false},
-       );
-     } catch (err) {
-       // handle error as you please
-       console.log('err', err);
-     }
+    //  try {
+    //    const granted = await PermissionsAndroid.request(
+    //      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+    //      {
+    //        title: 'Image Download Permission',
+    //        message: 'Your permission is required to save images to your device',
+    //        buttonNegative: 'Cancel',
+    //        buttonPositive: 'OK',
+    //      },
+    //    );
+    //    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+    //      return true;
+    //    }
+    //    Alert.alert(
+    //      '',
+    //      'Your permission is required to save images to your device',
+    //      [{text: 'OK', onPress: () => {}}],
+    //      {cancelable: false},
+    //    );
+    //  } catch (err) {
+    //    // handle error as you please
+    //    console.log('err', err);
+    //  }
     //const perm = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
 
   };
@@ -102,33 +102,33 @@ export default function AddCow({ navigation, route }) {
     
     // download image
   const downloadImage = async () => {
-    try {
-      const uri = await captureRef(componentRef, {
-        format: 'png',
-        quality: 1,
-      });
+    // try {
+    //   const uri = await captureRef(componentRef, {
+    //     format: 'png',
+    //     quality: 1,
+    //   });
 
-      if (Platform.OS === 'android') {
-        const granted = await getPermissionAndroid();
-        if (!granted) {
-          return;
-        }
-      }
+    //   if (Platform.OS === 'android') {
+    //     const granted = await getPermissionAndroid();
+    //     if (!granted) {
+    //       return;
+    //     }
+    //   }
 
-      // cameraroll saves image
-    //  const image = await CameraRoll.save
-    const image = MediaLibrary.saveToLibraryAsync(uri);
-      if (image) {
-        Alert.alert(
-          '',
-          'Image saved successfully.',
-          [{text: 'OK', onPress: () => {}}],
-          {cancelable: false},
-        );
-      }
-    } catch (error) {
-      console.log('error', error);
-    }
+    //   // cameraroll saves image
+    // //  const image = await CameraRoll.save
+    // const image = MediaLibrary.saveToLibraryAsync(uri);
+    //   if (image) {
+    //     Alert.alert(
+    //       '',
+    //       'Image saved successfully.',
+    //       [{text: 'OK', onPress: () => {}}],
+    //       {cancelable: false},
+    //     );
+    //   }
+    // } catch (error) {
+    //   console.log('error', error);
+    // }
   };
     const saveCow = async (vaca) => {
         //Guarda la vaca
@@ -280,7 +280,7 @@ export default function AddCow({ navigation, route }) {
                 
                 <View collapsable={false}  style={{backgroundColor:"white"}} ref={componentRef} >
                 
-                  <QRCode style={styles.qr} value={idCow} codeStyle="square" /> 
+                  {/* <QRCode style={styles.qr} value={idCow} codeStyle="square" />  */}
 
                 </View>   
 

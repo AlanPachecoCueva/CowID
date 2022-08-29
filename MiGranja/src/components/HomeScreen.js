@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, TextInput, Button, Image } from "react-native";
 import { useRef, useState, useEffect } from "react";
-import QRCode from 'react-native-qrcode-svg';
+// import QRCode from 'react-native-qrcode-svg';
 
 import { getVacas } from '../apiRoutes/apiVaca';
 const QR = (props) => {
@@ -27,7 +27,7 @@ const QR = (props) => {
 
   return (
     <View>
-      { shownSvg ? <QRCode size={300} value={`${props.name}`} getRef={(c) => (svg = c)}  /> : <View></View> }
+      {/* { shownSvg ? <QRCode size={300} value={`${props.name}`} getRef={(c) => (svg = c)}  /> : <View></View> } */}
       
       <Button onPress={getDataURL} title="Call Funct" color="#1FAAE2" />
     </View>

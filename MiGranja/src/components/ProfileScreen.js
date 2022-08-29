@@ -1,6 +1,7 @@
 /*Pantalla de navegacion del perfil: contiene las pantallas informacion de perfil y editar perfil*/
 /**Para importar navigation ejecutar yarn add @react-navigation/native-stack */
 /*Se importa useNavigation para implementar el boton de editar perfil*/
+import React from "react"
 import { useNavigation } from "@react-navigation/native";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';

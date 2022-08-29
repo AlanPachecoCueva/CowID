@@ -1,6 +1,6 @@
 import {View, Text, Button,StyleSheet,Pressable} from 'react-native';
 import React ,{useState, useEffect}from 'react';
-import { BarCodeScanner } from 'expo-barcode-scanner';
+// import { BarCodeScanner } from 'expo-barcode-scanner';
 import colors from "../utils/colors";
 
 export default function QRScan({navigation}) {
@@ -13,52 +13,52 @@ export default function QRScan({navigation}) {
 
     //Pedir permiso de la camara
     const askCameraPermission = () =>{
-        (
-            async() =>{
-                //Pregunta por permiso
-                const {status} = await BarCodeScanner.requestPermissionsAsync();
-                //Define el estado
-                setHasPermission(status =='granted')
-            }
-        )()
+        // (
+        //     async() =>{
+        //         //Pregunta por permiso
+        //         const {status} = await BarCodeScanner.requestPermissionsAsync();
+        //         //Define el estado
+        //         setHasPermission(status =='granted')
+        //     }
+        // )()
     }
 
     //Ejecuta el pedir permisos al inicio de el componente
     useEffect(() =>{
-        askCameraPermission();
+        // askCameraPermission();
     }, []
     );
 
     const handleQrScanned = ({type, data}) =>{
-        setScanned(true);
-        setCowID(data);
-        alert('Vaca encontrada',`Vaca #${data}`);
-        navigation.navigate("CowInfo", data);
+    //     setScanned(true);
+    //     setCowID(data);
+    //     alert('Vaca encontrada',`Vaca #${data}`);
+    //     navigation.navigate("CowInfo", data);
     };
 
     const resetQR = () =>{
-        setScanned(false);
-        alert('Escanear de nuevo','Ahora puedes volver a escanear un código');
+    //     setScanned(false);
+    //     alert('Escanear de nuevo','Ahora puedes volver a escanear un código');
     };
     
     
 
-    if(hasPermission === null){
-        return(
-            <View style={styles.container}> 
-                <Text>Request camera permission</Text>
-            </View>
-        )
-    }
+    // if(hasPermission === null){
+    //     return(
+    //         <View style={styles.container}> 
+    //             <Text>Request camera permission</Text>
+    //         </View>
+    //     )
+    // }
 
-    if(hasPermission === false){
-        return(
-            <View style={styles.container}> 
-                <Text>Request camera permission</Text>
-                <Button title={'Dar permiso camara'} onPress={askCameraPermission()} />
-            </View> 
-        )
-    } 
+    // if(hasPermission === false){
+    //     return(
+    //         <View style={styles.container}> 
+    //             <Text>Request camera permission</Text>
+    //             <Button title={'Dar permiso camara'} onPress={askCameraPermission()} />
+    //         </View> 
+    //     )
+    // } 
 
     return (
 

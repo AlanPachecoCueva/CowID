@@ -5,7 +5,7 @@ import { SafeAreaView, StyleSheet, Text, View, TextInput, Image,Pressable } from
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 /**Imports para manejo de la imagen */
-import * as ImagePicker from 'expo-image-picker'
+// import * as ImagePicker from 'expo-image-picker'
 import {upload} from '../utils/firestore'
 import {firebase} from '../utils/firebase';
 //import {getStorage,ref, uploadBytes} from 'firebase/storage';
@@ -41,20 +41,20 @@ export default function ProfileEdit({ navigation }) {
     });
 
     useEffect(()=>{
-        (async ()=>{
-            //Se solicitan permisos de galeria
-            const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
-            setHasGalleryPermission(galleryStatus.status === 'granted');
-        })();
+        // (async ()=>{
+        //     //Se solicitan permisos de galeria
+        //     const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        //     setHasGalleryPermission(galleryStatus.status === 'granted');
+        // })();
     },[]);
 
     const pickImage = async ()=>{
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing:true,
-            aspect:[4,3],
-            quality:1,
-        });
+        // let result = await ImagePicker.launchImageLibraryAsync({
+        //     mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        //     allowsEditing:true,
+        //     aspect:[4,3],
+        //     quality:1,
+        // });
 
         if(!result.cancelled){
             console.log(result.uri);
