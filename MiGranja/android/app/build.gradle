@@ -136,6 +136,7 @@ android {
     defaultConfig {
         applicationId "com.migranja"
         minSdkVersion rootProject.ext.minSdkVersion
+        missingDimensionStrategy 'react-native-scan-barcode', 'general'
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
@@ -256,6 +257,11 @@ android {
 }
 
 dependencies {
+
+    //Manual Linking to Scan-Barcode
+    // compile project(':react-native-scan-barcode')
+
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
     //noinspection GradleDynamicVersion
@@ -308,7 +314,7 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.implementation
     into 'libs'
 }
-
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
 
 def isNewArchitectureEnabled() {

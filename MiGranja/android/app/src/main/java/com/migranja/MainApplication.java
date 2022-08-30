@@ -1,5 +1,8 @@
 package com.migranja;
 
+//Manual Linking to Scan-Barcode
+// import com.safaeean.barcodescanner.BarcodeScannerPackage;
+
 import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
@@ -14,6 +17,16 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
+
+  // //Manual Linking to Scan-Barcodes
+  // @Override
+  //   protected List<ReactPackage> getPackages() {
+  //     return Arrays.<ReactPackage>asList(
+  //       new MainReactPackage(),
+  //       new BarcodeScannerPackage()
+  //     );
+  //   }
+
 
   private final ReactNativeHost mReactNativeHost =
       new ReactNativeHost(this) {
