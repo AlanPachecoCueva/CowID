@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
     }
     ,
     viewStyle:{
-        paddingTop:"10%"
+        
     }
 
 })

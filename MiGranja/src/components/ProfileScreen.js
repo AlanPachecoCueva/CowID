@@ -18,7 +18,7 @@ const ProfileScreen = () => {
         <NavigationContainer independent={true}>        
             <ProfileStack.Navigator 
             initialRouteName="ProfileInfo"
-            screenOptions={{title:"Mi perfil"}}>
+            screenOptions={{title:"Mi perfil", headerShown:false}}>
             <ProfileStack.Screen  name="ProfileInfo" component={ProfileInfo} />
             <ProfileStack.Screen  name="ProfileEdit" component={ProfileEdit} options={{title:
             "Editar mi perfil"}}/>

@@ -15,6 +15,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { shadow } from 'react-native-paper';
+import { NOT_INITIALIZED_ERROR } from "@react-navigation/core/lib/typescript/src/createNavigationContainerRef";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -37,32 +38,30 @@ const CowCreation = {
 const CowInfoScreen = {
   name: "CowInfo", title: "Información"
 };
-
-function CowHandler() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name={Cows.name} component={CowScreen} options={{title:Cows.title}}/>
-      <Stack.Screen name={CowCreation.name} component={AddCow} options={{title:"Agregar vaca"}}/>
-      <Stack.Screen name={CowInfoScreen.name} component={CowInfo} options={{title:CowInfoScreen.title}}/>
-    </Stack.Navigator>
-  )
+const NavigationBar = {
+  name: "Navegacion", title: "Navegacion"
 }
+
 
 
 function QRHandler() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name={QR.name} component={QRScan} options={{title:QR.title}}/>
-      <Stack.Screen name={CowInfoScreen.name} component={CowInfo} options={{title:CowInfoScreen.title}}/>
+    <Stack.Navigator screenOptions={{headerShown:false}}>
+      <Stack.Screen name={QR.name} component={QRScan} options={{ title: QR.title }} />
+      <Stack.Screen name={CowInfoScreen.name} component={CowInfo} options={{ title: CowInfoScreen.title }} />
     </Stack.Navigator>
   )
 }
 
-export default function NavBar() {
+function NavBar() {
   return (
     <Tab.Navigator
       initialRouteName={Home.name}
+      screenOptions={{
+        headerShown: false
+      }}
       tabBarOptions={{
+        
         activeTintColor: colors.QUINARY_COLOR,
         inactiveTintColor: colors.INACTIVE_ICON,
         shifting: true,
@@ -70,10 +69,12 @@ export default function NavBar() {
           ...styles.Navbar,
         },
       }}
+
     >
       <Tab.Screen
         name={Home.name}
         component={Statistics}
+        headerShown={false}
         options={{
           tabBarLabel: Home.title,
           tabBarIcon: ({ color }) => (
@@ -96,8 +97,8 @@ export default function NavBar() {
         }}
       />
       <Tab.Screen name="Vacas"
-        component={CowHandler} 
-          options={{
+        component={CowScreen}
+        options={{
           tabBarLabel: CowScreen.title,
           tabBarItemStyle: { color: "#000" },
           tabBarIcon: ({ color }) => (
@@ -117,13 +118,26 @@ export default function NavBar() {
         component={ProfileScreen}
         options={{
           tabBarLabel: Profile.title,
+          
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account" color={color} size={26} />
           ),
         }}
       />
-    </Tab.Navigator>
+    </Tab.Navigator >
   );
+
+
+}
+export default function CowHandler() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name={NavigationBar.name} component={NavBar} screenOptions={{headerShown:false}}/>
+      <Stack.Screen name={Cows.name} component={CowScreen} options={{ title: Cows.title }} />
+      <Stack.Screen name={CowCreation.name} component={AddCow} options={{ title: "Agregar vaca" }} />
+      <Stack.Screen name={CowInfoScreen.name} component={CowInfo} options={{ title: CowInfoScreen.title }} />
+    </Stack.Navigator>
+  )
 }
 
 const styles = StyleSheet.create({

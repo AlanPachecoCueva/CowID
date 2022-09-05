@@ -163,7 +163,7 @@ export default function AddCow({ navigation, route }) {
     
     return (
       <>
-        <ScrollView style={{ backgroundColor: "#ffffff" }}>
+        <ScrollView style={{ backgroundColor: "#ffffff", paddingTop:"10%" }}>
           <View style={styles.formContainer}>
             {/* Nacimiento*/}
             <Text style={styles.inputLabel}>Fecha de nacimiento</Text>
@@ -305,7 +305,7 @@ export default function AddCow({ navigation, route }) {
 const styles = StyleSheet.create({
   contenedorMayor:{
     backgroundColor:"#FFF5ED",
-    paddingTop:"10%"
+    paddingTop:"20%"
   },
     qrContenedor:{
       height:150,
@@ -333,7 +333,8 @@ const styles = StyleSheet.create({
     },
     inputLabel:{
         marginTop:"5%",
-        fontSize:17
+        fontSize:17,
+        color:"#000"
     },
 
     inputText: {

@@ -1,25 +1,26 @@
 import react from "react";
 import { SafeAreaView, StyleSheet, Text, View, Button, TextInput, Pressable } from "react-native";
+import React, { useState, useEffect } from 'react';
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-export default function Veterinaria(props) {
+export default function Vet(props) {
     return (
         <View style={styles.content}>
             <Text style={[styles.textStyle, {marginBottom:"10%"}]}>Seleccione el motivo de la ficha</Text>
             {/* Cambia a la pantalla de gestacion */}
             <Pressable style={[styles.input, styles.btnLogin]}
-                onPress={() => props.setScreen(3)}> 
+                onPress={() => props.setScreen(1)}> 
                 <Text style={styles.txtBtnLogin}>Gestación</Text>
             </Pressable>
             {/* Cambia a la pantalla de enfermedad */}
             <Pressable style={[styles.input, styles.btnLogin]}
-                onPress={() => props.setScreen(6)}>
+                onPress={() => props.setScreen(4)}>
                 <Text style={styles.txtBtnLogin}>Enfermedad</Text>
             </Pressable>
             {/* Cambia a la pantalla de vacuna */}
             <Pressable style={[styles.input, styles.btnLogin]}
-                onPress={() => props.setScreen(7)}>
+                onPress={() => props.setScreen(5)}>
                 <Text style={styles.txtBtnLogin}>Vacuna</Text>
             </Pressable>
         </View>
