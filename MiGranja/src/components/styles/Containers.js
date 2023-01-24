@@ -98,5 +98,7 @@ const containers = StyleSheet.create({
         borderColor: colors.QUINARY_COLOR
     },
 
+    
+
 })
 export { containers }
