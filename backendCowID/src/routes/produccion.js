@@ -35,7 +35,7 @@ router.get('/producciones', getProducciones);
  *    tags: [Producciones]
  */
 router.get('/producciones/count', getProduccionesCount);
-produccion
+
 /**
  * @swagger
  * /producciones/ultima:
