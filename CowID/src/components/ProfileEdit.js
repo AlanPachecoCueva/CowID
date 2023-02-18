@@ -72,7 +72,7 @@ export default function ProfileEdit({ navigation }) {
             <SafeAreaView style={{ backgroundColor:"#ffffff" }}>
                 <View style={styles.imageContainer}>
                 
-                <Image style = {styles.userImg} source={{uri:profilePic}}/>
+                    <Image style = {styles.userImg} source={{profilePic}}/>
  
                     <View style={styles.button}>
                         <MaterialCommunityIcons.Button
