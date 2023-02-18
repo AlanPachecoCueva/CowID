@@ -28,7 +28,8 @@ export default function AddCow({ navigation, route }) {
         qr:'',
         parcelaUbicacion:'', 
         edadDestete:7, 
-        aptaParaProduccion:0
+        aptaParaProduccion:0,
+        produccionesDiarias: []
     });
 
     useEffect(() => {

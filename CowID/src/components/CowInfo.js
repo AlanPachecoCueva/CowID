@@ -116,6 +116,7 @@ export default function CowInfo({ navigation, route }) {
     /**Se obtiene la vaca actual de la api */
     const loadCow = async () => {
         const cowI = await getVaca(cowId);
+        console.log("Vaca Recuperada: ", cowI);
         setCow(cowI);
     }
 
@@ -218,6 +219,7 @@ export default function CowInfo({ navigation, route }) {
         // console.log(produccion);
 
         useEffect(() => {
+            console.log("eeF",route.params);
             loadCow();
             // loadProducciones();
             //getProduccion();
@@ -295,7 +297,7 @@ export default function CowInfo({ navigation, route }) {
                     </View>
                     <View style={styles.titleContainer}>
                             {/* <Text style={styles.title}>{DATA.vaca.nombre} {DATA.vaca.id}</Text> */}
-                            <Text style={styles.title}>ID:{cow.id}</Text>
+                            <Text style={styles.title}>ID{'\n'}{cowId}</Text>
                     </View> 
                 </View>
             </SafeAreaView>
@@ -314,11 +316,11 @@ export default function CowInfo({ navigation, route }) {
                     return (
                         <View style={styles.dataInformationContainer}>
                             <View style={styles.dataInformation1}>
-                                <Text style={styles.textDataInformation}>Peso: {cow.Peso} kg</Text> 
+                                <Text style={styles.textDataInformation}>Peso: {cow.peso} kg</Text> 
                             </View>
 
                             <View style={styles.dataInformation2}>
-                                <Text style={styles.textDataInformation}>Cantidad de partos: {cow.NumeroPartos}</Text>
+                                <Text style={styles.textDataInformation}>Cantidad de partos: {cow.numeroPartos}</Text>
                             </View>
 
                             <View style={styles.dataInformation1}>
@@ -326,7 +328,7 @@ export default function CowInfo({ navigation, route }) {
                             </View>
 
                             <View style={styles.dataInformation2}>
-                                <Text style={styles.textDataInformation}>Ubicación: {cow.ParcelaUbicacion}</Text>
+                                <Text style={styles.textDataInformation}>Ubicación: {cow.parcelaUbicacion}</Text>
                             </View>
                         </View>
                         
@@ -514,7 +516,7 @@ export default function CowInfo({ navigation, route }) {
         },
 
         title: {
-            fontSize: 20,
+            fontSize: 15,
             color: "#fff",
             fontFamily: "sans-serif-condensed",
             fontWeight:"bold"
@@ -525,7 +527,9 @@ export default function CowInfo({ navigation, route }) {
             alignItems:"center",
             backgroundColor: "#000",
             borderRadius:10,
-            height: "6%",
+            height: "7%",
+            width: "30%",
+            padding: "1%",
             marginHorizontal:155,
             marginTop:"-160%"
         },

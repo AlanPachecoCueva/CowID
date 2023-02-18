@@ -70,15 +70,17 @@ const CowScreen = ({ navigation, route }) => {
         id: 2
     }
     ]
-
     );
+
+
     const [cowId, setCowId] = useState(8);
     const [cow, setCow] = useState();
 
     const loadCows = async () => {
 
         let cowL = await getVacas();
-        setCowList(cowL[0]);
+        
+        setCowList(cowL);
 
     }
 
@@ -90,24 +92,19 @@ const CowScreen = ({ navigation, route }) => {
     useEffect(() => {
 
         //loadCows();
-
+        console.log("ee",cowList);
         const refresh = navigation.addListener('focus', () => {
             loadCows();
         });
         return refresh;
     }, [navigation]);
 
-    console.log(cowList);
-    console.log("************************************")
-
-    { /*console.warn(DATA)*/ }
     return (
         <SafeAreaView style={{ backgroundColor: colors.QUATERNARY_COLOR, alignItems: "center" }}>
             {/* <Image style = {styles.userImg} source={{uri:profilePic}}/> */}
             <View style={styles.headerContainer}>
                 <Text style={styles.title}>Vacas de mi granja</Text>
             </View>
-
             <View style={styles.infoContainer}>
                 <FlatList
                     data={cowList}
@@ -146,9 +143,9 @@ const CowScreen = ({ navigation, route }) => {
                     </Pressable>
                 </View>
             </View>
-
+            
+            
         </SafeAreaView>
-
     )
 
 }

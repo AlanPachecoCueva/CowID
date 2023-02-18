@@ -72,7 +72,7 @@ export default function Statistics(navigation) {
     useEffect(() => {
 
         //loadCows();
-        cargarDatos()
+        //cargarDatos()
         /*const refresh = navigation.addListener('focus', () => {
             cargarDatos();
         });
