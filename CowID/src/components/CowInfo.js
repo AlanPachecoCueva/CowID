@@ -1,16 +1,14 @@
-import react from "react";
 import React, { useState, useEffect } from 'react';
 
 import colors from "../utils/colors";
-import { Pressable, SafeAreaView, StyleSheet, Text, View, Button, FlatList, TextInput, ImageBackground, Image } from "react-native";
+import { Pressable, SafeAreaView, StyleSheet, Text, View, FlatList, TextInput, Image } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import DatePicker from 'react-native-date-picker'
 
-import { getVacas, getVaca } from '../apiRoutes/apiVaca';
-import { getProducciones, getProduccion, saveProduccion, updateProduccion, deleteVaca } from "../apiRoutes/apiProduccion.js";
-import { getEnfermedad, getEnfermedades, saveVaca, updateEnfermedad, getLastEnfermedades } from "../apiRoutes/apiEnfermedad.js";
-import { getVacuna, deleteVacuna, updateVacuna, getVacunas, saveVacuna } from "../apiRoutes/apiVacuna";
+import { getVaca } from '../apiRoutes/apiVaca';
+import { getProducciones, saveProduccion} from "../apiRoutes/apiProduccion.js";
+import { getEnfermedad, getEnfermedades, saveVaca} from "../apiRoutes/apiEnfermedad.js";
+import { getVacunas, saveVacuna } from "../apiRoutes/apiVacuna";
 
 /**Se importan las pantallas para agregar los litros diarios y los chequeos medicos */
 import Produccion from "./Produccion.js";
@@ -20,21 +18,8 @@ import Veterinaria from "./Veterinaria.js";
 //diferencia el nombre de la vaca de los botones
 //tratamiento en la informacion de la vaca
 export default function CowInfo({ navigation, route }) {
-
-
-
-    const formatDate = (fech) => {
-        var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-        let str = fech.toLocaleDateString("en-US", options);
-        return fech.getFullYear() + '/' + str.substring(0, 5);
-    }
-
     /**Constante y funcion para administrar los componentes produccion y veterianaria */
-    const [cowScreen, setCowScreen] = useState(0);
-
-    function changeScreen(screenID) {
-        setCowScreen(screenID);
-    }
+    const [cowScreen, setCowScreen] = useState("InformacionGeneral");
 
     /**Constante que guarda la vaca actual */
     const [cow, setCow] = useState({
@@ -48,7 +33,10 @@ export default function CowInfo({ navigation, route }) {
         id: 1
     });
 
-    const [producciones, setProducciones] = useState([{
+    //Para el manejo de producciones matutinas y de la tarde
+    const [producciones, setProducciones] = useState();
+    /*  Formato de datos
+    [{ 
         CantidadManana: 0,
         CantidadTarde: 0,
         Fecha: '2022/07/14',
@@ -61,7 +49,7 @@ export default function CowInfo({ navigation, route }) {
         Fecha: '2022/07/14',
         VacaID: 51,
         id: 56
-    }]);
+    }] */
 
     /**se guarda la produccion de la vaca actual */
     const [produccion, setProduccion] = useState({
@@ -72,6 +60,20 @@ export default function CowInfo({ navigation, route }) {
         id: 551
     });
 
+
+
+    const formatDate = (fech) => {
+        var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        let str = fech.toLocaleDateString("en-US", options);
+        return fech.getFullYear() + '/' + str.substring(0, 5);
+    }
+
+
+    function changeScreen(screenID) {
+        setCowScreen(screenID);
+    }
+
+    
 
     const [cowId, setCowId] = useState(route.params);
     const [vacuna, setVacuna] = useState();
@@ -113,20 +115,6 @@ export default function CowInfo({ navigation, route }) {
     }]);
 
 
-    /**Se obtiene la vaca actual de la api */
-    const loadCow = async () => {
-        const cowI = await getVaca(cowId);
-        console.log("Vaca Recuperada: ", cowI);
-        setCow(cowI);
-    }
-
-    /**Se guardan todas las producciones en la constante producciones */
-    const loadProducciones = async () => {
-        const produccionesTmp = await getProducciones();
-        setProducciones(produccionesTmp[0]);
-        //console.log(typeof (producciones));
-    }
-
     const getProduccion = () => {
         producciones.forEach((element, index) => {
             if (element.VacaID === cowId) {
@@ -135,33 +123,6 @@ export default function CowInfo({ navigation, route }) {
                 setProduccion(element);
             }
         })};
-        /**Se itera en el arreglo de producciones buscando el de la vaca actual */
-        // const getProduccion = () => {
-        //     // const prodAct = producciones.find(data => data.VacaID === cowId);
-        //     // setProduccion(prodAct);
-        //     producciones.forEach((element) => {
-        //         if (element.VacaID == cowId) {
-        //             setProduccion(element);
-        //             console.log(element);
-        //         }
-        //     })
-        // };
-
-
-        /**Si una vaca no tiene producciones crear una */
-        const nuevaProduccion = async () => {
-            if (produccion.Fecha === undefined || produccion.Fecha) {
-                const newProd = {
-                    CantidadManana: 15,
-                    CantidadTarde: 15,
-                    Fecha: '2022/07/15',
-                    VacaID: cowId,
-                }
-                await saveProduccion(newProd);
-                //console.log("nuevas: " + producciones);
-            }
-        }
-
 
 
         const nuevaEnfermedad = async () => {
@@ -206,109 +167,28 @@ export default function CowInfo({ navigation, route }) {
             //console.log(vacunas);
         }
 
-        const loadEnfermedad = async () => {
-            const enfermedadTmp = await getEnfermedad(cowId);
-            setEnfermedad(enfermedadTmp);
-            // console.log(enfermedad);
-        }
-
-        console.log("*************************************")
-
         let date3 = formatDate(new Date());
         console.log(date3);
         // console.log(produccion);
 
-        useEffect(() => {
-            console.log("eeF",route.params);
-            loadCow();
-            // loadProducciones();
-            //getProduccion();
-            // loadEnfermedades();
-            // loadVacunas();
+        /**Se obtiene la vaca actual de la api */
+        const loadCow = async () => {
+            const cowI = await getVaca(cowId);
+            setCow(cowI);
+        }
 
-        }, []);
+        useEffect(() =>{
+            loadCow();    
+        }, []); 
 
-        return (
-            <SafeAreaView>
-                <View style={styles.content}>
-                    {/* Contenedor de la image */}
-                    <View >
-                        <Image style={{ position: "absolute", width: "100%", height: 270 }} source={require("../utils/images/VacaSacandoLengua.jpg")}></Image>
-                    </View>
-                    <View style={styles.header}>
-                        {/* Boton para regresar a la pantalla de informacion de la vaca */}
-                        <View style={{ width: 50, margin: "5%" }}>
-                            <MaterialCommunityIcons.Button
-                                name="arrow-left"
-                                backgroundColor={"#b47f59"}
-                                color={"#fff"}
-                                size={35}
-                                borderRadius={50}
-                                onPress={() => { changeScreen(0) }}
-                            ></MaterialCommunityIcons.Button>
-                        </View>
 
-                        {/*       Aqui va el nombre e identificador de la vaca       */}
-                        {/* <View style={styles.titleContainer}>
-                            {/* <Text style={styles.title}>{DATA.vaca.nombre} {DATA.vaca.id}</Text> *
-                            <Text style={styles.title}>Vaca id:{cow.id}</Text>
-                        </View> */}
-                    </View>
-                    <View style={styles.body}>
-                        {/* La funcion screen contiene el switch que evalua la pagina a mostrar (litros diarios, chequeo medico , informacion) */}
-
-                        {screen()}
-
-                    </View>
-                    {/* Botones con posicion abssoluta para ingresar leche o ingresar ficha medica */}
-                    <View style={styles.buttonsContainer}>
-                        <View style={{ width: "45%" }}>
-
-                            {/* Ingresar litros diarios */}
-                            <MaterialCommunityIcons.Button
-                                name="plus-circle-outline"
-                                backgroundColor={"#b47f59"}
-                                color={"#fff"}
-                                size={25}
-                                borderRadius={35}
-                                margin={5}
-                                height={50}
-                                onPress={() => { changeScreen(1); getProduccion() }}
-                            ><Text style={{ fontSize: 25, color: "#fff", fontFamily: "sans-serif-condensed" }}>Litros</Text>
-                            </MaterialCommunityIcons.Button>
-                        </View>
-
-                        <View style={{ width: "45%" }}>
-
-                            {/* Ingresar ficha medica */}
-                            <MaterialCommunityIcons.Button
-                                name="plus-circle-outline"
-                                backgroundColor={"#b47f59"}
-                                color={"#fff"}
-                                size={30}
-                                borderRadius={35}
-                                margin={5}
-
-                                height={50}
-                                onPress={() => { changeScreen(2); loadEnfermedades(); loadVacunas() }}
-                            ><Text style={{ fontSize: 25, color: "#fff", fontFamily: "sans-serif-condensed" }}>Ficha médica</Text>
-                            </MaterialCommunityIcons.Button>
-                        </View>
-                    </View>
-                    <View style={styles.titleContainer}>
-                            {/* <Text style={styles.title}>{DATA.vaca.nombre} {DATA.vaca.id}</Text> */}
-                            <Text style={styles.title}>ID{'\n'}{cowId}</Text>
-                    </View> 
-                </View>
-            </SafeAreaView>
-        )
 
         /**Esta funcion permite mostrar los formularios de: agregar leche, ficha vacuna, embarazo, enfermedad, informacion */
         function screen() {
             switch (cowScreen) {
-
+                
                 /**Editar aqui la informacion de la vaca  */
-                case 0:
+                case "InformacionGeneral":
                     var aP = "No";
                     if(cow.aptaParaProduccion == 1){
                         aP = "Sí";
@@ -333,23 +213,18 @@ export default function CowInfo({ navigation, route }) {
                         </View>
                         
                     )
-                /* data={[ <FlatList
-                renderItem={({ item }) => <Text style={{
-                                fontSize: 25, marginTop: "2%", fontFamily: "sans-serif-condensed"
-                            }}>{item.key}</Text>}
-                        />*/
                 /**Formulario para agregar leche */
-                case 1:
+                case "LitrosDiarios":
                     return (
                         <Produccion produccionHoy={produccion} />
                         // <Text>Te la creiste we</Text>
                     )
-                case 2:
+                case "FichaMedica":
                     /**Formulario para ficha medica */
                     return (
                         <Veterinaria setScreen={changeScreen} />
                     )
-                case 3:
+                case "Gestacion":
                     /**Formulario de gestación para agregar fechas de inseminacion */
                     return (
                         <View>
@@ -360,7 +235,7 @@ export default function CowInfo({ navigation, route }) {
                             </View>
                         </View>
                     )
-                case 4:
+                case "FormularioEnfermedad":
                     /**Formulario de enfermedad */
                     return (
                         <View>
@@ -381,7 +256,7 @@ export default function CowInfo({ navigation, route }) {
                             </Pressable>
                         </View>
                     )
-                case 5:
+                case "FormularioVacuna":
                     /**Formulario de vacuna */
                     return (
                         <View>
@@ -399,7 +274,7 @@ export default function CowInfo({ navigation, route }) {
                         </View>
                     )
 
-                case 6:
+                case "Enfermedad":
                     /**Lista de enfermedades */
                     return (
                         <View style={{ paddingBottom: "20%" }}>
@@ -425,14 +300,14 @@ export default function CowInfo({ navigation, route }) {
                             />
 
                             <Pressable style={styles.buttonAddContainer} >
-                                <Icon name="plus" color={colors.SECONDARY_COLOR} size={25} onPress={() => setCowScreen(4)} />
+                                <Icon name="plus" color={colors.SECONDARY_COLOR} size={25} onPress={() => setCowScreen("FormularioEnfermedad")} />
                             </Pressable>
 
 
                         </View>
                     )
 
-                case 7:
+                case "Vacuna":
                     /**Lista de vacunas */
                     return (
                         <View style={{ paddingBottom: "40%" }}>
@@ -455,7 +330,7 @@ export default function CowInfo({ navigation, route }) {
                                 }
                             />
                             <Pressable style={styles.buttonAddContainer} >
-                                <Icon name="plus" color={colors.SECONDARY_COLOR} size={25} onPress={() => setCowScreen(5)} />
+                                <Icon name="plus" color={colors.SECONDARY_COLOR} size={25} onPress={() => setCowScreen("FormularioVacuna")} />
                             </Pressable>
                         </View>
                     )
@@ -463,7 +338,86 @@ export default function CowInfo({ navigation, route }) {
             }
 
         }
+
+        return (
+            // Contenedor general
+            <SafeAreaView>
+                <View style={styles.content}>
+
+                    {/* Contenedor de la imagen de la vaca */}
+                    <View >
+                        <Image style={{ position: "absolute", width: "100%", height: 270 }} source={require("../utils/images/VacaSacandoLengua.jpg")}></Image>
+                    </View>
+                    
+                    {/* Botón de atrás interno */}
+                    <View style={styles.header}>
+
+                        {/* Boton para regresar a la pantalla de informacion de la vaca */}
+                        <View style={{ width: 50, margin: "5%" }}>
+                            <MaterialCommunityIcons.Button
+                                name="arrow-left"
+                                backgroundColor={"#b47f59"}
+                                color={"#fff"}
+                                size={35}
+                                borderRadius={50}
+                                onPress={() => { changeScreen("InformacionGeneral") }}
+                            ></MaterialCommunityIcons.Button>
+                        </View>
+                    </View>
+
+                    {/* Cuerpo de la ventana */}
+                    <View style={styles.body}>
+                        {/* La funcion screen contiene el switch que evalua la pagina a mostrar 
+                        (litros diarios, chequeo medico, informacion) */}
+
+                        {screen()}
+                    </View>
+                    
+                    {/* Botones con posicion absoluta para ingresar leche o 
+                    ingresar ficha medica */}
+                    <View style={styles.buttonsContainer}>
+                        {/* Botón ingresar litros diarios */}
+                        <View style={{ width: "45%" }}>
+                            <MaterialCommunityIcons.Button
+                                name="plus-circle-outline"
+                                backgroundColor={"#b47f59"}
+                                color={"#fff"}
+                                size={25}
+                                borderRadius={35}
+                                margin={5}
+                                height={50}
+                                onPress={() => { changeScreen("LitrosDiarios"); getProduccion() }}
+                            ><Text style={{ fontSize: 25, color: "#fff", fontFamily: "sans-serif-condensed" }}>Litros</Text>
+                            </MaterialCommunityIcons.Button>
+                        </View>
+
+                        {/* Botón ingresar ficha medica */}
+                        <View style={{ width: "45%" }}>
+                            <MaterialCommunityIcons.Button
+                                name="plus-circle-outline"
+                                backgroundColor={"#b47f59"}
+                                color={"#fff"}
+                                size={30}
+                                borderRadius={35}
+                                margin={5}
+
+                                height={50}
+                                onPress={() => { changeScreen("FichaMedica"); loadEnfermedades(); loadVacunas() }}
+                            ><Text style={{ fontSize: 25, color: "#fff", fontFamily: "sans-serif-condensed" }}>Ficha médica</Text>
+                            </MaterialCommunityIcons.Button>
+                        </View>
+                    </View>
+
+                    {/* Etiqueta superior que contiene el id de la vaca */}
+                    <View style={styles.titleContainer}>
+                            <Text style={styles.title}>ID{'\n'}{cowId}</Text>
+                    </View> 
+                </View>
+            </SafeAreaView>
+        )
     }
+
+
 
     const styles = StyleSheet.create({
         dataInformationContainer:{
@@ -494,7 +448,6 @@ export default function CowInfo({ navigation, route }) {
             width: "100%",
             display: "flex"
         },
-
         header: {
             color: "#fff",
             height: "35%",
@@ -502,9 +455,7 @@ export default function CowInfo({ navigation, route }) {
             flexDirection: "row",
             width: "100%",
             justifyContent: "space-between",
-            
         },
-
         body: {
             backgroundColor: "#FFF6EF",
             height: "65%",
@@ -512,7 +463,6 @@ export default function CowInfo({ navigation, route }) {
             borderTopRightRadius: 30,
             padding: "10%",
             paddingTop: "20%"
-
         },
 
         title: {
@@ -560,13 +510,10 @@ export default function CowInfo({ navigation, route }) {
         inputText: {
             fontSize: 20,
             marginTop: "5%",
-
-
         },
 
         inputContainer: {
             marginTop: "4%",
-
         },
 
         input: {
@@ -577,7 +524,6 @@ export default function CowInfo({ navigation, route }) {
             borderBottomWidth: 1,
             borderBottomColor: colors.QUATERNARY_COLOR,
             marginTop: 5,
-
         },
 
         buttonContainer: {
@@ -591,10 +537,8 @@ export default function CowInfo({ navigation, route }) {
             borderRadius: 15
         },
         cowElement: {
-
             padding: "4%",
             marginBottom: "5%",
-            // backgroundColor: colors.PRIMARY_COLOR,
             borderRadius: 25,
             borderStyle: "solid",
             borderColor: colors.PRIMARY_COLOR,
@@ -611,6 +555,4 @@ export default function CowInfo({ navigation, route }) {
             borderRadius: 15,
             marginTop: "10%"
         },
-
-
     })

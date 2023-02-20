@@ -13,11 +13,8 @@ import { getAuth, signOut } from 'firebase/auth';
 import { firebase } from '../utils/firebase';
 import { useIsFocused } from '@react-navigation/native';
 
-// import CowScreen from "./CowScreen";
 
 /**En esta pagina se listan todas las vacas, ademas se puede agregar nuevas vacas */
-
-
 let DATA = [
     {
         id: 12345,
@@ -49,50 +46,29 @@ let DATA = [
 
 const CowScreen = ({ navigation, route }) => {
     const [upList, setUpList] = useState(false);
-    const [cowList, setCowList] = useState([{
-        peso: 51.0,
-        fechaNacimiento: '2022/07/16',
-        numeroPartos: 3,
-        qr: '',
-        parcelaUbicacion: '',
-        edadDestete: 7,
-        aptaParaProduccion: 0,
-        id: 1
-    },
-    {
-        peso: 51.0,
-        fechaNacimiento: '2022/07/16',
-        numeroPartos: 3,
-        qr: '',
-        parcelaUbicacion: '',
-        edadDestete: 7,
-        aptaParaProduccion: 1,
-        id: 2
-    }
-    ]
-    );
+    const [cowList, setCowList] = useState();
 
 
-    const [cowId, setCowId] = useState(8);
-    const [cow, setCow] = useState();
+    // const [cowId, setCowId] = useState();
+    // const [cow, setCow] = useState();
 
     const loadCows = async () => {
 
         let cowL = await getVacas();
         
         setCowList(cowL);
+        console.log("cowList: ",cowList);
 
     }
 
-    const loadCow = async () => {
-        let cowI = await getVaca(cowId);
-        () => setCow(cowI);
-    }
+    // const loadCow = async () => {
+    //     let cowI = await getVaca(cowId);
+    //     () => setCow(cowI);
+    // }
+
+
 
     useEffect(() => {
-
-        //loadCows();
-        console.log("ee",cowList);
         const refresh = navigation.addListener('focus', () => {
             loadCows();
         });
@@ -121,7 +97,7 @@ const CowScreen = ({ navigation, route }) => {
                                 <View style={{ width: "65%", flexWrap: "nowrap", }}>
                                     <Text style={{ fontSize: 20 }}>id: {item.id}</Text>
 
-                                    <Text style={{ fontSize: 20 }}>Ubicación: {item.ParcelaUbicacion}</Text>
+                                    <Text style={{ fontSize: 20 }}>Ubicación: {item.parcelaUbicacion}</Text>
 
                                 </View>
 

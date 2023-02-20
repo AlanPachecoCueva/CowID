@@ -6,20 +6,24 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 export default function Veterinaria(props) {
     return (
         <View style={styles.content}>
+
             <Text style={[styles.textStyle, {marginBottom:"10%"}]}>Seleccione el motivo de la ficha</Text>
+            
             {/* Cambia a la pantalla de gestacion */}
             <Pressable style={[styles.input, styles.btnLogin]}
-                onPress={() => props.setScreen(3)}> 
+                onPress={() => props.setScreen("Gestacion")}> 
                 <Text style={styles.txtBtnLogin}>Gestación</Text>
             </Pressable>
+
             {/* Cambia a la pantalla de enfermedad */}
             <Pressable style={[styles.input, styles.btnLogin]}
-                onPress={() => props.setScreen(6)}>
+                onPress={() => props.setScreen("Enfermedad")}>
                 <Text style={styles.txtBtnLogin}>Enfermedad</Text>
             </Pressable>
+
             {/* Cambia a la pantalla de vacuna */}
             <Pressable style={[styles.input, styles.btnLogin]}
-                onPress={() => props.setScreen(7)}>
+                onPress={() => props.setScreen("Vacuna")}>
                 <Text style={styles.txtBtnLogin}>Vacuna</Text>
             </Pressable>
         </View>

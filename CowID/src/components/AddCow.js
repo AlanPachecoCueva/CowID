@@ -15,12 +15,11 @@ import * as MediaLibrary from 'expo-media-library'
 import {getLastVaca, saveVaca} from '../apiRoutes/apiVaca';
 
 export default function AddCow({ navigation, route }) {
-// create a ref
 
 
     const componentRef = useRef();
 
-    const [birthDateAux,setBirthDateAux] = useState('2022/07/16');
+    const [birthDateAux,setBirthDateAux] = useState(`${new Date()}`);
     const[cow,setCow] = useState({
         peso: 51.0, 
         fechaNacimiento: '2022/07/16',
