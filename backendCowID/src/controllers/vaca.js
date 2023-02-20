@@ -92,10 +92,15 @@ export const getLastVaca = async (req, res) => {
 // }
 
 export const createVaca = async (req, res) => {
-    const { body } = req
-    const result = await addDoc(collection(db, Collections.VACAS), body)
-    console.log(result)
-    return res.status(200).json(result)
+    try{
+        const { body } = req
+        const result = await addDoc(collection(db, Collections.VACAS), body)
+        //console.log(result)
+        return res.status(200).json({ok:true,vacaID:result.id})
+    }catch(e){
+        res.status(400).json({ok:false})
+    }
+    
 }
 
 export const deleteVaca = async (req, res) => {
