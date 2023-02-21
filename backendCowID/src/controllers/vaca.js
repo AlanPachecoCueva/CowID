@@ -91,11 +91,17 @@ export const getLastVaca = async (req, res) => {
 //         });
 // }
 
+
+/**
+ * Este metodo guarda una vaca en la base de datos
+ * @param {*} req 
+ * @param {*} res 
+ * @returns ok:estado de la consulta , vacadID: Id del documento guardado en firebase
+ */
 export const createVaca = async (req, res) => {
     try{
         const { body } = req
         const result = await addDoc(collection(db, Collections.VACAS), body)
-        //console.log(result)
         return res.status(200).json({ok:true,vacaID:result.id})
     }catch(e){
         res.status(400).json({ok:false})
