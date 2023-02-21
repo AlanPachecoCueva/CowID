@@ -1,4 +1,4 @@
-import uri from './uri';
+import uri from '../apiRoutes/uri';
 
 const URI = uri();
 

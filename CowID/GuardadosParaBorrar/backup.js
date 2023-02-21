@@ -1,3 +1,5 @@
+  CowInfo
+  
   /**Se guardan todas las producciones en la constante producciones */
     const loadProducciones = async () => {
         const produccionesTmp = await getProducciones();
@@ -26,3 +28,10 @@
             setEnfermedad(enfermedadTmp);
             // console.log(enfermedad);
         }
+
+
+
+AddCow
+
+
+
